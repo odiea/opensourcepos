@@ -90,7 +90,7 @@ if(isset($success))
 					<span class="ui-helper-hidden-accessible" role="status"></span>
 				</li>
 				<?php
-				if($this->Employee->has_grant('reports_sales', $this->session->userdata('person_id')))
+				if($this->Employee->has_grant('items', $this->session->userdata('person_id')))
 				{
 				?>
 				<li class="pull-right">
