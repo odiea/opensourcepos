@@ -95,7 +95,7 @@ if(isset($success))
 				?>
 				<li class="pull-right">
 					<button id='new_item_button' class='btn btn-info btn-sm pull-right modal-dlg' data-btn-new="<?php echo $this->lang->line('common_new') ?>" data-btn-submit="<?php echo $this->lang->line('common_submit')?>" data-href="<?php echo site_url("items/view"); ?>"
-							title="<?php echo $this->lang->line($controller_name . '_new_item'); ?>">
+						title="<?php echo $this->lang->line($controller_name . '_new_item'); ?>">
 						<span class="glyphicon glyphicon-tag">&nbsp</span><?php echo $this->lang->line($controller_name. '_new_item'); ?>
 					</button>
 				</li>
