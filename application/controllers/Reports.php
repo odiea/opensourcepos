@@ -1268,9 +1268,6 @@ class Reports extends Secure_Controller
 					to_currency($drow['profit']),
 					($drow['discount_type'] == PERCENT)? $drow['discount'].'%':to_currency($drow['discount'])), $attribute_values));
 
-				$attribute_values = (isset($drow['attribute_values'])) ? $drow['attribute_values'] : '';
-				append_attribute_values($details_data[$row['sale_id']][0], $definition_names, $attribute_values);
-				$details_data[$row['sale_id']][0] = array_values($details_data[$row['sale_id']][0]);
 			}
 
 			if(isset($report_data['rewards'][$key]))
@@ -1383,9 +1380,6 @@ class Reports extends Secure_Controller
 					to_currency($drow['total']),
 					($drow['discount_type'] == PERCENT)? $drow['discount'].'%':to_currency($drow['discount'])), $attribute_values));
 
-				$attribute_values = (isset($drow['attribute_values'])) ? $drow['attribute_values'] : '';
-				append_attribute_values($details_data[$row['receiving_id']][0], $definition_names, $attribute_values);
-				$details_data[$row['receiving_id']][0] = array_values($details_data[$row['receiving_id']][0]);
 			}
 		}
 

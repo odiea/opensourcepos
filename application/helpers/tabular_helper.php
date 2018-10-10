@@ -413,8 +413,6 @@ function get_item_data_row($item)
 
 	$attribute_values = (property_exists($item, 'attribute_values')) ? $item->attribute_values : "";
 	return $result + expand_attribute_values($definition_names, $attribute_values);
-
-	return $result;
 }
 
 
