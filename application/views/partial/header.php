@@ -31,7 +31,7 @@
 		<link rel="stylesheet" type="text/css" href="css/receipt.css"/>
 		<link rel="stylesheet" type="text/css" href="css/register.css"/>
 		<link rel="stylesheet" type="text/css" href="css/reports.css"/>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="css/style.css"/>-->
 		<!-- end css template tags -->
 		<!-- bower:js -->
 		<script src="bower_components/jquery/dist/jquery.js"></script>
@@ -95,6 +95,7 @@
 
 <body>
 	<div class="wrapper">
+	<div class="header">	
 		<div class="topbar">
 			<div class="container">
 				<div class="navbar-left">
@@ -140,7 +141,7 @@
 				</div>
 			</div>
 		</div>
-
+	</div>
 		<div class="container">
-			<div class="row">
-
+		<div class="page__content-container">
+		<div class="row">
