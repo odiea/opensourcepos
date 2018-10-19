@@ -132,6 +132,7 @@ if (isset($success))
 				{
 			?>
 					<?php echo form_open($controller_name."/edit_item/$line", array('class'=>'form-horizontal', 'id'=>'cart_'.$line)); ?>
+							<?php $item['item_number'] = $item['item_number'] == !NULL ? $item['item_number'] : $item['item_id'];?>
 						<tr>
 							<td><?php echo anchor($controller_name."/delete_item/$line", '<span class="glyphicon glyphicon-trash"></span>');?></td>
 							<td><?php echo $item['item_number']; ?></td>

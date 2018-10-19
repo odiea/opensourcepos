@@ -145,6 +145,7 @@ if(isset($success))
 						<tr>
 							<td>
 								<?php echo anchor($controller_name . "/delete_item/$line", '<span class="glyphicon glyphicon-trash"></span>'); ?>
+								<?php $item['item_number'] = $item['item_number'] == !NULL ? $item['item_number'] : $item['item_id'];?>
 								<?php echo form_hidden('location', $item['item_location']); ?>
 								<?php echo form_input(array('type'=>'hidden', 'name'=>'item_id', 'value'=>$item['item_id'])); ?>
 							</td>
