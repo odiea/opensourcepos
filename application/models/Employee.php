@@ -340,6 +340,13 @@ class Employee extends Person
 
 		redirect('login');
 	}
+	
+	public function change_employee()
+	{
+		 $this->session->unset_userdata('person_id');
+
+		redirect('login');
+	}
 
 	/*
 	Determins if a employee is logged in

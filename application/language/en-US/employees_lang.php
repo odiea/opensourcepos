@@ -2,6 +2,7 @@
 
 $lang["employees_basic_information"] = "Information";
 $lang["employees_cannot_be_deleted"] = "Unable to delete selected employee(s), one or more of the has processed sales or you are trying to delete your account.";
+$lang["employees_change_employee"] = "Change Employee";
 $lang["employees_change_password"] = "Change Password";
 $lang["employees_confirm_delete"] = "Are you sure you want to delete the selected employee(s)?";
 $lang["employees_confirm_restore"] = "Are you sure you want to restore selected employee(s)?";

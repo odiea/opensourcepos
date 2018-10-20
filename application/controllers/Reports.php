@@ -405,8 +405,7 @@ class Reports extends Secure_Controller
 		$stock_locations['all'] = $this->lang->line('reports_all');
 		$data['stock_locations'] = array_reverse($stock_locations, TRUE);
 		$data['mode'] = 'sale';
-		$data['sale_type_options'] = $this->get_sale_type_options();
-
+		$data['sale_type_options'] = $this->get_sale_type_options();        
 		$this->load->view('reports/date_input', $data);
 	}
 
@@ -427,8 +426,8 @@ class Reports extends Secure_Controller
 		$data['stock_locations'] = array_reverse($stock_locations, TRUE);
 		$data['mode'] = 'sale';
 		$data['sale_type_options'] = $this->get_sale_type_options();
-
-		$this->load->view('reports/date_input', $data);
+		$data['payment_type'] = $this->get_payment_type();
+		$this->load->view('reports/sales_date_input', $data);
 	}
 
 	public function date_input_recv()
@@ -907,17 +906,16 @@ class Reports extends Secure_Controller
 			$customer_name = $customer_info->company_name;
 		}
 
-		$data = array(
-			'title' => $this->xss_clean($customer_info->first_name . ' ' . $customer_info->last_name . ' ' . $this->lang->line('reports_report')),
+		$data = array(						
+			'title' => $this->xss_clean($customer_info->first_name . ' ' . $customer_info->last_name . '  ' .$customer_name. '  ' .$this->lang->line('reports_report')),
 			'subtitle' => $this->_get_subtitle_report(array('start_date' => $start_date, 'end_date' => $end_date)),
 			'headers' => $headers,
 			'editable' => 'sales',
 			'summary_data' => $summary_data,
 			'details_data' => $details_data,
 			'details_data_rewards' => $details_data_rewards,
-			'overall_summary_data' => $this->xss_clean($model->getSummaryData($inputs))
-		);
-
+			'overall_summary_data' => $this->xss_clean($model->getSummaryData($inputs))			
+		);		
 		$this->load->view('reports/tabular_details', $data);
 	}
 
@@ -1029,7 +1027,7 @@ class Reports extends Secure_Controller
 		$data['specific_input_name'] = $this->lang->line('reports_discount');
 
 		$discounts = array();
-		for($i = 0; $i <= 100; $i += 10)
+		for($i = 0; $i <= 100; $i += 5)
 		{
 			$discounts[$i] = $i . '%';
 		}
@@ -1189,11 +1187,11 @@ class Reports extends Secure_Controller
 		return $sale_type_options;
 	}
 
-	public function detailed_sales($start_date, $end_date, $sale_type, $location_id = 'all')
+	public function detailed_sales($start_date, $end_date, $sale_type, $payment_type, $location_id = 'all')
 	{
 		$definition_names = $this->Attribute->get_definitions_by_flags(Attribute::SHOW_IN_SALES);
 
-		$inputs = array('start_date' => $start_date, 'end_date' => $end_date, 'sale_type' => $sale_type, 'location_id' => $location_id, 'definition_ids' => array_keys($definition_names));
+		$inputs = array('start_date' => $start_date, 'end_date' => $end_date, 'sale_type' => $sale_type, 'location_id' => $location_id, 'payment_type' => $payment_type, 'definition_ids' => array_keys($definition_names));
 
 		$this->load->model('reports/Detailed_sales');
 		$model = $this->Detailed_sales;

@@ -103,8 +103,8 @@ if (isset($success))
 		<thead>
 			<tr>
 				<th style="width:5%;"><?php echo $this->lang->line('common_delete'); ?></th>
-				<th style="width:15%;"><?php echo $this->lang->line('sales_item_number'); ?></th>
-				<th style="width:23%;"><?php echo $this->lang->line('receivings_item_name'); ?></th>
+				<th style="width:15%;"><?php echo $this->lang->line('items_item_number'); ?></th>
+				<th style="width:35%;"><?php echo $this->lang->line('receivings_item_name'); ?></th>
 				<th style="width:10%;"><?php echo $this->lang->line('receivings_cost'); ?></th>
 				<th style="width:10%;"><?php echo $this->lang->line('receivings_quantity'); ?></th>
 				<th style="width:7%;"><?php echo $this->lang->line('receivings_ship_pack'); ?></th>
@@ -120,7 +120,7 @@ if (isset($success))
 			{
 			?>
 				<tr>
-					<td colspan='9'>
+					<td colspan='10'>
 						<div class='alert alert-dismissible alert-info'><?php echo $this->lang->line('sales_no_items_in_cart'); ?></div>
 					</td>
 				</tr>
@@ -132,11 +132,23 @@ if (isset($success))
 				{
 			?>
 					<?php echo form_open($controller_name."/edit_item/$line", array('class'=>'form-horizontal', 'id'=>'cart_'.$line)); ?>
-							<?php $item['item_number'] = $item['item_number'] == !NULL ? $item['item_number'] : $item['item_id'];?>
 						<tr>
 							<td><?php echo anchor($controller_name."/delete_item/$line", '<span class="glyphicon glyphicon-trash"></span>');?></td>
-							<td><?php echo $item['item_number']; ?></td>
-							<td style="align:center;">
+								
+								<?php if(!empty($item['item_number'])) 
+							{
+						     ?>
+								<td><?php echo $item['item_number']; ?></td>							
+							<?php
+							}
+							else
+							{
+						    ?>
+								<td><?php echo $item['item_id']; ?></td>
+							<?php
+							}
+							?>
+								<td style="align:center;">						    
 								<?php echo $item['name'] . ' ' . $item['attribute_values']; ?><br /> <?php echo '[' . to_quantity_decimals($item['in_stock']) . ' in ' . $item['stock_name'] . ']'; ?>
 								<?php echo form_hidden('location', $item['item_location']); ?>
 							</td>
@@ -145,7 +157,7 @@ if (isset($success))
 							if ($items_module_allowed && $mode !='requisition')
 							{
 							?>
-								<td><?php echo form_input(array('name'=>'price', 'class'=>'form-control input-sm', 'value'=>to_currency_no_money($item['price'])));?></td>
+								<td><?php echo form_input(array('name'=>'price', 'class'=>'form-control input-sm', 'value'=>to_currency_no_money($item['price']), 'onClick'=>'this.select();' ));?></td>
 							<?php
 							}
 							else
@@ -159,7 +171,7 @@ if (isset($success))
 							}
 							?>
 							
-							<td><?php echo form_input(array('name'=>'quantity', 'class'=>'form-control input-sm', 'value'=>to_quantity_decimals($item['quantity']))); ?></td>
+							<td><?php echo form_input(array('name'=>'quantity', 'class'=>'form-control input-sm', 'value'=>to_quantity_decimals($item['quantity']), 'onClick'=>'this.select();')); ?></td>
 							<td><?php echo form_dropdown('receiving_quantity', $item['receiving_quantity_choices'], $item['receiving_quantity'], array('class'=>'form-control input-sm'));?></td>
 
 							<?php       
@@ -218,7 +230,7 @@ if (isset($success))
 								}
 								?>
 							</td>
-							<td colspan='7'></td>
+							<td colspan='8'></td>
 						</tr>
 					<?php echo form_close(); ?>
 			<?php

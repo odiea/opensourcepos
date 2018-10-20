@@ -109,10 +109,13 @@ function get_sale_data_row($sale)
 	$row['receipt'] = anchor($controller_name."/receipt/$sale->sale_id", '<span class="glyphicon glyphicon-usd"></span>',
 		array('title' => $CI->lang->line('sales_show_receipt'))
 	);
+	
 	$row['edit'] = anchor($controller_name."/edit/$sale->sale_id", '<span class="glyphicon glyphicon-edit"></span>',
-		array('class' => 'modal-dlg print_hide', 'data-btn-delete' => $CI->lang->line('common_delete'), 'data-btn-submit' => $CI->lang->line('common_submit'), 'title' => $CI->lang->line($controller_name.'_update'))
+		array('class' => 'modal-dlg print_hide','data-btn-submit' => $CI->lang->line('common_submit'), 'title' => $CI->lang->line($controller_name.'_update'))
+	
 	);
 
+              
 	return $row;
 }
 
@@ -361,22 +364,20 @@ function get_item_data_row($item)
 	// remove ', ' from last item
 	$tax_percents = substr($tax_percents, 0, -2);
 	$controller_name = strtolower(get_class($CI));
-
-	$image = NULL;
+     $image = NULL;
 	if($item->pic_filename != '')
-	{
+	{		
 		$ext = pathinfo($item->pic_filename, PATHINFO_EXTENSION);
 		if($ext == '')
 		{
 			// legacy
 			$images = glob('./uploads/item_pics/' . $item->pic_filename . '.*');
 		}
-		else
+		else 
 		{
 			// preferred
 			$images = glob('./uploads/item_pics/' . $item->pic_filename);
 		}
-
 		if(sizeof($images) > 0)
 		{
 			$image .= '<a class="rollover" href="'. base_url($images[0]) .'"><img src="'.site_url('items/pic_thumb/' . pathinfo($images[0], PATHINFO_BASENAME)) . '"></a>';
@@ -392,7 +393,7 @@ function get_item_data_row($item)
 
 	$result = array (
 		'items.item_id' => $item->item_id,
-		'item_number' => $item->item_number,
+		'item_number' => $item->item_number == !NULL ? $item->item_number : $item->item_id,
 		'name' => $item->name,
 		'category' => $item->category,
 		'company_name' => $item->company_name,
@@ -720,10 +721,6 @@ function get_expenses_manage_payments_summary($payments, $expenses)
 	return $table;
 }
 
-
-/*
-Get the header for the cashup tabular view
-*/
 function get_cashups_manage_table_headers()
 {
 	$CI =& get_instance();
@@ -737,7 +734,6 @@ function get_cashups_manage_table_headers()
 		array('close_employee_id' => $CI->lang->line('cashups_close_employee')),
 		array('closed_amount_cash' => $CI->lang->line('cashups_closed_amount_cash')),
 		array('note' => $CI->lang->line('cashups_note')),
-		array('closed_amount_due' => $CI->lang->line('cashups_closed_amount_due')),
 		array('closed_amount_card' => $CI->lang->line('cashups_closed_amount_card')),
 		array('closed_amount_check' => $CI->lang->line('cashups_closed_amount_check')),
 		array('closed_amount_total' => $CI->lang->line('cashups_closed_amount_total'))
@@ -747,7 +743,7 @@ function get_cashups_manage_table_headers()
 }
 
 /*
-Gets the html data row for the cashups
+Gets the html data rows for the cashup
 */
 function get_cash_up_data_row($cash_up)
 {
@@ -763,12 +759,13 @@ function get_cash_up_data_row($cash_up)
 		'close_employee_id' => $cash_up->close_first_name . ' ' . $cash_up->close_last_name,
 		'closed_amount_cash' => to_currency($cash_up->closed_amount_cash),
 		'note' => $cash_up->note ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>',
-		'closed_amount_due' => to_currency($cash_up->closed_amount_due),
 		'closed_amount_card' => to_currency($cash_up->closed_amount_card),
-		'closed_amount_check' => to_currency($cash_up->closed_amount_check),
-		'closed_amount_total' => to_currency($cash_up->closed_amount_total),
+		'closed_amount_check' => to_currency($cash_up->closed_amount_check),	
+    	'closed_amount_total' => to_currency($cash_up->closed_amount_total),
 		'edit' => anchor($controller_name."/view/$cash_up->cashup_id", '<span class="glyphicon glyphicon-edit"></span>',
 			array('class'=>'modal-dlg', 'data-btn-submit' => $CI->lang->line('common_submit'), 'title'=>$CI->lang->line($controller_name.'_update'))
 		));
 }
 ?>
+
+

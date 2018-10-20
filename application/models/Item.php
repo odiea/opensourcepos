@@ -110,6 +110,7 @@ class Item extends CI_Model
 	{
 		// get_found_rows case
 		if($count_only == TRUE)
+
 		{
 			$this->db->select('COUNT(DISTINCT items.item_id) AS count');
 		}
@@ -225,6 +226,12 @@ class Item extends CI_Model
 		{
 			$non_temp = array(ITEM, ITEM_KIT, ITEM_AMOUNT_ENTRY);
 			$this->db->where_in('items.item_type', $non_temp);
+		}
+
+		if ($filters['printed'] != FALSE)				
+					 
+		{
+			$this->db->where('printed', '');
 		}
 
 		// get_found_rows case
@@ -403,6 +410,7 @@ class Item extends CI_Model
 			if($this->db->insert('items', $item_data))
 			{
 				$item_data['item_id'] = $this->db->insert_id();
+
 				if($item_data['low_sell_item_id'] == -1)
 				{
 					$this->db->where('item_id', $item_data['item_id']);
@@ -498,16 +506,22 @@ class Item extends CI_Model
 			$seed .= ',' . $this->config->item('suggestions_third_column');
 		}
 
+			   
+   if($this->config->item('suggestions_fourth_column') !== '')
+		{
+			$seed .= ','.$this->config->item('suggestions_fourth_column');
+		}			
+								 
+									  
 		return $seed;
 	}
 	
-	function get_search_suggestion_label($result_row)
+		function get_search_suggestion_label($result_row)
 	{
 		$label = '';
 		$label1 = $this->config->item('suggestions_first_column');
 		$label2 = $this->config->item('suggestions_second_column');
 		$label3 = $this->config->item('suggestions_third_column');
-
 		// If multi_pack enabled then if "name" is part of the search suggestions then append pack
 		if($this->config->item('multi_pack_enabled') == '1')
 		{
@@ -518,18 +532,15 @@ class Item extends CI_Model
 		else
 		{
 			$label = $result_row->$label1;
-
 			if($label2 !== '')
 			{
 				$label .= NAME_SEPARATOR . $result_row->$label2;
 			}
-
 			if($label3 !== '')
 			{
 				$label .= NAME_SEPARATOR . $result_row->$label3;
 			}
 		}
-
 		return $label;
 	}
 
@@ -589,6 +600,17 @@ class Item extends CI_Model
 			$suggestions[] = array('value' => $row->item_id, 'label' => $this->get_search_suggestion_label($row));
 		}
 
+   
+					   
+								 
+							
+													   
+																												
+						 
+										
+										  
+											  
+	
 		if(!$unique)
 		{
 			//Search by category
@@ -690,6 +712,18 @@ class Item extends CI_Model
 			$suggestions[] = array('value' => $row->item_id, 'label' => $this->get_search_suggestion_label($row));
 		}
 
+	$this->db->select($this->get_search_suggestion_format('item_id, item_id'));
+		$this->db->from('items');
+		$this->db->where('deleted', $filters['is_deleted']);
+		$this->db->where("item_type = " . ITEM); // standard, exclude kit items since kits will be picked up later
+		$this->db->where("stock_type = '0'"); // stocked items only
+		$this->db->like('item_id', $search);
+		$this->db->order_by('item_id', 'asc');
+		foreach($this->db->get()->result() as $row)
+		{
+			$suggestions[] = array('value' => $row->item_id, 'label' => $this->get_search_suggestion_label($row));
+		}	
+					
 		if(!$unique)
 		{
 			//Search by category
@@ -943,6 +977,29 @@ class Item extends CI_Model
 	 *
 	 */
 	public function change_cost_price($item_id, $items_received, $new_price, $old_price = NULL)
+	{
+		if($old_price === NULL)
+		{
+			$item_info = $this->get_info($item_id);
+			$old_price = $item_info->cost_price;
+		}
+
+		$this->db->from('item_quantities');
+		$this->db->select_sum('quantity');
+		$this->db->where('item_id', $item_id);
+		$this->db->join('stock_locations', 'stock_locations.location_id=item_quantities.location_id');
+		$this->db->where('stock_locations.deleted', 0);
+		$old_total_quantity = $this->db->get()->row()->quantity;
+
+		$total_quantity = $old_total_quantity + $items_received;
+		$average_price = bcdiv(bcadd(bcmul($items_received, $new_price), bcmul($old_total_quantity, $old_price)), $total_quantity);
+
+		$data = array('cost_price' => $new_price);
+
+		return $this->save($data, $item_id);
+	}
+	
+	public function change_average_price($item_id, $items_received, $new_price, $old_price = null)
 	{
 		if($old_price === NULL)
 		{

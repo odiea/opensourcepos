@@ -53,7 +53,7 @@ $(document).ready(function()
 	<?php echo anchor("sales", '<span class="glyphicon glyphicon-shopping-cart">&nbsp</span>' . $this->lang->line('sales_register'), array('class'=>'btn btn-info btn-sm pull-right', 'id'=>'show_sales_button')); ?>
 </div>
 
-<div id="toolbar">
+<div id="toolbar">	
 	<div class="pull-left form-inline" role="toolbar">
 		<button id="delete" class="btn btn-default btn-sm print_hide">
 			<span class="glyphicon glyphicon-trash">&nbsp</span><?php echo $this->lang->line("common_delete");?>

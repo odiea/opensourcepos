@@ -19,7 +19,7 @@ $config['application_version'] = '3.3.0';
 | 
 | 
 */ 
-$config['commit_sha1'] = '$Id $';
+$config['commit_sha1'] = '$Id$';
  
 /* 
 |-------------------------------------------------------------------------- 
@@ -257,7 +257,7 @@ $config['directory_trigger'] = 'd';
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 1;
+$config['log_threshold'] = 1; // was 0
 
 /*
 |--------------------------------------------------------------------------
@@ -358,7 +358,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = getenv('ENCRYPTION_KEY') ? getenv('ENCRYPTION_KEY') : 'a7e24a833c1c4b4d5f2d480a9abb747ac747a2245335cea4017ff08209586a16';
+$config['encryption_key'] = getenv('ENCRYPTION_KEY') ? getenv('ENCRYPTION_KEY') : 'e2afc17a381648cca8a7c350b98f56803989688a2504570a8e9bcc88f65a2d9e';
 
 /*
 |--------------------------------------------------------------------------

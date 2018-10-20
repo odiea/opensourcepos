@@ -18,6 +18,13 @@ class Home extends Secure_Controller
 	{
 		$this->Employee->logout();
 	}
+	
+	public function change_employee()
+	{
+		$this->track_page('logout', 'logout');
+
+		$this->Employee->change_employee();
+	}
 
 	/*
 	Loads the change employee password form

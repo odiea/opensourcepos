@@ -27,6 +27,7 @@ class Items extends Secure_Controller
 			'no_description' => $this->lang->line('items_no_description_items'),
 			'search_custom' => $this->lang->line('items_search_attributes'),
 			'is_deleted' => $this->lang->line('items_is_deleted'),
+			'printed' => $this->lang->line('items_is_printed'),
 			'temporary' => $this->lang->line('items_temp'));
 
 		$this->load->view('items/manage', $data);
@@ -57,6 +58,7 @@ class Items extends Secure_Controller
 						'search_custom' => FALSE,
 						'is_deleted' => FALSE,
 						'temporary' => FALSE,
+						'printed' => FALSE,
 						'definition_ids' => array_keys($definition_names));
 		
 		// check if any filter is set in the multiselect dropdown
@@ -157,8 +159,15 @@ class Items extends Secure_Controller
 
 		echo json_encode($suggestions);
 	}
+							   
+  function suggest_printed()
+	{
+		$suggestions = $this->Item->get_printed_suggestions($this->input->post('q'));
 
-	/*
+		echo implode("\n",$suggestions);
+	}																   
+						  
+  	/*
 	 Gives search suggestions based on what is being searched for
 	*/
 	public function suggest_location()
@@ -183,6 +192,7 @@ class Items extends Secure_Controller
 
 	public function view($item_id = -1)
 	{
+
 		if($item_id == -1)
 		{
 			$data = array();
@@ -454,14 +464,25 @@ class Items extends Secure_Controller
 
 		$receiving_quantity = parse_decimals($this->input->post('receiving_quantity'));
 		$item_type = $this->input->post('item_type') == NULL ? ITEM : $this->input->post('item_type');
+		$markup = $this->config->item('item_markup');
+		$cost_price = parse_decimals($this->input->post('cost_price'));
+		//Save item data
+		if ($markup > 0 )
+					{			
+		    $unit_price = parse_decimals($this->input->post('cost_price') * (1 +$markup / 100));
+					}
+					else
+					{
+					$unit_price = parse_decimals($this->input->post('unit_price'));
+					}			   
 
 		if($receiving_quantity == '0' && $item_type!= ITEM_TEMP)
 		{
 			$receiving_quantity = '1';
 		}
+
 		$default_pack_name = $this->lang->line('items_default_pack_name');
 
-		//Save item data
 		$item_data = array(
 			'name' => $this->input->post('name'),
 			'description' => $this->input->post('description'),
@@ -476,6 +497,7 @@ class Items extends Secure_Controller
 			'receiving_quantity' => $receiving_quantity,
 			'allow_alt_description' => $this->input->post('allow_alt_description') != NULL,
 			'is_serialized' => $this->input->post('is_serialized') != NULL,
+		    'printed'=>$this->input->post('printed') != Null,											 
 			'qty_per_pack' => $this->input->post('qty_per_pack') == NULL ? 1 : $this->input->post('qty_per_pack'),
 			'pack_name' => $this->input->post('pack_name') == NULL ? $default_pack_name : $this->input->post('pack_name'),
 			'low_sell_item_id' => $this->input->post('low_sell_item_id') == NULL ? -1 : $this->input->post('low_sell_item_id'),
@@ -509,7 +531,8 @@ class Items extends Secure_Controller
 		}
 		
 		$employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
-
+		//$cur_item_info = $this->Item->get_info($item_id);
+ 
 		if($this->Item->save($item_data, $item_id))
 		{
 			$success = TRUE;
@@ -613,7 +636,8 @@ class Items extends Secure_Controller
 	*/
 	public function check_kit_exists()
 	{
-		if($this->input->post('item_number') === -1)
+		if($this->input->post('item_number') == -1)
+
 		{
 			$exists = $this->Item_kit->item_kit_exists_for_name($this->input->post('name'));
 		}
@@ -671,10 +695,16 @@ class Items extends Secure_Controller
 			'item_id' => $item_id,
 			'location_id' => $location_id,
 			'quantity' => $item_quantity->quantity + parse_decimals($this->input->post('newquantity'))
+   
 		);
 
 		if($this->Item_quantity->save($item_quantity_data, $item_id, $location_id))
+  
 		{
+			$this->db->where('item_id', $item_id);
+			$this->db->update('items', array('custom10'=>$this->input->post('newquantity'), 'printed'=>0));
+										 
+																								  
 			$message = $this->xss_clean($this->lang->line('items_successful_updating') . ' ' . $cur_item_info->name);
 			
 			echo json_encode(array('success' => TRUE, 'message' => $message, 'id' => $item_id));

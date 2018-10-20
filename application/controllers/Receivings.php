@@ -290,7 +290,7 @@ class Receivings extends Secure_Controller
 		$data['transaction_time'] = date($this->config->item('dateformat') . ' ' . $this->config->item('timeformat'), strtotime($receiving_info['receiving_time']));
 		$data['show_stock_locations'] = $this->Stock_location->show_locations('receivings');
 		$data['payment_type'] = $receiving_info['payment_type'];
-		$data['reference'] = $this->receiving_lib->get_reference();
+		$data['reference'] = $receiving_info['reference'];
 		$data['receiving_id'] = 'RECV ' . $receiving_id;
 		$data['barcode'] = $this->barcode_lib->generate_receipt_barcode($data['receiving_id']);
 		$employee_info = $this->Employee->get_info($receiving_info['employee_id']);

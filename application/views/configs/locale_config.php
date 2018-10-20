@@ -112,12 +112,84 @@
 					?>
                 </div>
             </div>
-
-            <div class="form-group form-group-sm">
+			
+			<div class="form-group form-group-sm">
+  				<?php echo form_label($this->lang->line('config_quick_cash_enable'), 'quick_cash_enable', array('class' => 'control-label col-xs-2')); ?>
+  				<div class='col-xs-2'>
+ 					<?php echo form_checkbox(array(
+ 						'name' => 'quick_cash_enable',
+ 						'id' => 'quick_cash_enable',
+ 						'value' => 'quick_cash_enable',
+  						'checked'=>$this->config->item('quick_cash_enable'))); ?>
+  				</div>
+  			</div>
+			
+			<div class="form-group form-group-sm">
+				<?php echo form_label($this->lang->line('config_cash_button'), 'cash_button', array('class' => 'control-label col-xs-2')); ?>
+				<div class="col-sm-10">
+					<div class="form-group form-group-sm row">
+						<label class="control-label col-sm-1"><?php echo $this->lang->line('config_cash_button_1').' '; ?></label>
+						<div class='col-sm-2'>
+					<?php echo form_input(array(
+						'name' => 'quick_cash_1',
+						'id' => 'quick_cash_1',
+						'class' => 'form-control input-sm number_button',
+						'value'=>$this->config->item('quick_cash_1'))); ?>
+				</div>
+						
+						<label class="control-label col-sm-1"><?php echo $this->lang->line('config_cash_button_2').' '; ?></label>
+						<div class='col-sm-2'>
+							<?php echo form_input(array(
+						'name' => 'quick_cash_2',
+						'id' => 'quick_cash_2',
+						'class' => 'form-control input-sm number_button',
+						'value'=>$this->config->item('quick_cash_2'))); ?>
+						</div>
+						</div>
+					<div class="form-group form-group-sm row">
+						<label class="control-label col-sm-1"><?php echo $this->lang->line('config_cash_button_3').' '; ?></label>
+						<div class='col-sm-2'>
+							<?php echo form_input(array(
+						'name' => 'quick_cash_3',
+						'id' => 'quick_cash_3',
+						'class' => 'form-control input-sm number_button',
+						'value'=>$this->config->item('quick_cash_3'))); ?>
+						</div>
+						<label class="control-label col-sm-1"><?php echo $this->lang->line('config_cash_button_4').' '; ?></label>
+						<div class='col-sm-2'>
+							<?php echo form_input(array(
+						'name' => 'quick_cash_4',
+						'id' => 'quick_cash_4',
+						'class' => 'form-control input-sm number_button',
+						'value'=>$this->config->item('quick_cash_4'))); ?>
+						</div>
+					</div>	
+				<div class="form-group form-group-sm row">
+						<label class="control-label col-sm-1"><?php echo $this->lang->line('config_cash_button_5').' '; ?></label>
+						<div class='col-sm-2'>
+							<?php echo form_input(array(
+						'name' => 'quick_cash_5',
+						'id' => 'quick_cash_5',
+						'class' => 'form-control input-sm number_button',
+						'value'=>$this->config->item('quick_cash_5'))); ?>
+						</div>
+						
+						<label class="control-label col-sm-1"><?php echo $this->lang->line('config_cash_button_6').' '; ?></label>
+						<div class='col-sm-2'>
+							<?php echo form_input(array(
+						'name' => 'quick_cash_6',
+						'id' => 'quick_cash_6',
+						'class' => 'form-control input-sm number_button',
+						'value'=>$this->config->item('quick_cash_6'))); ?>
+						</div>
+						</div>
+					</div>
+</div>
+             <div class="form-group form-group-sm">
 				<?php echo form_label($this->lang->line('config_payment_options_order'), 'payment_options_order', array('class' => 'control-label col-xs-2')); ?>
 				<div class='col-xs-4'>
 					<?php echo form_dropdown('payment_options_order', array(
-						'cashdebitcredit' => $this->lang->line('sales_cash') . ' / ' . $this->lang->line('sales_debit') . ' / ' . $this->lang->line('sales_credit'),
+						'cashdebitcredit' => $this->lang->line('sales_cash') . ' / ' . $this->lang->line('sales_credit') . ' / ' . $this->lang->line('sales_debit'),
 						'debitcreditcash' => $this->lang->line('sales_debit') . ' / ' . $this->lang->line('sales_credit') . ' / ' . $this->lang->line('sales_cash'),
 						'debitcashcredit' => $this->lang->line('sales_debit') . ' / ' . $this->lang->line('sales_cash') . ' / ' . $this->lang->line('sales_credit'),
 						'creditdebitcash' => $this->lang->line('sales_credit') . ' / ' . $this->lang->line('sales_debit') . ' / ' . $this->lang->line('sales_cash'),
@@ -126,7 +198,7 @@
 					$this->config->item('payment_options_order'), array('class' => 'form-control input-sm'));
 					?>
 				</div>
-			</div>
+</div>
 
 			<div class="form-group form-group-sm">
 				<?php echo form_label($this->lang->line('config_country_codes'), 'country_codes', array('class' => 'control-label col-xs-2')); ?>
@@ -226,7 +298,20 @@
 //validation and submit handling
 $(document).ready(function()
 {
-	$('span').tooltip();
+	var enable_disable_quick_cash_enable = (function() {
+        var quick_cash_enable = $("#quick_cash_enable").is(":checked");
+        $("input[name*='quick_cash_1']").prop("readonly", !quick_cash_enable);
+        $("input[name*='quick_cash_2']").prop("readonly", !quick_cash_enable);
+        $("input[name*='quick_cash_3']").prop("readonly", !quick_cash_enable);
+		$("input[name*='quick_cash_4']").prop("readonly", !quick_cash_enable);
+        $("input[name*='quick_cash_5']").prop("readonly", !quick_cash_enable);
+        $("input[name*='quick_cash_6']").prop("readonly", !quick_cash_enable);
+        
+        return arguments.callee;
+    })();
+
+    $("#quick_cash_enable").change(enable_disable_quick_cash_enable);
+	
 
 	$('#currency_symbol, #thousands_separator').change(function() {
 		var field = $(this).attr('id');

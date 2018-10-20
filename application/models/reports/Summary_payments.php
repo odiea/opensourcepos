@@ -18,7 +18,6 @@ class Summary_payments extends Summary_report
 		$this->db->from('sales_payments AS sales_payments');
 		$this->db->join('sales AS sales', 'sales.sale_id = sales_payments.sale_id');
 		$this->db->join('sales_items AS sales_items', 'sales_items.sale_id = sales_payments.sale_id', 'left');
-
 		$this->_where($inputs);
 
 		$this->db->group_by("payment_type");

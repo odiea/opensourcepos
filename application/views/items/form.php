@@ -45,7 +45,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<div id="attributes">
 			<script type="text/javascript">
 				$('#attributes').load('<?php echo site_url("items/attributes/$item_info->item_id");?>');
@@ -391,7 +391,18 @@
 						);?>
 			</div>
 		</div>
-
+		
+		<div class="form-group form-group-sm">
+		<?php echo form_label($this->lang->line('common_print').':', 'printed',array('class'=>'control-label col-xs-3')); ?>
+		<div class='col-xs-1'>
+			<?php echo form_checkbox(array(
+				'name'=>'printed',
+				'id'=>'printed',
+				'value'=>1,
+				'checked'=>($item_info->printed)? 1 : 0)
+			);?>
+		</div>
+	</div>			
 	</fieldset>
 <?php echo form_close(); ?>
 

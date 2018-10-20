@@ -27,16 +27,11 @@ class Sales extends Secure_Controller
 	{
 		$person_id = $this->session->userdata('person_id');
 
-		if(!$this->Employee->has_grant('reports_sales', $person_id))
-		{
-			redirect('no_access/sales/reports_sales');
-		}
-		else
-		{
+		
 			$data['table_headers'] = get_sales_manage_table_headers();
 
 			// filters that will be loaded in the multiselect dropdown
-			if($this->config->item('invoice_enable') == TRUE)
+			if($this->config->item('invoice_enable') == TRUE )
 			{
 				$data['filters'] = array('only_cash' => $this->lang->line('sales_cash_filter'),
 					'only_due' => $this->lang->line('sales_due_filter'),
@@ -51,7 +46,7 @@ class Sales extends Secure_Controller
 			}
 
 			$this->load->view('sales/manage', $data);
-		}
+		
 	}
 
 	public function get_row($row_id)
@@ -83,7 +78,6 @@ class Sales extends Secure_Controller
 		// check if any filter is set in the multiselect dropdown
 		$filledup = array_fill_keys($this->input->get('filters'), TRUE);
 		$filters = array_merge($filters, $filledup);
-
 		$sales = $this->Sale->search($search, $filters, $limit, $offset, $sort, $order);
 		$total_rows = $this->Sale->get_found_rows($search, $filters);
 		$payments = $this->Sale->get_payments_summary($search, $filters);
@@ -848,21 +842,16 @@ class Sales extends Secure_Controller
 		{
 			$customer_info = $this->Customer->get_info($customer_id);
 			$data['customer_id'] = $customer_id;
-			if(!empty($customer_info->company_name))
-			{
-				$data['customer'] = $customer_info->company_name;
-			}
-			else
-			{
-				$data['customer'] = $customer_info->first_name . ' ' . $customer_info->last_name;
-			}
+			$data['company_name'] = $customer_info->company_name;
+			$data['customer'] = $customer_info->first_name . ' ' . $customer_info->last_name;			
 			$data['first_name'] = $customer_info->first_name;
 			$data['last_name'] = $customer_info->last_name;
 			$data['customer_email'] = $customer_info->email;
 			$data['customer_address'] = $customer_info->address_1;
+			$data['phone_number'] = $customer_info->phone_number;
 			if(!empty($customer_info->zip) || !empty($customer_info->city))
 			{
-				$data['customer_location'] = $customer_info->zip . ' ' . $customer_info->city;
+				$data['customer_location'] = $customer_info->city . ' ' . $customer_info->state . ' ' . $customer_info->zip;
 			}
 			else
 			{

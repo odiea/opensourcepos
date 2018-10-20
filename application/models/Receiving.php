@@ -99,7 +99,7 @@ class Receiving extends CI_Model
 				'item_unit_price' => $item['price'],
 				'item_location' => $item['item_location']
 			);
-
+            $item_id = $item['item_id'];
 			$this->db->insert('receivings_items', $receivings_items_data);
 
 			$items_received = $item['receiving_quantity'] != 0 ? $item['quantity'] * $item['receiving_quantity'] : $item['quantity'];
@@ -107,14 +107,22 @@ class Receiving extends CI_Model
 			// update cost price, if changed AND is set in config as wanted
 			if($cur_item_info->cost_price != $item['price'] && $this->config->item('receiving_calculate_average_price') != FALSE)
 			{
-				$this->Item->change_cost_price($item['item_id'], $items_received, $item['price'], $cur_item_info->cost_price);
+				$this->Item->change_average_price($item['item_id'], $items_received, $item['price'], $cur_item_info->cost_price);
 			}
 
+			if($cur_item_info->cost_price != $item['price'] && $this->config->item('receiving_calculate_average_price') == FALSE)
+			{
+				$this->Item->change_cost_price($item['item_id'], $items_received, $item['price'], $cur_item_info->cost_price);
+			}
+			
 			//Update stock quantity
 			$item_quantity = $this->Item_quantity->get_item_quantity($item['item_id'], $item['item_location']);
 			$this->Item_quantity->save(array('quantity' => $item_quantity->quantity + $items_received, 'item_id' => $item['item_id'],
 											  'location_id' => $item['item_location']), $item['item_id'], $item['item_location']);
 
+			$this->db->where('item_id', $item_id);
+			$this->db->update('items', array('custom10'=>$items_received, 'printed'=>0));	
+			
 			$recv_remarks = 'RECV ' . $receiving_id;
 			$inv_data = array(
 				'trans_date' => date('Y-m-d H:i:s'),

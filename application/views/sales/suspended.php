@@ -12,7 +12,7 @@
 			}
 			?>
 			<th><?php echo $this->lang->line('sales_employee'); ?></th>
-			<th><?php echo $this->lang->line('sales_customer'); ?></th>			
+			<th><?php echo $this->lang->line('sales_customer'); ?></th>				
 			<th><?php echo $this->lang->line('sales_comments'); ?></th>
 			<th><?php echo $this->lang->line('sales_unsuspend_and_delete'); ?></th>
 		</tr>
@@ -33,15 +33,14 @@
 				<?php
 				}
 				?>
-				
-				<td>
-					<?php	
-						$employee_info = $this->Employee->get_info($suspended_sale['employee_id']);
-						echo $data['employee'] = $employee_info->first_name . ' ' . mb_substr($employee_info->last_name, 0, 1);
-					?>
-				</td>
 				<td>
 				<?php
+				$employee_info = $this->Employee->get_info($suspended_sale['employee_id']);
+		        echo $data['employee'] = $employee_info->first_name . ' ' . mb_substr($employee_info->last_name, 0, 1);
+						?>
+				</td>
+				<td>
+					<?php
 					if (isset($suspended_sale['customer_id']))
 					{
 						$customer = $this->Customer->get_info($suspended_sale['customer_id']);

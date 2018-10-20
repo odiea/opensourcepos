@@ -15,6 +15,7 @@ $lang["expenses_categories_no_expenses_categories_to_display"] = "No Category to
 $lang["expenses_categories_none_selected"] = "You have not selected any Category Expense";
 $lang["expenses_categories_one_or_multiple"] = "Category Expense";
 $lang["expenses_categories_quantity"] = "Quantity";
+$lang["expenses_categories_confirm_restore"] = "Are you sure you want to restore the selected Expense Category?"; 
 $lang["expenses_categories_successful_adding"] = "Expense Category add successful";
 $lang["expenses_categories_successful_deleted"] = "Expense Category delete successful";
 $lang["expenses_categories_successful_updating"] = "Expense Category update successful";

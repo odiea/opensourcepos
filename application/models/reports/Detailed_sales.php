@@ -92,6 +92,15 @@ class Detailed_sales extends Report
 			MAX(comment) AS comment');
 		$this->db->from('sales_items_temp');
 
+		if($inputs['payment_type'] == 'invoices')
+		{
+			$this->db->where('sale_type', SALE_TYPE_INVOICE);
+		}	
+		elseif ($inputs['payment_type'] != 'all') 
+		{
+			$this->db->like('payment_type', $this->lang->line('sales_'.$inputs['payment_type']));
+		}
+		
 		if($inputs['location_id'] != 'all')
 		{
 			$this->db->where('item_location', $inputs['location_id']);
@@ -170,6 +179,15 @@ class Detailed_sales extends Report
 		$this->db->select('SUM(subtotal) AS subtotal, SUM(tax) AS tax, SUM(total) AS total, SUM(cost) AS cost, SUM(profit) AS profit');
 		$this->db->from('sales_items_temp');
 
+		if($inputs['payment_type'] == 'invoices')
+		{
+			$this->db->where('sale_type', SALE_TYPE_INVOICE);
+		}	
+		elseif ($inputs['payment_type'] != 'all') 
+		{
+			$this->db->like('payment_type', $this->lang->line('sales_'.$inputs['payment_type']));
+		}
+		
 		if($inputs['location_id'] != 'all')
 		{
 			$this->db->where('item_location', $inputs['location_id']);

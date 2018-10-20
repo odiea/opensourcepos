@@ -234,7 +234,7 @@ class Item_kits extends Secure_Controller
 		$data['barcode_config'] = $barcode_config;
 
 		// display barcodes
-		$this->load->view("barcodes/barcode_sheet", $data);
+		$this->load->view("barcodes/barcode_sheet_kit", $data);
 	}
 }
 ?>

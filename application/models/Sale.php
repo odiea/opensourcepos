@@ -190,7 +190,7 @@ class Sale extends CI_Model
 		// get_found_rows case
 		if($count_only == TRUE)
 		{
-			$this->db->select('COUNT(DISTINCT sales.sale_id) AS count');
+			$this->db->select('COUNT(DISTINCT sales.sale_id) as count');
 		}
 		else
 		{

@@ -60,7 +60,8 @@
 					<?php endif; ?>
 					<?php echo form_input(array(
 							'name'=>'transfer_amount_cash',
-							'id'=>'transfer_amount_cash',
+							'id'=>'transfer_amount_cash',							
+							'readonly'=>'true',
 							'class'=>'form-control input-sm',
 							'value'=>to_currency_no_money($cash_ups_info->transfer_amount_cash))
 							);?>
@@ -109,8 +110,30 @@
 					<?php if (currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
 					<?php endif; ?>
-				</div>
-			</div>
+				</div>				
+			</div>					
+			
+			<div class='col-xs-4'>
+				<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>
+				<div class="input-group input-group-sm">
+				<?php else:?>				
+				<div class="input-group input-group-sm hidden">	
+				<?php endif?>				
+					<?php if (!currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+					<?php echo form_input(array(
+							'name'=>'expected_closed_amount_cash',
+							'id'=>'expected_closed_amount_cash',
+							'readonly'=>'true',
+							'class'=>'form-control input-sm',
+							'value'=>to_currency_no_money($cash_ups_info->expected_closed_amount_cash))
+							);?>
+					<?php if (currency_side()): ?>
+					<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol');?></b></span>
+					<?php endif; ?>
+				</div>				
+			</div>	
 		</div>
 
 		<div class="form-group form-group-sm">
@@ -123,28 +146,8 @@
 					'checked'=>($cash_ups_info->note) ? 1 : 0)
 				);?>
 			</div>
-		</div>
-
-		<div class="form-group form-group-sm">
-			<?php echo form_label($this->lang->line('cashups_closed_amount_due'), 'closed_amount_due', array('class'=>'control-label col-xs-3')); ?>
-			<div class='col-xs-4'>
-				<div class="input-group input-group-sm">
-					<?php if (!currency_side()): ?>
-						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
-					<?php endif; ?>
-					<?php echo form_input(array(
-							'name'=>'closed_amount_due',
-							'id'=>'closed_amount_due',
-							'class'=>'form-control input-sm',
-							'value'=>to_currency_no_money($cash_ups_info->closed_amount_due))
-							);?>
-					<?php if (currency_side()): ?>
-						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
-					<?php endif; ?>
-				</div>
-			</div>
-		</div>
-
+		</div>	
+		
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_closed_amount_card'), 'closed_amount_card', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-4'>
@@ -157,6 +160,28 @@
 							'id'=>'closed_amount_card',
 							'class'=>'form-control input-sm',
 							'value'=>to_currency_no_money($cash_ups_info->closed_amount_card))
+							);?>
+					<?php if (currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+				</div>
+			</div>		
+						
+			<div class='col-xs-4'>
+				<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>
+				<div class="input-group input-group-sm">
+				<?php else:?>				
+				<div class="input-group input-group-sm hidden">	
+				<?php endif?>
+					<?php if (!currency_side()): ?>
+						<span class="input-group-addon input-sm "><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+					<?php echo form_input(array(
+							'name'=>'expected_closed_amount_card',
+							'id'=>'expected_closed_amount_card',
+							'readonly'=>'true',
+							'class'=>'form-control input-sm',
+							'value'=>to_currency_no_money($cash_ups_info->expected_closed_amount_card))
 							);?>
 					<?php if (currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
@@ -183,6 +208,28 @@
 					<?php endif; ?>
 				</div>
 			</div>
+			
+			<div class='col-xs-4'>
+				<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>
+				<div class="input-group input-group-sm">
+				<?php else:?>				
+				<div class="input-group input-group-sm hidden">	
+				<?php endif?>
+					<?php if (!currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+					<?php echo form_input(array(
+							'name'=>'expected_closed_amount_check',
+							'id'=>'expected_closed_amount_check',
+							'readonly'=>'true',
+							'class'=>'form-control input-sm',
+							'value'=>to_currency_no_money($cash_ups_info->expected_closed_amount_check))
+							);?>
+					<?php if (currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+				</div>
+			</div>
 		</div>
 
 		<div class="form-group form-group-sm">
@@ -198,6 +245,28 @@
 							'readonly'=>'true',
 							'class'=>'form-control input-sm',
 							'value'=>to_currency_no_money($cash_ups_info->closed_amount_total)
+							));?>
+					<?php if (currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+				</div>
+			</div>			
+			
+			<div class='col-xs-4'>
+				<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>
+				<div class="input-group input-group-sm">
+				<?php else:?>				
+				<div class="input-group input-group-sm hidden">	
+				<?php endif?>						
+					<?php if (!currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+					<?php echo form_input(array(
+							'name'=>'expected_closed_amount_total',
+							'id'=>'expected_closed_amount_total',
+							'readonly'=>'true',
+							'class'=>'form-control input-sm',
+							'value'=>to_currency_no_money($cash_ups_info->expected_closed_amount_total)
 							));?>
 					<?php if (currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
@@ -298,22 +367,23 @@ $(document).ready(function()
 		bootcssVer: 3,
 		language: '<?php echo current_language_code(); ?>'
 	});
-
-	$('#open_amount_cash, #transfer_amount_cash, #closed_amount_cash, #closed_amount_due, #closed_amount_card, #closed_amount_check').keyup(function() {
-		$.post("<?php echo site_url($controller_name . '/ajax_cashup_total')?>", {
-				'open_amount_cash': $('#open_amount_cash').val(),
-				'transfer_amount_cash': $('#transfer_amount_cash').val(),
-				'closed_amount_due': $('#closed_amount_due').val(),
-				'closed_amount_cash': $('#closed_amount_cash').val(),
-				'closed_amount_card': $('#closed_amount_card').val(),
-				'closed_amount_check': $('#closed_amount_check').val()
-			},
+	
+	$('#open_amount_cash, #transfer_amount_cash, #closed_amount_cash, #closed_amount_card, #closed_amount_check').keyup(function() {
+		$.post("<?php echo site_url($controller_name . '/ajax_cashup_total')?>",
+			$.extend(csrf_form_base(), {
+					'open_amount_cash': $('#open_amount_cash').val(),
+					'transfer_amount_cash': $('#transfer_amount_cash').val(),					
+					'closed_amount_cash': $('#closed_amount_cash').val(),
+					'closed_amount_card': $('#closed_amount_card').val(),
+					'closed_amount_check': $('#closed_amount_check').val()
+			}),
 			function(response) {
-				$('#closed_amount_total').val(response.total);
+				$('#closed_amount_total').val(response.total);				
 			},
 			'json'
 		);
 	});
+	
 
 	var submit_form = function()
 	{
@@ -357,5 +427,7 @@ $(document).ready(function()
 			}
 		}
 	}, form_support.error));
+	
+	
 });
 </script>

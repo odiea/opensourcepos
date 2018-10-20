@@ -42,20 +42,14 @@ class Cashup extends CI_Model
 	*/
 	public function get_found_rows($search, $filters)
 	{
-		return $this->search($search, $filters, 0, 0, 'cashup_id', 'asc', TRUE);
+		return $this->search($search, $filters)->num_rows();
 	}
 
 	/*
 	Searches cashups
 	*/
-	public function search($search, $filters, $rows = 0, $limit_from = 0, $sort = 'cashup_id', $order = 'asc', $count_only = FALSE)
+	public function search($search, $filters, $rows = 0, $limit = 0, $sort = 'cashup_id', $order = 'asc')
 	{
-		// get_found_rows case
-		if($count_only == TRUE)
-		{
-			$this->db->select('COUNT(cash_up.cashup_id) as count');
-		}
-
 		$this->db->select('
 			cash_up.cashup_id,
 			MAX(cash_up.open_date) AS open_date,
@@ -63,12 +57,15 @@ class Cashup extends CI_Model
 			MAX(cash_up.open_amount_cash) AS open_amount_cash,
 			MAX(cash_up.transfer_amount_cash) AS transfer_amount_cash,
 			MAX(cash_up.closed_amount_cash) AS closed_amount_cash,
-			MAX(cash_up.closed_amount_due) AS closed_amount_due,
 			MAX(cash_up.closed_amount_card) AS closed_amount_card,
 			MAX(cash_up.closed_amount_check) AS closed_amount_check,
 			MAX(cash_up.closed_amount_total) AS closed_amount_total,
+			MAX(cash_up.expected_closed_amount_cash) AS expected_closed_amount_cash,
+			MAX(cash_up.expected_closed_amount_card) AS expected_closed_amount_card,
+			MAX(cash_up.expected_closed_amount_check) AS expected_closed_amount_check,
+			MAX(cash_up.expected_closed_amount_total) AS expected_closed_amount_total,
 			MAX(cash_up.description) AS description,
-			MAX(cash_up.note) AS note,
+			MAX(cash_up.note) AS note,			
 			MAX(cash_up.open_employee_id) AS open_employee_id,
 			MAX(cash_up.close_employee_id) AS close_employee_id,
 			MAX(open_employees.first_name) AS open_first_name,
@@ -103,18 +100,11 @@ class Cashup extends CI_Model
 		}
 
 		$this->db->group_by('cashup_id');
-
-		// get_found_rows case
-		if($count_only == TRUE)
-		{
-			return $this->db->get()->row_array()['count'];
-		}
-
 		$this->db->order_by($sort, $order);
 
 		if($rows > 0)
 		{
-			$this->db->limit($rows, $limit_from);
+			$this->db->limit($rows, $limit);
 		}
 
 		return $this->db->get();
@@ -132,12 +122,15 @@ class Cashup extends CI_Model
 			cash_up.open_amount_cash AS open_amount_cash,
 			cash_up.transfer_amount_cash AS transfer_amount_cash,
 			cash_up.closed_amount_cash AS closed_amount_cash,
-			cash_up.closed_amount_due AS closed_amount_due,
 			cash_up.closed_amount_card AS closed_amount_card,
 			cash_up.closed_amount_check AS closed_amount_check,
 			cash_up.closed_amount_total AS closed_amount_total,
+			cash_up.expected_closed_amount_cash AS expected_closed_amount_cash,
+			cash_up.expected_closed_amount_card AS expected_closed_amount_card,
+			cash_up.expected_closed_amount_check AS expected_closed_amount_check,
+			cash_up.expected_closed_amount_total AS expected_closed_amount_total,
 			cash_up.description AS description,
-			cash_up.note AS note,
+			cash_up.note AS note,			
 			cash_up.open_employee_id AS open_employee_id,
 			cash_up.close_employee_id AS close_employee_id,
 			cash_up.deleted AS deleted,

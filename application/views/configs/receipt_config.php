@@ -9,6 +9,7 @@
 				<div class='col-xs-2'>
 					<?php echo form_dropdown('receipt_template', array(
 						'receipt_default' => $this->lang->line('config_receipt_default'),
+						'receipt_category' => $this->lang->line('config_receipt_category'),
 						'receipt_short' => $this->lang->line('config_receipt_short')
 					),
 					$this->config->item('receipt_template'), array('class' => 'form-control input-sm'));
@@ -279,8 +280,8 @@
 						<span class="input-group-addon input-sm">px</span>
 					</div>
 				</div>
-			</div>
-
+			</div>		
+			
 			<?php echo form_submit(array(
 				'name' => 'submit_receipt',
 				'id' => 'submit_receipt',

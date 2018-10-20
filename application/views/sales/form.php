@@ -34,7 +34,35 @@
 		<?php
 		}
 		?>
-
+			<div class="form-group form-group-sm">
+			<?php echo form_label($this->lang->line('sales_total'), 'sales_total', array('class'=>'control-label col-xs-3')); ?>
+			<div class='col-xs-4'>
+				<div class="input-group">
+					<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></span>
+					<?php echo form_input(array(
+							'name'=>'sales_total',
+							'id'=>'sales_total',
+							'class'=>'form-control input-sm', 'readonly'=>'true',
+							'value'=>$sale_info['amount_due'])
+							);?>
+				</div>
+			</div>
+		</div>
+		<div class="form-group form-group-sm">
+			<?php echo form_label($this->lang->line('sales_amount_due'), 'sales_change_due', array('class'=>'control-label col-xs-3')); ?>
+			<div class='col-xs-4'>
+				<div class="input-group">
+					<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></span>
+					<?php echo form_input(array(
+							'name'=>'sales_change_due',
+							'id'=>'sales_change_due',
+							'class'=>'form-control input-sm', 'readonly'=>'true',
+							'value'=>$sale_info['change_due'])
+							);?>
+				</div>
+			</div>
+		</div>
+		
 		<?php 
 		$i = 0;
 		foreach($payments as $row)
@@ -55,7 +83,19 @@
 						<?php if(!currency_side()): ?>
 							<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
 						<?php endif; ?>
+						<?php if($sale_info['change_due'] == 0)
+						{
+						?>
 						<?php echo form_input(array('name'=>'payment_amount_'.$i, 'value'=>$row->payment_amount, 'id'=>'payment_amount_'.$i, 'class'=>'form-control input-sm', 'readonly'=>'true'));?>
+						<?php
+						}
+						else
+						{
+						?>
+						<?php echo form_input(array('name'=>'payment_amount_'.$i, 'value'=>$row->payment_amount, 'id'=>'payment_amount_'.$i, 'class'=>'form-control input-sm'));?>
+						<?php
+						}
+						?>
 						<?php if (currency_side()): ?>
 							<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
 						<?php endif; ?>

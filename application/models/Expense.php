@@ -294,6 +294,7 @@ class Expense extends CI_Model
 	*/
 	public function get_payment_options()
 	{
+		$payments = get_payment_options();
 		return get_payment_options();
 	}
 

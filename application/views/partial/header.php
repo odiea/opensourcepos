@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<base href="<?php echo base_url();?>" />
 	<title><?php echo $this->config->item('company') . ' | ' . $this->lang->line('common_powered_by') . ' OSPOS ' . $this->config->item('application_version') ?></title>
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
@@ -23,6 +24,7 @@
 		<link rel="stylesheet" href="bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css" />
 		<!-- endbower -->
 		<!-- start css template tags -->
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-toggle.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.autocomplete.css"/>
 		<link rel="stylesheet" type="text/css" href="css/invoice.css"/>
 		<link rel="stylesheet" type="text/css" href="css/ospos.css"/>
@@ -31,7 +33,7 @@
 		<link rel="stylesheet" type="text/css" href="css/receipt.css"/>
 		<link rel="stylesheet" type="text/css" href="css/register.css"/>
 		<link rel="stylesheet" type="text/css" href="css/reports.css"/>
-		<!--<link rel="stylesheet" type="text/css" href="css/style.css"/>-->
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 		<!-- end css template tags -->
 		<!-- bower:js -->
 		<script src="bower_components/jquery/dist/jquery.js"></script>
@@ -61,6 +63,7 @@
 		<script src="bower_components/chartist-plugin-barlabels/dist/chartist-plugin-barlabels.min.js"></script>
 		<script src="bower_components/remarkable-bootstrap-notify/bootstrap-notify.js"></script>
 		<script src="bower_components/js-cookie/src/js.cookie.js"></script>
+		<script src="bower_components/blockUI/jquery.blockUI.js"></script>
 		<script src="bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>
 		<script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 		<!-- endbower -->
@@ -75,11 +78,10 @@
 		<![endif]-->
 		<!-- start mincss template tags -->
 		<link rel="stylesheet" type="text/css" href="dist/jquery-ui/jquery-ui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="dist/opensourcepos.min.css?rel=22ba2f62c0"/>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="dist/opensourcepos.min.css?rel=fa2bd89206"/>
 		<!-- end mincss template tags -->
 		<!-- start minjs template tags -->
-		<script type="text/javascript" src="dist/opensourcepos.min.js?rel=5b9b9e956c"></script>
+		<script type="text/javascript" src="dist/opensourcepos.min.js?rel=38477b65ab"></script>
 		<!-- end minjs template tags -->
 	<?php endif; ?>
 
@@ -90,12 +92,25 @@
 		html {
 			overflow: auto;
 		}
+.navbar-nav {
+float:none;
+margin:0 auto;
+display: block;
+text-align: center;
+
+}
+
+.navbar-nav>li {
+display: inline-block;
+float:none;
+}
 	</style>
 </head>
 
 <body>
+	
+</div>
 	<div class="wrapper">
-	<div class="header">	
 		<div class="topbar">
 			<div class="container">
 				<div class="navbar-left">
@@ -106,6 +121,8 @@
 					<?php echo anchor('home/change_password/'.$user_info->person_id, $user_info->first_name . ' ' . $user_info->last_name, array('class' => 'modal-dlg', 'data-btn-submit' => $this->lang->line('common_submit'), 'title' => $this->lang->line('employees_change_password'))); ?>
 					<?php echo '  |  ' . ($this->input->get('debug') == 'true' ? $this->session->userdata('session_sha1') . '  |  ' : ''); ?>
 					<?php echo anchor('home/logout', $this->lang->line('common_logout')); ?>
+					<?php echo '  |  ' ?>					
+					<?php echo anchor('home/change_employee',$this->lang->line('employees_change_employee')); ?>	
 				</div>
 
 				<div class="navbar-center" style="text-align:center">
@@ -113,7 +130,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="navbar navbar-default" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
@@ -123,8 +140,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-
-					<a class="navbar-brand hidden-sm" href="<?php echo site_url(); ?>">OSPOS</a>
+		
 				</div>
 
 				<div class="navbar-collapse collapse">
@@ -141,7 +157,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+
 		<div class="container">
-		<div class="page__content-container">
-		<div class="row">
+			<div class="row">
+

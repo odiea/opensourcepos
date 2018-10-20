@@ -74,6 +74,7 @@
 					</label>
 				</div>
 			</div>
+					
 
 			<div class="form-group form-group-sm">
 				<?php echo form_label($this->lang->line('config_barcode_content'), 'barcode_content', array('class' => 'control-label col-xs-2')); ?>

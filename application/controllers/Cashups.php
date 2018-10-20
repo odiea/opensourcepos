@@ -47,7 +47,7 @@ class Cashups extends Secure_Controller
 	}
 
 	public function view($cashup_id = -1)
-	{
+	{		
 		$data = array();
 
 		$data['employees'] = array();
@@ -75,19 +75,9 @@ class Cashups extends Secure_Controller
 			$cash_ups_info->close_date = $cash_ups_info->open_date;
 			$cash_ups_info->open_employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
 			$cash_ups_info->close_employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
-		}
-		// if all the amounts are null or 0 that means it's a close cashup
-		elseif(floatval($cash_ups_info->closed_amount_cash) == 0 &&
-			floatval($cash_ups_info->closed_amount_due) == 0 &&
-			floatval($cash_ups_info->closed_amount_card) == 0 &&
-			floatval($cash_ups_info->closed_amount_check) == 0)
-		{
-			// set the close date and time to the actual as this is a close session
-			$cash_ups_info->close_date = date('Y-m-d H:i:s');
-
-			// the closed amount starts with the open amount -/+ any trasferred amount
-			$cash_ups_info->closed_amount_cash = $cash_ups_info->open_amount_cash + $cash_ups_info->transfer_amount_cash;
-
+			$cash_ups_info->open_amount_cash = 0;
+			$cash_ups_info->transfer_amount_cash = 0;			
+		}		
 			// if it's date mode only and not date & time truncate the open and end date to date only
 			if(empty($this->config->item('date_or_time_format')))
 			{
@@ -101,30 +91,34 @@ class Cashups extends Secure_Controller
 			}
 
 			// get all the transactions payment summaries
-			$this->load->model('reports/Summary_payments');
-			$reports_data = $this->Summary_payments->getData($inputs);
-
+			$this->load->model('reports/Summary_cashups_payments');
+			$reports_data = $this->Summary_cashups_payments->getData($inputs);		
+					
+			$cash_ups_info->expected_closed_amount_cash = 0;
+			$cash_ups_info->expected_closed_amount_cash = $cash_ups_info->open_amount_cash - $cash_ups_info->transfer_amount_cash ;
+			$cash_ups_info->expected_closed_amount_card = 0;
+			$cash_ups_info->expected_closed_amount_check = 0;
 			foreach($reports_data as $row)
 			{
 				if($row['payment_type'] == $this->lang->line('sales_cash'))
-				{
-					$cash_ups_info->closed_amount_cash += $this->xss_clean($row['payment_amount']);
+				{					
+					$cash_ups_info->expected_closed_amount_cash += $this->xss_clean($row['payment_amount']);
 				}
 				elseif($row['payment_type'] == $this->lang->line('sales_due'))
 				{
-					$cash_ups_info->closed_amount_due += $this->xss_clean($row['payment_amount']);
+					$cash_ups_info->expected_closed_amount_cash -= $this->xss_clean($row['payment_amount']);
 				}
 				elseif($row['payment_type'] == $this->lang->line('sales_debit') || 
 						$row['payment_type'] == $this->lang->line('sales_credit'))
-				{
-					$cash_ups_info->closed_amount_card += $this->xss_clean($row['payment_amount']);
+				{					
+					$cash_ups_info->expected_closed_amount_card += $this->xss_clean($row['payment_amount']);
 				}
 				elseif($row['payment_type'] == $this->lang->line('sales_check'))
 				{
-					$cash_ups_info->closed_amount_check += $this->xss_clean($row['payment_amount']);
+					$cash_ups_info->expected_closed_amount_check += $this->xss_clean($row['payment_amount']);
 				}
 			}
-
+				
 			// lookup expenses paid in cash
 			$filters = array(
 						 'only_cash' => TRUE,
@@ -134,17 +128,16 @@ class Cashups extends Secure_Controller
 						 'only_debit' => FALSE,
 						 'is_deleted' => FALSE);
 			$payments = $this->Expense->get_payments_summary('', array_merge($inputs, $filters));
-
+			$cash_ups_info->transfer_amount_cash = 0;
 			foreach($payments as $row)
-			{
-				$cash_ups_info->closed_amount_cash -= $this->xss_clean($row['amount']);
+			{				
+				$cash_ups_info->transfer_amount_cash += $this->xss_clean($row['amount']);
 			}
-
-			$cash_ups_info->closed_amount_total = $this->_calculate_total($cash_ups_info->open_amount_cash, $cash_ups_info->transfer_amount_cash, $cash_ups_info->closed_amount_cash, $cash_ups_info->closed_amount_due, $cash_ups_info->closed_amount_card, $cash_ups_info->closed_amount_check);
-		}
-
-		$data['cash_ups_info'] = $cash_ups_info;
-
+            
+			$cash_ups_info->expected_closed_amount_total =  $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->expected_closed_amount_card + $cash_ups_info->expected_closed_amount_check;
+			
+		$data['cash_ups_info'] = $cash_ups_info;		
+	
 		$this->load->view("cashups/form", $data);
 	}
 
@@ -170,15 +163,18 @@ class Cashups extends Secure_Controller
 			'open_amount_cash' => parse_decimals($this->input->post('open_amount_cash')),
 			'transfer_amount_cash' => parse_decimals($this->input->post('transfer_amount_cash')),
 			'closed_amount_cash' => parse_decimals($this->input->post('closed_amount_cash')),
-			'closed_amount_due' => parse_decimals($this->input->post('closed_amount_due')),
 			'closed_amount_card' => parse_decimals($this->input->post('closed_amount_card')),
 			'closed_amount_check' => parse_decimals($this->input->post('closed_amount_check')),
 			'closed_amount_total' => parse_decimals($this->input->post('closed_amount_total')),
+			'expected_closed_amount_cash' => parse_decimals($this->input->post('expected_closed_amount_cash')),
+			'expected_closed_amount_card' => parse_decimals($this->input->post('expected_closed_amount_card')),
+			'expected_closed_amount_check' => parse_decimals($this->input->post('expected_closed_amount_check')),
+			'expected_closed_amount_total' => parse_decimals($this->input->post('expected_closed_amount_total')),
 			'note' => $this->input->post('note') != NULL,
 			'description' => $this->input->post('description'),
 			'open_employee_id' => $this->input->post('open_employee_id'),
 			'close_employee_id' => $this->input->post('close_employee_id'),
-			'deleted' => $this->input->post('deleted') != NULL
+			'deleted' => $this->input->post('deleted') != NULL			
 		);
 
 		if($this->Cashup->save($cash_up_data, $cashup_id))
@@ -219,15 +215,14 @@ class Cashups extends Secure_Controller
 	AJAX call from cashup input form to calculate the total
 	*/
 	public function ajax_cashup_total()
-	{
+	{		
 		$open_amount_cash = parse_decimals($this->input->post('open_amount_cash'));
-		$transfer_amount_cash = parse_decimals($this->input->post('transfer_amount_cash'));
+		$transfer_amount_cash = parse_decimals($this->input->post('transfer_amount_cash'));		
 		$closed_amount_cash = parse_decimals($this->input->post('closed_amount_cash'));
-		$closed_amount_due = parse_decimals($this->input->post('closed_amount_due'));
 		$closed_amount_card = parse_decimals($this->input->post('closed_amount_card'));
 		$closed_amount_check = parse_decimals($this->input->post('closed_amount_check'));
 
-		$total = $this->_calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_due, $closed_amount_cash, $closed_amount_card, $closed_amount_check);
+		$total = $this->_calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_cash, $closed_amount_card, $closed_amount_check);
 
 		echo json_encode(array('total' => to_currency_no_money($total)));
 	}
@@ -235,9 +230,10 @@ class Cashups extends Secure_Controller
 	/*
 	Calculate total
 	*/
-	private function _calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_due, $closed_amount_cash, $closed_amount_card, $closed_amount_check)
+	private function _calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_cash, $closed_amount_card, $closed_amount_check)
 	{
-		return ($closed_amount_cash - $open_amount_cash - $transfer_amount_cash + $closed_amount_due + $closed_amount_card + $closed_amount_check);
+
+		return ($closed_amount_cash + $closed_amount_card + $closed_amount_check);
 	}
 }
 ?>

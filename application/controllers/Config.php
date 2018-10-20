@@ -290,6 +290,7 @@ class Config extends Secure_Controller
 			'enforce_privacy' => $this->input->post('enforce_privacy'),
 			'receiving_calculate_average_price' => $this->input->post('receiving_calculate_average_price') != NULL,
 			'lines_per_page' => $this->input->post('lines_per_page'),
+			'item_markup'=>$this->input->post('item_markup'),
 			'notify_horizontal_position' => $this->input->post('notify_horizontal_position'),
 			'notify_vertical_position' => $this->input->post('notify_vertical_position'),
 			'gcaptcha_enable' => $this->input->post('gcaptcha_enable') != NULL,
@@ -298,6 +299,7 @@ class Config extends Secure_Controller
 			'suggestions_first_column' => $this->input->post('suggestions_first_column'),
 			'suggestions_second_column' => $this->input->post('suggestions_second_column'),
 			'suggestions_third_column' => $this->input->post('suggestions_third_column'),
+			'suggestions_fourth_column' => $this->input->post('suggestions_fourth_column'),
 			'giftcard_number' => $this->input->post('giftcard_number'),
 			'derive_sale_quantity' => $this->input->post('derive_sale_quantity') != NULL,
 			'multi_pack_enabled' => $this->input->post('multi_pack_enabled') != NULL
@@ -353,7 +355,14 @@ class Config extends Secure_Controller
 			'date_or_time_format' => $this->input->post('date_or_time_format'),
 			'cash_decimals' => $this->input->post('cash_decimals'),
 			'cash_rounding_code' => $this->input->post('cash_rounding_code'),
-			'financial_year' => $this->input->post('financial_year')
+			'financial_year' => $this->input->post('financial_year'),
+			'quick_cash_enable' => $this->input->post('quick_cash_enable'), 
+			'quick_cash_1' => $this->input->post('quick_cash_1'), 
+			'quick_cash_2' => $this->input->post('quick_cash_2'),
+			'quick_cash_3' => $this->input->post('quick_cash_3'),
+			'quick_cash_4' => $this->input->post('quick_cash_4'),
+			'quick_cash_5' => $this->input->post('quick_cash_5'),
+			'quick_cash_6' => $this->input->post('quick_cash_6')
 		);
 
 		$result = $this->Appconfig->batch_save($batch_save_data);
@@ -819,7 +828,7 @@ class Config extends Secure_Controller
 			'print_top_margin' => $this->input->post('print_top_margin'),
 			'print_left_margin' => $this->input->post('print_left_margin'),
 			'print_bottom_margin' => $this->input->post('print_bottom_margin'),
-			'print_right_margin' => $this->input->post('print_right_margin')
+			'print_right_margin' => $this->input->post('print_right_margin')			
 		);
 
 		$result = $this->Appconfig->batch_save($batch_save_data);
