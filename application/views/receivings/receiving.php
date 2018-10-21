@@ -106,8 +106,8 @@ if (isset($success))
 				<th style="width:15%;"><?php echo $this->lang->line('items_item_number'); ?></th>
 				<th style="width:35%;"><?php echo $this->lang->line('receivings_item_name'); ?></th>
 				<th style="width:10%;"><?php echo $this->lang->line('receivings_cost'); ?></th>
-				<th style="width:10%;"><?php echo $this->lang->line('receivings_quantity'); ?></th>
-				<th style="width:7%;"><?php echo $this->lang->line('receivings_ship_pack'); ?></th>
+				<th style="width:9%;"><?php echo $this->lang->line('receivings_quantity'); ?></th>
+				<th style="width:9%;"><?php echo $this->lang->line('receivings_ship_pack'); ?></th>
 				<th style="width:15%;"><?php echo $this->lang->line('receivings_discount'); ?></th>
 				<th style="width:10%;"><?php echo $this->lang->line('receivings_total'); ?></th>
 				<th style="width:5%;"><?php echo $this->lang->line('receivings_update'); ?></th>

@@ -121,7 +121,7 @@ class Receiving extends CI_Model
 											  'location_id' => $item['item_location']), $item['item_id'], $item['item_location']);
 
 			$this->db->where('item_id', $item_id);
-			$this->db->update('items', array('custom10'=>$items_received, 'printed'=>0));	
+			$this->db->update('items', array('printed'=>0));	
 			
 			$recv_remarks = 'RECV ' . $receiving_id;
 			$inv_data = array(
