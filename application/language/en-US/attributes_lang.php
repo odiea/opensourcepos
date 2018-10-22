@@ -26,3 +26,4 @@ $lang["attributes_update"] = "Update Attribute";
 $lang["attributes_definition_name_required"] = "Attribute name is a required field";
 $lang["attributes_definition_type_required"] = "Attribute type is a required field";
 $lang["attributes_attribute_value_invalid_chars"] = "Attribute value cannot contain ':' or '|'";
+$lang["attributes_confirm_restore"] =  "Are you sure you want to Restore the selected attribute(s)?";
