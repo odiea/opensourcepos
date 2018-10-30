@@ -37,7 +37,7 @@
 		if(!empty($customer))
 		{
 		?>
-			<div id="customer"><?php echo $this->lang->line('customers_customer').": ".$company_name; ?></div>
+			<div id="customer"><?php echo $company_name; ?></div>
 			<div id="customer"><?php echo $first_name. ' '.$last_name; ?></div>
 			<div id="customer"><?php echo $customer_address; ?></div>
 			<div id="customer"><?php echo $customer_location; ?></div>

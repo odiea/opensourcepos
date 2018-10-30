@@ -845,6 +845,7 @@ class Sale_lib
 					'item_number' => $item_info->item_number,
 					'attribute_values' => $this->CI->Attribute->get_link_values($item_id, 'sale_id', $sale_id, Attribute::SHOW_IN_SALES),
 					'description' => $description != NULL ? $description : $item_info->description,
+					'category' => $item_info->category,
 					'serialnumber' => $serialnumber != NULL ? $serialnumber : '',
 					'allow_alt_description' => $item_info->allow_alt_description,
 					'is_serialized' => $item_info->is_serialized,
