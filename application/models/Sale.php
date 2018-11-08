@@ -78,8 +78,7 @@ class Sale extends CI_Model
 				MAX(sales.comment) AS comment,
 				MAX(sales.sale_status) AS sale_status,
 				MAX(sales.invoice_number) AS invoice_number,
-				MAX(sales.quote_number) AS quote_number,
-				MAX(sales.employee_id) AS employee_id,
+				MAX(sales.quote_number) AS quote_number,				
 				MAX(sales.customer_id) AS customer_id,
 				MAX(CONCAT(customer_p.first_name, " ", customer_p.last_name)) AS customer_name,
 				MAX(customer_p.first_name) AS first_name,
@@ -201,6 +200,8 @@ class Sale extends CI_Model
 					MAX(sales.invoice_number) AS invoice_number,
 					MAX(sales.quote_number) AS quote_number,
 					SUM(sales_items.quantity_purchased) AS items_purchased,
+					MAX(sales.employee_id) AS employee_id,
+				    MAX(CONCAT(employee_p.first_name, " ", employee_p.last_name)) AS employee_name,
 					MAX(CONCAT(customer_p.first_name, " ", customer_p.last_name)) AS customer_name,
 					MAX(customer.company_name) AS company_name,
 					' . "
@@ -221,6 +222,8 @@ class Sale extends CI_Model
 		$this->db->join('sales AS sales', 'sales_items.sale_id = sales.sale_id', 'inner');
 		$this->db->join('people AS customer_p', 'sales.customer_id = customer_p.person_id', 'LEFT');
 		$this->db->join('customers AS customer', 'sales.customer_id = customer.person_id', 'LEFT');
+		$this->db->join('people AS employee_p', 'sales.employee_id = employee_p.person_id', 'LEFT');
+		$this->db->join('employees AS employee', 'sales.employee_id = employee.person_id', 'LEFT');	
 		$this->db->join('sales_payments_temp AS payments', 'sales.sale_id = payments.sale_id', 'LEFT OUTER');
 		$this->db->join('sales_items_taxes_temp AS sales_items_taxes',
 			'sales_items.sale_id = sales_items_taxes.sale_id AND sales_items.item_id = sales_items_taxes.item_id AND sales_items.line = sales_items_taxes.line',
