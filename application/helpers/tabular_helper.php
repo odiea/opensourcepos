@@ -62,7 +62,7 @@ function get_sales_manage_table_headers()
 	$headers = array(
 		array('sale_id' => $CI->lang->line('common_id')),
 		array('sale_time' => $CI->lang->line('sales_sale_time')),
-		array('sales_employee' => $CI->lang->line('sales_employee')),
+		array('employee_name' => $CI->lang->line('sales_employee')),
 		array('customer_name' => $CI->lang->line('customers_customer')),
 		array('amount_due' => $CI->lang->line('sales_amount_due')),
 		array('amount_tendered' => $CI->lang->line('sales_amount_tendered')),
@@ -75,7 +75,6 @@ function get_sales_manage_table_headers()
 		$headers[] = array('invoice_number' => $CI->lang->line('sales_invoice_number'));
 		$headers[] = array('invoice' => '&nbsp', 'sortable' => FALSE);
 	}
-    $headers[] = array('sales_employee' => '&nbsp', 'sortable' => FALSE);
 	$headers[] = array('receipt' => '&nbsp', 'sortable' => FALSE);
 
 	return transform_headers($headers);
@@ -92,7 +91,7 @@ function get_sale_data_row($sale)
 	$row = array (
 		'sale_id' => $sale->sale_id,
 		'sale_time' => date($CI->config->item('dateformat') . ' ' . $CI->config->item('timeformat'), strtotime($sale->sale_time)),
-		'sales_employee' => $sale->employee_name,
+		'employee_name' => $sale->employee_name,
 		'customer_name' => $sale->customer_name,
 		'amount_due' => to_currency($sale->amount_due),
 		'amount_tendered' => to_currency($sale->amount_tendered),
