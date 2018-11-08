@@ -314,6 +314,8 @@ class Sale extends CI_Model
 		$this->db->join('sales_payments', 'sales_payments.sale_id = sales.sale_id');
 		$this->db->join('people AS customer_p', 'sales.customer_id = customer_p.person_id', 'LEFT');
 		$this->db->join('customers AS customer', 'sales.customer_id = customer.person_id', 'LEFT');
+		$this->db->join('people AS employee_p', 'sales.employee_id = employee_p.person_id', 'LEFT');
+		$this->db->join('employees AS employee', 'sales.employee_id = employee.person_id', 'LEFT');
 
 		if(empty($this->config->item('date_or_time_format')))
 		{
@@ -340,7 +342,13 @@ class Sale extends CI_Model
 					$this->db->or_like('customer_p.first_name', $search);
 					// customer first and last name
 					$this->db->or_like('CONCAT(customer_p.first_name, " ", customer_p.last_name)', $search);
-					// customer company name
+					//employee last name
+					$this->db->like('employee_p.last_name', $search);
+					// employee first name
+					$this->db->or_like('employee_p.first_name', $search);
+					// employee first and last name
+					$this->db->or_like('CONCAT(employee_p.first_name, " ", employee_p.last_name)', $search);
+					// Company name
 					$this->db->or_like('customer.company_name', $search);
 				$this->db->group_end();
 			}
