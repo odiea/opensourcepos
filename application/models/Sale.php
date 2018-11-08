@@ -79,6 +79,7 @@ class Sale extends CI_Model
 				MAX(sales.sale_status) AS sale_status,
 				MAX(sales.invoice_number) AS invoice_number,
 				MAX(sales.quote_number) AS quote_number,				
+				MAX(sales.employee_id) AS employee_id,
 				MAX(sales.customer_id) AS customer_id,
 				MAX(CONCAT(customer_p.first_name, " ", customer_p.last_name)) AS customer_name,
 				MAX(customer_p.first_name) AS first_name,
