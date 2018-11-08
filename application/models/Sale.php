@@ -201,7 +201,6 @@ class Sale extends CI_Model
 					MAX(sales.invoice_number) AS invoice_number,
 					MAX(sales.quote_number) AS quote_number,
 					SUM(sales_items.quantity_purchased) AS items_purchased,
-					MAX(sales.employee_id) AS employee_id,
 				    MAX(CONCAT(employee_p.first_name, " ", employee_p.last_name)) AS employee_name,
 					MAX(CONCAT(customer_p.first_name, " ", customer_p.last_name)) AS customer_name,
 					MAX(customer.company_name) AS company_name,
@@ -249,6 +248,9 @@ class Sale extends CI_Model
 					// customer first and last name
 					$this->db->or_like('CONCAT(customer_p.first_name, " ", customer_p.last_name)', $search);
 					// customer company name
+					$this->db->like('employee_p.last_name', $search);
+					$this->db->like('employee_p.last_name', $search);
+					$this->db->or_like('CONCAT(employee_p.first_name, " ", employee_p.last_name)', $search);
 					$this->db->or_like('customer.company_name', $search);
 				$this->db->group_end();
 			}

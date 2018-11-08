@@ -75,7 +75,7 @@ function get_sales_manage_table_headers()
 		$headers[] = array('invoice_number' => $CI->lang->line('sales_invoice_number'));
 		$headers[] = array('invoice' => '&nbsp', 'sortable' => FALSE);
 	}
-
+    $headers[] = array('sales_employee' => '&nbsp', 'sortable' => FALSE);
 	$headers[] = array('receipt' => '&nbsp', 'sortable' => FALSE);
 
 	return transform_headers($headers);
