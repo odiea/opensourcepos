@@ -880,6 +880,7 @@ class Sales extends Secure_Controller
 				$data['customer'],
 				$data['customer_address'],
 				$data['customer_location'],
+				$data['phone_number'],
 				$data['customer_account_number']
 			));
 		}
