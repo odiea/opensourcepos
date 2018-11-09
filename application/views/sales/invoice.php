@@ -136,7 +136,7 @@ $(document).ready(function()
 					<td style='text-align:center;'><textarea rows="4" cols="6"><?php echo ($item['discount_type']==FIXED)?to_currency($item['discount']):$item['discount'] . '%';?></textarea>
 					</td>
 					<?php if($discount > 0): ?>
-						<td style='text-align:center;'><textarea rows="4" cols="6"><?php echo to_currency($item['discounted_total'] / $item['quantity']); ?></textarea>
+						<td style='text-align:center;'><textarea rows="4" cols="6"><?php echo to_currency($item['total'] - $item['discounted_total']); ?></textarea>
 						</td>
 					<?php endif; ?>
 					<td style='border-right: solid 1px; text-align:right;'><textarea rows="4" cols="6"><?php echo to_currency($item['discounted_total']); ?></textarea>
