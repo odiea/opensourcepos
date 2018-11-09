@@ -67,18 +67,11 @@ if(isset($success))
 						<span class="glyphicon glyphicon-align-justify">&nbsp</span><?php echo $this->lang->line('sales_suspended_sales'); ?>
 					</button>
 				</li>
-
-				<?php
-				if($this->Employee->has_grant('reports_sales', $this->session->userdata('person_id')))
-				{
-				?>
+				
 					<li class="pull-right">
 						<?php echo anchor($controller_name."/manage", '<span class="glyphicon glyphicon-list-alt">&nbsp</span>' . $this->lang->line('sales_takings'),
 									array('class'=>'btn btn-primary btn-sm', 'id'=>'sales_takings_button', 'title'=>$this->lang->line('sales_takings'))); ?>
-					</li>
-				<?php
-				}
-				?>
+					</li>				
 			</ul>
 		</div>
 	<?php echo form_close(); ?>
