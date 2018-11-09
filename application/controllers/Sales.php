@@ -879,9 +879,9 @@ class Sales extends Secure_Controller
 			$data['customer_info'] = implode("\n", array(
 				$data['customer'],
 				$data['customer_address'],
-				$data['customer_location'],
-				$data['phone_number'],
-				$data['customer_account_number']
+				$data['customer_location'],				
+				$data['customer_account_number'],
+				$data['phone_number']
 			));
 		}
 
