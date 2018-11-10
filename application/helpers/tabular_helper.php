@@ -62,7 +62,7 @@ function get_sales_manage_table_headers()
 	$headers = array(
 		array('sale_id' => $CI->lang->line('common_id')),
 		array('sale_time' => $CI->lang->line('sales_sale_time')),
-		array('employee_name' => $CI->lang->line('sales_employee')),
+		//array('employee_name' => $CI->lang->line('sales_employee')),
 		array('customer_name' => $CI->lang->line('customers_customer')),
 		array('amount_due' => $CI->lang->line('sales_amount_due')),
 		array('amount_tendered' => $CI->lang->line('sales_amount_tendered')),
@@ -91,7 +91,7 @@ function get_sale_data_row($sale)
 	$row = array (
 		'sale_id' => $sale->sale_id,
 		'sale_time' => date($CI->config->item('dateformat') . ' ' . $CI->config->item('timeformat'), strtotime($sale->sale_time)),
-		'employee_name' => $sale->employee_name,
+		//'employee_id' => $sale->employee_id,
 		'customer_name' => $sale->customer_name,
 		'amount_due' => to_currency($sale->amount_due),
 		'amount_tendered' => to_currency($sale->amount_tendered),
