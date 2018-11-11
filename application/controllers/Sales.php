@@ -513,7 +513,16 @@ class Sales extends Secure_Controller
 		$data['transaction_date'] = date($this->config->item('dateformat'));
 		$data['show_stock_locations'] = $this->Stock_location->show_locations('sales');
 		$data['comments'] = $this->sale_lib->get_comment();
-		$employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
+		$employee_id = $this->session->userdata('person_id');
+		if($this->session->userdata('sales_employee'))
+		{
+			$employee_id = $this->sale_lib->get_employee($employee_id);
+		}
+		else
+		{
+			$employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
+		}
+		
 		$employee_info = $this->Employee->get_info($employee_id);
 		$data['employee'] = $employee_info->first_name . ' ' . mb_substr($employee_info->last_name, 0, 1);
 		$data['company_info'] = implode("\n", array(
@@ -762,7 +771,11 @@ class Sales extends Secure_Controller
 				$data['cart'] = $this->get_filtered($this->sale_lib->get_cart_reordered($data['sale_id_num']));
 
 				$this->load->view('sales/receipt', $data);
+				$this->sale_lib->remove_employee($employee_id);
 				$this->sale_lib->clear_all();
+				
+				$employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
+
 			}
 		}
 	}
@@ -989,7 +1002,8 @@ class Sales extends Secure_Controller
 		}
 		$data['cart'] = $this->sale_lib->get_cart();
 		$customer_info = $this->_load_customer_data($this->sale_lib->get_customer(), $data, TRUE);
-
+$person_id = $this->session->userdata('person_id');
+$employee_id = $person_id;
 		$data['modes'] = $this->sale_lib->get_register_mode_options();
 		$data['mode'] = $this->sale_lib->get_mode();
 		$data['empty_tables'] = $this->sale_lib->get_empty_tables();
@@ -1353,7 +1367,7 @@ class Sales extends Secure_Controller
 	{
 		$sale_id = $this->input->post('suspended_sale_id');
 		$this->sale_lib->clear_all();
-
+$person_id = $this->session->userdata('person_id');
 		if($sale_id > 0)
 		{
 			$this->sale_lib->copy_entire_sale($sale_id);
