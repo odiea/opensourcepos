@@ -320,8 +320,19 @@ if(isset($success))
 <!-- Overall Sale -->
 
 <div id="overall_sale" class="panel panel-default">
-	<div class="panel-body">
+	<div class="panel-body">	
+	<?php $sale_id = $this->sale_lib->get_sale_id();?>			
+		
 		<?php echo form_open($controller_name."/select_customer", array('id'=>'select_customer_form', 'class'=>'form-horizontal')); ?>
+			<?php if(!$sale_id == '')
+				{				
+			?>		
+				<tr>
+						<th style='width: 55%;'><?php echo $this->lang->line("sales_id"); ?></th>
+						<th style="width: 45%; text-align: right;"><?php echo ($sale_id); ?></th>						
+				</tr>
+		  <?php } ?>
+			
 			<?php
 			if(isset($customer))
 			{
