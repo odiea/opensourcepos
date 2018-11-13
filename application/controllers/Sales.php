@@ -1002,8 +1002,8 @@ class Sales extends Secure_Controller
 		}
 		$data['cart'] = $this->sale_lib->get_cart();
 		$customer_info = $this->_load_customer_data($this->sale_lib->get_customer(), $data, TRUE);
-$person_id = $this->session->userdata('person_id');
-$employee_id = $person_id;
+		$person_id = $this->session->userdata('person_id');
+		$employee_id = $person_id;
 		$data['modes'] = $this->sale_lib->get_register_mode_options();
 		$data['mode'] = $this->sale_lib->get_mode();
 		$data['empty_tables'] = $this->sale_lib->get_empty_tables();
