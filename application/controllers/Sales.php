@@ -911,8 +911,7 @@ class Sales extends Secure_Controller
 		$data['cart'] = $this->sale_lib->get_cart();
 		$data['payments'] = $this->sale_lib->get_payments();
 		$data['selected_payment_type'] = $this->sale_lib->get_payment_type();
-
-		$data['taxes'] = $this->sale_lib->get_taxes();
+		$data['taxes'] = $this->Sale->get_sales_taxes($sale_id);
 		$data['discount'] = $this->sale_lib->get_discount();
 		$data['transaction_time'] = date($this->config->item('dateformat') . ' ' . $this->config->item('timeformat'), strtotime($sale_info['sale_time']));
 		$data['transaction_date'] = date($this->config->item('dateformat'), strtotime($sale_info['sale_time']));

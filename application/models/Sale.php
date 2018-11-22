@@ -1489,5 +1489,19 @@ class Sale extends CI_Model
 
 		return COMPLETED;
 	}
+	/**
+	 * Return the taxes that were charged
+	 */
+	public function get_sales_taxes($sale_id)
+	{
+		$this->db->from('sales_taxes');
+		$this->db->where('sale_id', $sale_id);
+		$this->db->order_by('print_sequence', 'asc');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+	
 }
 ?>
