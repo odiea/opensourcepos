@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 $lang["config_address"] = "Endereço da empresa";
 $lang["config_address_required"] = "Endereço da empresa é um campo obrigatório.";
 $lang["config_allow_duplicate_barcodes"] = "Permitir códigos de barras duplicados";
@@ -46,16 +45,6 @@ $lang["config_country_codes"] = "Código do país";
 $lang["config_country_codes_tooltip"] = "Vírgula lista de códigos de país separado para pesquisa de endereços pelo nome.";
 $lang["config_currency_decimals"] = "Decimais da moeda";
 $lang["config_currency_symbol"] = "Simbolo moeda";
-$lang["config_custom1"] = "Campo customizado 1";
-$lang["config_custom10"] = "Campo customizado 10";
-$lang["config_custom2"] = "Campo customizado 2";
-$lang["config_custom3"] = "Campo customizado 3";
-$lang["config_custom4"] = "Campo customizado 4";
-$lang["config_custom5"] = "Campo customizado 5";
-$lang["config_custom6"] = "Campo customizado 6";
-$lang["config_custom7"] = "Campo customizado 7";
-$lang["config_custom8"] = "Campo customizado 8";
-$lang["config_custom9"] = "Campo customizado 9";
 $lang["config_customer_reward"] = "Recompensa";
 $lang["config_customer_reward_duplicate"] = "Recompensa deve ser única.";
 $lang["config_customer_reward_enable"] = "Ativar recompensas do cliente";
@@ -77,6 +66,7 @@ $lang["config_default_barcode_page_width_number"] = "A largura da página de có
 $lang["config_default_barcode_page_width_required"] = "A largura da página de código de barras padrão é um campo obrigatório.";
 $lang["config_default_barcode_width_number"] = "A largura do código de barras padrão deve ser um número.";
 $lang["config_default_barcode_width_required"] = "A largura do código de barras padrão é um campo obrigatório.";
+$lang["config_default_item_columns"] = "";
 $lang["config_default_origin_tax_code"] = "Código de imposto de origem padrão";
 $lang["config_default_sales_discount"] = "Desconto de vendas padrão";
 $lang["config_default_sales_discount_number"] = "O desconto de vendas padrão deve ser um número.";
@@ -269,6 +259,6 @@ $lang["config_theme"] = "Tema";
 $lang["config_thousands_separator"] = "Separador de milhar";
 $lang["config_timezone"] = "Fuso horário";
 $lang["config_top"] = "Topo";
-$lang["config_website"] = "Site da internet";
+$lang["config_website"] = "OSPOS";
 $lang["config_work_order_enable"] = "Suporte para Ordem de Serviço";
 $lang["config_work_order_format"] = "Formato Ordem de Serviço";
