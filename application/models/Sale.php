@@ -516,7 +516,7 @@ class Sale extends CI_Model
 			{
 				return $this->exists($pieces[1]);
 			}
-			elseif($this->config->item('invoice_enable') == TRUE)
+			elseif($this->config->item('invoice_search_enable') == TRUE)
 			{
 				$sale_info = $this->get_sale_by_invoice_number($receipt_sale_id);
 				if($sale_info->num_rows() > 0)

@@ -328,6 +328,9 @@ function get_items_manage_table_headers()
 	$definition_names = $CI->Attribute->get_definitions_by_flags(Attribute::SHOW_IN_ITEMS);
 
 	$headers = array(
+	    array('inventory' => ''),
+	    array('stock' => ''),
+		array('edit' => $CI->lang->line('items_edit')),
 		array('items.item_id' => $CI->lang->line('common_id')),
 		array('item_number' => $CI->lang->line('items_item_number')),
 		array('name' => $CI->lang->line('items_name')),
@@ -344,9 +347,6 @@ function get_items_manage_table_headers()
 	{
 		$headers[] = array($definition_id => $definition_name);
 	}
-
-	$headers[] = array('inventory' => '');
-	$headers[] = array('stock' => '');
 
 	return transform_headers($headers);
 }
@@ -392,20 +392,7 @@ function get_item_data_row($item)
 	}
 
 	$definition_names = $CI->Attribute->get_definitions_by_flags(Attribute::SHOW_IN_ITEMS);
-
-	$columns = array (
-		'items.item_id' => $item->item_id,
-		'item_number' => $item->item_number == !NULL ? $item->item_number : $item->item_id,
-		'name' => $item->name,
-		'category' => $item->category,
-		'company_name' => $item->company_name,
-		'cost_price' => to_currency($item->cost_price),
-		'unit_price' => to_currency($item->unit_price),
-		'quantity' => to_quantity_decimals($item->quantity),
-		'tax_percents' => !$tax_percents ? '-' : $tax_percents,
-		'item_pic' => $image
-	);
-
+	
 	$icons = array(
 		'inventory' => anchor($controller_name."/inventory/$item->item_id", '<span class="glyphicon glyphicon-pushpin"></span>',
 			array('class' => 'modal-dlg', 'data-btn-submit' => $CI->lang->line('common_submit'), 'title' => $CI->lang->line($controller_name.'_count'))
@@ -417,6 +404,19 @@ function get_item_data_row($item)
 			array('class' => 'modal-dlg', 'data-btn-submit' => $CI->lang->line('common_submit'), 'title' => $CI->lang->line($controller_name.'_update'))
 		)
 	);
+	
+	$columns = array (
+		'items.item_id' => $item->item_id,
+		'item_number' => $item->item_number == !NULL ? $item->item_number : $item->item_id,
+		'name' => $item->name,
+		'category' => $item->category,
+		'company_name' => $item->company_name,
+		'cost_price' => to_currency($item->cost_price),
+		'unit_price' => to_currency($item->unit_price),
+		'quantity' => to_quantity_decimals($item->quantity),
+		'tax_percents' => !$tax_percents ? '-' : $tax_percents,
+		'item_pic' => $image
+	);	
 
 	$attribute_values = (property_exists($item, 'attribute_values')) ? $item->attribute_values : "";
 	return $columns + expand_attribute_values($definition_names, $attribute_values) + $icons;
