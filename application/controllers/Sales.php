@@ -1457,5 +1457,20 @@ $person_id = $this->session->userdata('person_id');
 		}
 		return NULL;
 	}
+	
+	public function get_item_categories()
+    {
+        $this->load->model('item');        
+		$item = $this->Item->get_categories();     
+       
+	   $categories = array();               
+        foreach($item->result() as $result)
+		{            
+			$categories[$result->category][] = $result->name; 
+			$categories[$result->category][] = $result->item_id; 			
+        }		 
+        
+        echo json_encode($categories);
+    }
 }
 ?>

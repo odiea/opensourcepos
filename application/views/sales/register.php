@@ -15,8 +15,8 @@ if(isset($success))
 {
 	echo "<div class='alert alert-dismissible alert-success'>".$success."</div>";
 }
-?>
 
+?>
 <div id="register_wrapper">
 <?php $quick_cash_1 = $this->config->item('quick_cash_1');  ?>
 <?php $quick_cash_2 = $this->config->item('quick_cash_2'); ?>
@@ -28,6 +28,19 @@ if(isset($success))
 <!-- Top register controls -->
 
 	<?php echo form_open($controller_name."/change_mode", array('id'=>'mode_form', 'class'=>'form-horizontal panel panel-default')); ?>
+		<?php if($this->config->item('quick_cash_enable'))
+		{
+			?>
+		<style type='text/css'> .scrollable-menu { max-height: 200px; overflow-x: hidden; height: auto; } </style>		
+			<div id='quickpick' align='center'>            
+			    <ul>
+                 
+			   </ul>				
+			</div>
+			
+		<?php 
+		}
+		?>
 		<div class="panel-body form-group">
 			<ul>
 				<li class="pull-left first_li">
@@ -74,7 +87,7 @@ if(isset($success))
 					</li>				
 			</ul>
 		</div>
-	<?php echo form_close(); ?>
+	<?php echo form_close(); ?>	
 
 	<?php $tabindex = 0; ?>
 
@@ -690,7 +703,7 @@ if(isset($success))
 		<?php
 		}
 		?>
-	</div>
+	</div>	
 </div>
 
 <script type="text/javascript">
@@ -1055,7 +1068,39 @@ function check_payment_type()
 		$('#add_payment_form').submit();
 	}
 	});
+}	
+	$.getJSON( '<?php echo site_url($controller_name."/get_item_categories"); ?>', function(data)
+ {
+        var items = [];		
+        $.each( data, function (key,val)
+		{                
+                items.push("<div id='quickpick' class='btn-group' style=padding-left:1px; padding-bottom: 1px;'>");
+                items.push("<button type='button' class='btn btn-small btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" ); 
+                items.push(key + "<span class='caret'></span>");
+                items.push("</button>");
+                items.push("<ul class='dropdown-menu scrollable-menu'>");
+                $.each(val,function(ikey,ival) 
+				{
+                    items.push("<li><a onclick='additem(" + ival + ")'> "+ival+"</a></li>"); 
+                });
+                items.push( "</ul>");
+                items.push( "</div>");       
+                console.log(items);				
+        });
+        
+        $("#quickpick").html(items.join(""));
+		$('#quickpickhide').dblclick(function() { $('#quickpick').toggle()} );
+	
+	 // Get Items   
+	
+    });
+
+	function additem(val)
+{
+$('#item').val(val);
+$("#add_item_form").submit();
 }
+
 </script>
 
 <?php $this->load->view("partial/footer"); ?>
