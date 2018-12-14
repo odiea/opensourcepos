@@ -1075,7 +1075,7 @@ function check_payment_type()
         $.each( data, function (key,val)
 		{                
                 items.push("<div id='quickpick' class='btn-group' style=padding-left:1px; padding-bottom: 1px;'>");
-                items.push("<button type='button' class='btn btn-small btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" ); 
+                items.push("<button type='button' class='btn btn-small btn-warning dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" ); 
                 items.push(key + "<span class='caret'></span>");
                 items.push("</button>");
                 items.push("<ul class='dropdown-menu scrollable-menu'>");
@@ -1102,5 +1102,5 @@ $("#add_item_form").submit();
 }
 
 </script>
-
 <?php $this->load->view("partial/footer"); ?>
+
