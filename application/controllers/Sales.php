@@ -1457,7 +1457,6 @@ $person_id = $this->session->userdata('person_id');
 		}
 		return NULL;
 	}
-	
 	public function get_item_categories()
     {
         $this->load->model('item');        

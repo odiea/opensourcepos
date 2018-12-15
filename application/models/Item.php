@@ -172,9 +172,9 @@ class Item extends CI_Model
 		{
 			$this->db->where('trans_date BETWEEN ' . $this->db->escape(rawurldecode($filters['start_date'])) . ' AND ' . $this->db->escape(rawurldecode($filters['end_date'])));
 		}
-
+		
 		$attributes_enabled = count($filters['definition_ids']) > 0;
-
+		
 		if(!empty($search))
 		{
 			$this->db->group_start();
@@ -264,9 +264,7 @@ class Item extends CI_Model
 			$this->db->join('item_quantities', 'item_quantities.item_id = items.item_id');
 			$this->db->where('location_id', $stock_location_id);
 		}
-
-		$this->db->where('items.deleted', 0);
-
+        
 		// order by name of item
 		$this->db->order_by('items.name', 'asc');
 
@@ -597,17 +595,6 @@ class Item extends CI_Model
 			$suggestions[] = array('value' => $row->item_id, 'label' => $this->get_search_suggestion_label($row));
 		}
 
-   
-					   
-								 
-							
-													   
-																												
-						 
-										
-										  
-											  
-	
 		if(!$unique)
 		{
 			//Search by category
@@ -952,7 +939,7 @@ class Item extends CI_Model
 
 	public function get_categories()
 	{
-		$this->db->select('category, item_id, name');
+		$this->db->select('category, item_id, name');		
 		$this->db->from('items');
 		$this->db->where('deleted', 0);
 		$this->db->distinct();
