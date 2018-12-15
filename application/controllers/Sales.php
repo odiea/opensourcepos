@@ -1366,7 +1366,7 @@ class Sales extends Secure_Controller
 	{
 		$sale_id = $this->input->post('suspended_sale_id');
 		$this->sale_lib->clear_all();
-$person_id = $this->session->userdata('person_id');
+		$person_id = $this->session->userdata('person_id');
 		if($sale_id > 0)
 		{
 			$this->sale_lib->copy_entire_sale($sale_id);
@@ -1465,18 +1465,9 @@ $person_id = $this->session->userdata('person_id');
 	   $categories = array();               
         foreach($item->result() as $result)
 		{            
-			$categories[$result->category][] = $result->name; 			
-			if($result->item_number ==!NULL)
-			{
-			$categories[$result->category][] = $result->item_number;
-			}
-			else
-			{
-			$categories[$result->category][] = $result->item_id;
-			}
-				
-        }		 
-        
+			$categories[$result->category][] = $result->name; 	
+			$categories[$result->category][] = $result->item_number ?: $result->item_id;
+	    }	       
         echo json_encode($categories);
     }
 }

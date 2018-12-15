@@ -28,9 +28,9 @@ if(isset($success))
 <!-- Top register controls -->
 
 	<?php echo form_open($controller_name."/change_mode", array('id'=>'mode_form', 'class'=>'form-horizontal panel panel-default')); ?>
-		<?php if($this->config->item('quick_cash_enable'))
+	<!--	<?php if($this->config->item('quick_cash_enable'))
 		{
-			?>
+			?>	
 		<style type='text/css'> .scrollable-menu { max-height: 200px; overflow-x: hidden; height: auto; } </style>		
 			<div id='quickpick' align='center'>            
 			    <ul>
@@ -40,7 +40,7 @@ if(isset($success))
 			
 		<?php 
 		}
-		?>
+		?>-->
 		<div class="panel-body form-group">
 			<ul>
 				<li class="pull-left first_li">
@@ -163,7 +163,7 @@ if(isset($success))
 							if($item['item_type'] == ITEM_TEMP)
 							{
 							?>
-								<td><?php echo form_input(array('name'=>'item_number', 'id'=>'item_number','class'=>'form-control input-sm', 'value'=>$item['item_number'], 'tabindex'=>++$tabindex));?></td>
+								<td><?php echo form_input(array('name'=>'item_number', 'id'=>'item_number','class'=>'form-control input-sm', 'value'=>$item['item_number'] ?:$item['item_id'], 'tabindex'=>++$tabindex));?></td>
 								<td style="align: center;">
 									<?php echo form_input(array('name'=>'name','id'=>'name', 'class'=>'form-control input-sm', 'value'=>$item['name'], 'tabindex'=>++$tabindex));?>
 								</td>
@@ -172,19 +172,7 @@ if(isset($success))
 							else
 							{
 							?>
-							<?php if(!empty($item['item_number'])) 
-							{
-						     ?>
-								<td><?php echo $item['item_number']; ?></td>							
-							<?php
-							}
-							else
-							{
-						    ?>
-								<td><?php echo $item['item_id']; ?></td>
-							<?php
-							}
-							?>
+								<td><?php echo $item['item_number'] ?: $item['item_id'];?></td>
 								<td style="align: center;">
 									<?php echo $item['name'] . ' ' . $item['attribute_values']; ?>
 									<br/>
@@ -282,14 +270,14 @@ if(isset($success))
 									}
 									else
 									{
-										if($item['description']!='')
+										if($item['description']!='' && $item['description']!= 0)
 										{
 											echo $item['description'];
 											echo form_hidden('description', $item['description']);
 										}
 										else
 										{
-											echo $this->lang->line('sales_no_description');
+											//echo $this->lang->line('sales_no_description');
 											echo form_hidden('description','');
 										}
 									}
@@ -334,110 +322,19 @@ if(isset($success))
 
 <div id="overall_sale" class="panel panel-default">
 	<div class="panel-body">	
-
-		<?php echo form_open($controller_name."/select_customer", array('id'=>'select_customer_form', 'class'=>'form-horizontal')); ?>
-						
-			<?php
-			if(isset($customer))
+		<?php if($this->config->item('quick_cash_enable'))
 			{
-			?>
-				<table class="sales_table_100">
-					<tr>
-						<th style='width: 55%;'><?php echo $this->lang->line("sales_customer"); ?></th>
-						<th style="width: 45%; text-align: right;"><?php echo anchor('customers/view/'.$customer_id, $customer, array('class' => 'modal-dlg', 'data-btn-submit' => $this->lang->line('common_submit'), 'title' => $this->lang->line('customers_update'))); ?></th>
-					</tr>
-					<?php
-					if(!empty($customer_email))
-					{
-					?>
-						<tr>
-							<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_email"); ?></th>
-							<th style="width: 45%; text-align: right;"><?php echo $customer_email; ?></th>
-						</tr>
-					<?php
-					}
-					?>
-					<?php
-					if(!empty($customer_address))
-					{
-					?>
-						<tr>
-							<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_address"); ?></th>
-							<th style="width: 45%; text-align: right;"><?php echo $customer_address; ?></th>
-						</tr>
-					<?php
-					}
-					?>
-					<?php
-					if(!empty($customer_location))
-					{
-					?>
-						<tr>
-							<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_location"); ?></th>
-							<th style="width: 45%; text-align: right;"><?php echo $customer_location; ?></th>
-						</tr>
-					<?php
-					}
-					?>
-					<tr>
-						<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_discount"); ?></th>
-						<th style="width: 45%; text-align: right;"><?php echo ($customer_discount_type == FIXED)?to_currency($customer_discount):$customer_discount . '%'; ?></th>
-					</tr>
-					<?php if($this->config->item('customer_reward_enable') == TRUE): ?>
-					<?php
-					if(!empty($customer_rewards))
-					{
-					?>
-						<tr>
-							<th style='width: 55%;'><?php echo $this->lang->line("rewards_package"); ?></th>
-							<th style="width: 45%; text-align: right;"><?php echo $customer_rewards['package_name']; ?></th>
-						</tr>
-						<tr>
-							<th style='width: 55%;'><?php echo $this->lang->line("customers_available_points"); ?></th>
-							<th style="width: 45%; text-align: right;"><?php echo $customer_rewards['points']; ?></th>
-						</tr>
-					<?php
-					}
-					?>
-					<?php endif; ?>
-					<tr>
-						<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_total"); ?></th>
-						<th style="width: 45%; text-align: right;"><?php echo to_currency($customer_total); ?></th>
-					</tr>
-					<?php
-					if(!empty($mailchimp_info))
-					{
-					?>
-						<tr>
-							<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_mailchimp_status"); ?></th>
-							<th style="width: 45%; text-align: right;"><?php echo $mailchimp_info['status']; ?></th>
-						</tr>
-					<?php
-					}
-					?>
-				</table>
-
-				<?php echo anchor($controller_name."/remove_customer", '<span class="glyphicon glyphicon-remove">&nbsp</span>' . $this->lang->line('common_remove').' '.$this->lang->line('customers_customer'),
-								array('class'=>'btn btn-danger btn-sm', 'id'=>'remove_customer_button', 'title'=>$this->lang->line('common_remove').' '.$this->lang->line('customers_customer'))); ?>
-			<?php
+		?>
+		<th style='width: 55%; text-align:center;'><?php echo $this->lang->line("items_categories"); ?></th>
+		<style type='text/css'> .scrollable-menu { max-height: 200px; overflow-x: hidden; height: auto; } </style>		
+			<div id='quickpick' align='center'>    
+				<ul>
+                 
+			   </ul>				
+			</div>			
+		<?php 
 			}
-			else
-			{
-			?>
-				<div class="form-group" id="select_customer">
-					<label id="customer_label" for="customer" class="control-label" style="margin-bottom: 1em; margin-top: -1em;"><?php echo $this->lang->line('sales_select_customer') . ' ' . $customer_required; ?></label>
-					<?php echo form_input(array('name'=>'customer', 'id'=>'customer', 'class'=>'form-control input-sm', 'value'=>$this->lang->line('sales_start_typing_customer_name')));?>
-
-					<button class='btn btn-info btn-sm modal-dlg' data-btn-submit="<?php echo $this->lang->line('common_submit') ?>" data-href="<?php echo site_url("customers/view"); ?>"
-							title="<?php echo $this->lang->line($controller_name. '_new_customer'); ?>">
-						<span class="glyphicon glyphicon-user">&nbsp</span><?php echo $this->lang->line($controller_name. '_new_customer'); ?>
-					</button>
-
-				</div>
-			<?php
-			}
-			?>
-		<?php echo form_close(); ?>
+		?>
 
 		<table class="sales_table_100" id="sale_totals">
 			<tr>
@@ -704,6 +601,111 @@ if(isset($success))
 		}
 		?>
 	</div>	
+	<div class="panel-body">
+	<?php echo form_open($controller_name."/select_customer", array('id'=>'select_customer_form', 'class'=>'form-horizontal')); ?>
+						
+			<?php
+			if(isset($customer))
+			{
+			?>
+				<table class="sales_table_100">
+					<tr>
+						<th style='width: 55%;'><?php echo $this->lang->line("sales_customer"); ?></th>
+						<th style="width: 45%; text-align: right;"><?php echo anchor('customers/view/'.$customer_id, $customer, array('class' => 'modal-dlg', 'data-btn-submit' => $this->lang->line('common_submit'), 'title' => $this->lang->line('customers_update'))); ?></th>
+					</tr>
+					<?php
+					if(!empty($customer_email))
+					{
+					?>
+						<tr>
+							<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_email"); ?></th>
+							<th style="width: 45%; text-align: right;"><?php echo $customer_email; ?></th>
+						</tr>
+					<?php
+					}
+					?>
+					<?php
+					if(!empty($customer_address))
+					{
+					?>
+						<tr>
+							<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_address"); ?></th>
+							<th style="width: 45%; text-align: right;"><?php echo $customer_address; ?></th>
+						</tr>
+					<?php
+					}
+					?>
+					<?php
+					if(!empty($customer_location))
+					{
+					?>
+						<tr>
+							<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_location"); ?></th>
+							<th style="width: 45%; text-align: right;"><?php echo $customer_location; ?></th>
+						</tr>
+					<?php
+					}
+					?>
+					<tr>
+						<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_discount"); ?></th>
+						<th style="width: 45%; text-align: right;"><?php echo ($customer_discount_type == FIXED)?to_currency($customer_discount):$customer_discount . '%'; ?></th>
+					</tr>
+					<?php if($this->config->item('customer_reward_enable') == TRUE): ?>
+					<?php
+					if(!empty($customer_rewards))
+					{
+					?>
+						<tr>
+							<th style='width: 55%;'><?php echo $this->lang->line("rewards_package"); ?></th>
+							<th style="width: 45%; text-align: right;"><?php echo $customer_rewards['package_name']; ?></th>
+						</tr>
+						<tr>
+							<th style='width: 55%;'><?php echo $this->lang->line("customers_available_points"); ?></th>
+							<th style="width: 45%; text-align: right;"><?php echo $customer_rewards['points']; ?></th>
+						</tr>
+					<?php
+					}
+					?>
+					<?php endif; ?>
+					<tr>
+						<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_total"); ?></th>
+						<th style="width: 45%; text-align: right;"><?php echo to_currency($customer_total); ?></th>
+					</tr>
+					<?php
+					if(!empty($mailchimp_info))
+					{
+					?>
+						<tr>
+							<th style='width: 55%;'><?php echo $this->lang->line("sales_customer_mailchimp_status"); ?></th>
+							<th style="width: 45%; text-align: right;"><?php echo $mailchimp_info['status']; ?></th>
+						</tr>
+					<?php
+					}
+					?>
+				</table>
+
+				<?php echo anchor($controller_name."/remove_customer", '<span class="glyphicon glyphicon-remove">&nbsp</span>' . $this->lang->line('common_remove').' '.$this->lang->line('customers_customer'),
+								array('class'=>'btn btn-danger btn-sm', 'id'=>'remove_customer_button', 'title'=>$this->lang->line('common_remove').' '.$this->lang->line('customers_customer'))); ?>
+			<?php
+			}
+			else
+			{
+			?>
+				<div class="form-group" id="select_customer">
+					<label id="customer_label" for="customer" class="control-label" style="margin-bottom: 1em; margin-top: -1em;"><?php echo $this->lang->line('sales_select_customer') . ' ' . $customer_required; ?></label>
+					<?php echo form_input(array('name'=>'customer', 'id'=>'customer', 'class'=>'form-control input-sm', 'value'=>$this->lang->line('sales_start_typing_customer_name')));?>
+
+					<button class='btn btn-info btn-sm modal-dlg' data-btn-submit="<?php echo $this->lang->line('common_submit') ?>" data-href="<?php echo site_url("customers/view"); ?>"
+							title="<?php echo $this->lang->line($controller_name. '_new_customer'); ?>">
+						<span class="glyphicon glyphicon-user">&nbsp</span><?php echo $this->lang->line($controller_name. '_new_customer'); ?>
+					</button>
+
+				</div>
+			<?php
+			}
+			?>		
+			<?php echo form_close(); ?>	
+	</div>			
 </div>
 
 <script type="text/javascript">
@@ -1075,7 +1077,7 @@ function check_payment_type()
         $.each( data, function (key,val)
 		{                
                 items.push("<div id='quickpick' class='btn-group' style=padding-left:1px; padding-bottom: 1px;'>");
-                items.push("<button type='button' class='btn btn-small btn-warning dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" ); 
+                items.push("<button type='button' class='btn btn-sm btn-outline-dark dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" ); 
                 items.push(key + "<span class='caret'></span>");
                 items.push("</button>");
                 items.push("<ul class='dropdown-menu scrollable-menu'>");

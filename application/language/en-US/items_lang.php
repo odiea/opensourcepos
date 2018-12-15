@@ -9,6 +9,7 @@ $lang["items_buy_price_required"] = "Purchase Price is a required field.";
 $lang["items_cannot_be_deleted"] = "Could not delete selected Item(s), one or more of the selected Items have sales.";
 $lang["items_cannot_find_item"] = "Item not found.";
 $lang["items_category"] = "Category";
+$lang["items_categories"] = "Categories. Select the Item number.";
 $lang["items_category_required"] = "Category is a required field.";
 $lang["items_change_all_to_allow_alt_desc"] = "Allow Alternate Description for all.";
 $lang["items_change_all_to_not_allow_allow_desc"] = "Do not allow Alternate Description for all.";
