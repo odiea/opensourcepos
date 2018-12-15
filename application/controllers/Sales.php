@@ -1465,8 +1465,16 @@ $person_id = $this->session->userdata('person_id');
 	   $categories = array();               
         foreach($item->result() as $result)
 		{            
-			$categories[$result->category][] = $result->name; 
-			$categories[$result->category][] = $result->item_id; 			
+			$categories[$result->category][] = $result->name; 			
+			if($result->item_number ==!NULL)
+			{
+			$categories[$result->category][] = $result->item_number;
+			}
+			else
+			{
+			$categories[$result->category][] = $result->item_id;
+			}
+				
         }		 
         
         echo json_encode($categories);

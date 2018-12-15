@@ -939,7 +939,7 @@ class Item extends CI_Model
 
 	public function get_categories()
 	{
-		$this->db->select('category, item_id, name');		
+		$this->db->select('category, item_id, name, item_number');		
 		$this->db->from('items');
 		$this->db->where('deleted', 0);
 		$this->db->distinct();
