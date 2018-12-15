@@ -486,7 +486,7 @@ if(isset($success))
 			<div id="payment_details">
 				<?php
 				// Show Complete sale button instead of Add Payment if there is no amount due left
-				if($payments_total)
+				if($payments_cover_total)
 				{
 				?>
 					<?php echo form_open($controller_name."/add_payment", array('id'=>'add_payment_form', 'class'=>'form-horizontal')); ?>
