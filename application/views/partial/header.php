@@ -96,7 +96,7 @@
 
 <body>
 	<div class="wrapper">
-		<div class="header">
+	<div class="header">
 		<div class="topbar">
 			<div class="container">
 				<div class="navbar-left">

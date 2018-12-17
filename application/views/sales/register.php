@@ -28,10 +28,10 @@ if(isset($success))
 <!-- Top register controls -->
 
 	<?php echo form_open($controller_name."/change_mode", array('id'=>'mode_form', 'class'=>'form-horizontal panel panel-default')); ?>
-	<!--	<?php if($this->config->item('quick_cash_enable'))
+		<?php if(!$this->config->item('quick_cash_enable'))
 		{
 			?>	
-		<style type='text/css'> .scrollable-menu { max-height: 200px; overflow-x: hidden; height: auto; } </style>		
+		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
 			<div id='quickpick' align='center'>            
 			    <ul>
                  
@@ -40,7 +40,7 @@ if(isset($success))
 			
 		<?php 
 		}
-		?>-->
+		?>
 		<div class="panel-body form-group">
 			<ul>
 				<li class="pull-left first_li">
@@ -83,7 +83,7 @@ if(isset($success))
 				
 					<li class="pull-right">
 						<?php echo anchor($controller_name."/manage", '<span class="glyphicon glyphicon-list-alt">&nbsp</span>' . $this->lang->line('sales_takings'),
-									array('class'=>'btn btn-primary btn-sm', 'id'=>'sales_takings_button', 'title'=>$this->lang->line('sales_takings'))); ?>
+									array('class'=>'btn btn-success btn-sm', 'id'=>'sales_takings_button', 'title'=>$this->lang->line('sales_takings'))); ?>
 					</li>				
 			</ul>
 		</div>
@@ -326,7 +326,7 @@ if(isset($success))
 			{
 		?>
 		<th style='width: 55%; text-align:center;'><?php echo $this->lang->line("items_categories"); ?></th>
-		<style type='text/css'> .scrollable-menu { max-height: 200px; overflow-x: hidden; height: auto; } </style>		
+		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
 			<div id='quickpick' align='center'>    
 				<ul>
                  
@@ -1076,9 +1076,9 @@ function check_payment_type()
         var items = [];		
         $.each( data, function (key,val)
 		{                
-                items.push("<div id='quickpick' class='btn-group' style=padding-left:1px; padding-bottom: 1px;'>");
-                items.push("<button type='button' class='btn btn-sm btn-outline-dark dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" ); 
-                items.push(key + "<span class='caret'></span>");
+                items.push("<div id='quickpick' class='btn-group' style='padding-left:2px; padding-bottom: 1px;'>");
+                items.push("<button type='button' class='btn btn-sm btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" ); 
+                items.push(key + "<span class='dropdown-toggle'></span>");
                 items.push("</button>");
                 items.push("<ul class='dropdown-menu scrollable-menu'>");
                 $.each(val,function(ikey,ival) 
