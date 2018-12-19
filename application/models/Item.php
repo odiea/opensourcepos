@@ -944,7 +944,7 @@ class Item extends CI_Model
 		$this->db->where('deleted', 0);
 		$this->db->distinct();
 		$this->db->order_by('category', 'asc');
-
+		$this->db->order_by('name', 'asc');
 		return $this->db->get();
 	}
 

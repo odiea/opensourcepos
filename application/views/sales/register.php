@@ -1076,10 +1076,13 @@ function check_payment_type()
         var items = [];		
         $.each( data, function (key,val)
 		{                
-                items.push("<div id='quickpick' class='btn-group' style='padding-left:2px; padding-bottom: 1px;'>");
-                items.push("<button type='button' class='btn btn-sm btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" ); 
+                items.push("<div id='quickpick' class='btn-group' style='padding-left: 3px; padding-bottom: 2px;'>");
+              	items.push("<button type='button' class='btn btn-sm btn-primary'>" ); 
                 items.push(key + "<span class='dropdown-toggle'></span>");
-                items.push("</button>");
+                items.push("<button type='button' class='btn btn-sm btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
+			    items.push("<span class='caret'></span>");
+				items.push("<span class='sr-only'></span>");
+				items.push("</button>");
                 items.push("<ul class='dropdown-menu scrollable-menu'>");
                 $.each(val,function(ikey,ival) 
 				{
@@ -1102,7 +1105,7 @@ function check_payment_type()
 $('#item').val(val);
 $("#add_item_form").submit();
 }
-
+$('.dropdown-toggle').dropdown();
 </script>
 <?php $this->load->view("partial/footer"); ?>
 
