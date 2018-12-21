@@ -389,16 +389,13 @@ if(isset($success))
 					<?php echo form_open($controller_name."/add_payment", array('id'=>'add_payment_form', 'class'=>'form-horizontal')); ?>
 						<table class="sales_table_100">
 							<tr>
-								<td><?php echo $this->lang->line('sales_payment');?></td>
-								<td>
-									<?php echo form_dropdown('payment_type', $payment_options, $selected_payment_type, array('id'=>'payment_types', 'class'=>'selectpicker show-menu-arrow', 'data-style'=>'btn-default btn-sm', 'data-width'=>'auto', 'disabled'=>'disabled')); ?>
-								</td>
+								<td><h5><?php echo $this->lang->line('sales_amount_tendered'); ?></h5></td>
+								<td><?php echo form_input(array('name'=>'amount_tendered', 'id'=>'amount_tendered', 'class'=>'form-control input-sm disabled', 'disabled'=>'disabled', 'value'=>'0', 'size'=>'5', 'tabindex'=>++$tabindex)); ?><h4><?php echo to_currency($payments_total); ?></td></h4>
 							</tr>
 							<tr>
-								<td><span id="amount_tendered_label"><?php echo $this->lang->line('sales_amount_tendered'); ?></span></td>
-								<td>
-									<?php echo form_input(array('name'=>'amount_tendered', 'id'=>'amount_tendered', 'class'=>'form-control input-sm disabled', 'disabled'=>'disabled', 'value'=>'0', 'size'=>'5', 'tabindex'=>++$tabindex, 'onClick'=>'this.select();')); ?>
-								</td>
+								<tr>
+								<td><h4><?php echo $this->lang->line('sales_change_due')?></h4></td>								
+								<td><h3><?php echo to_currency($amount_due); ?></h3></td>							
 							</tr>
 						</table>
 					<?php echo form_close(); ?>
