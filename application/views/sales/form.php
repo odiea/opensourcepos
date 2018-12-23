@@ -142,6 +142,7 @@ $(document).ready(function()
 					function(response) {
 						dialog_support.hide();
 						table_support.handle_submit("<?php echo site_url('sales'); ?>", response);
+						$.notify(response.message, { type: response.success ? 'success' : 'danger'} );
 					}, 'json'
 				);	
 			}
