@@ -72,7 +72,7 @@
 		{
 		?>
 			<tr>
-				<td><?php echo ucfirst($item['name'] . ":  " . $item['item_id'] . ' ' . $item['attribute_values'] ); ?></td>
+				<td><?php echo ucfirst($item['name'] . ":  " . $item['item_id'] ); ?></td>
 				<td><?php echo $item['category'];?></td>
 				<td><?php echo to_currency($item['price']); ?></td>
 				<td><?php echo to_quantity_decimals($item['quantity']); ?></td>

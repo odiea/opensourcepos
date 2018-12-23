@@ -1070,6 +1070,7 @@ class Sale_lib
 		$this->clear_email_receipt();
 		$this->clear_invoice_number();
 		$this->clear_quote_number();
+		$this->clear_mode();
 		$this->clear_sale_type();
 		$this->clear_giftcard_remainder();
 		$this->empty_payments();
