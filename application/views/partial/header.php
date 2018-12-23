@@ -129,11 +129,10 @@
 				</div>
 
 				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav ">
+					<ul class="nav navbar-nav text-center" style="padding-top:5px;">
 						<?php foreach($allowed_modules as $module): ?>
 							<li class="<?php echo $module->module_id == $this->uri->segment(1) ? 'active' : ''; ?>">
-								<a href="<?php echo site_url("$module->module_id"); ?>" title="<?php echo $this->lang->line("module_" . $module->module_id); ?>" class="menu-icon">
-									<img src="<?php echo base_url() . 'images/menubar/' . $module->module_id . '.png'; ?>" border="0" alt="Module Icon"/><br/>
+								<a class="btn btn-secondary" href="<?php echo site_url("$module->module_id"); ?>" title="<?php echo $this->lang->line("module_" . $module->module_id); ?> ">
 									<?php echo $this->lang->line("module_" . $module->module_id) ?>
 								</a>
 							</li>
