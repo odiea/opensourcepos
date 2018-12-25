@@ -19,7 +19,7 @@
 			<div id="container">
 				<div align="center" style="color:red"><?php echo validation_errors(); ?></div>
 
-				<?php if ($this->migration->is_latest()): ?>
+				<?php if (!$this->migration->is_latest()): ?>
 				<div align="center" style="color:red"><?php echo $this->lang->line('common_migration_needed'); ?></div>
 				<?php endif; ?>
 
