@@ -430,33 +430,33 @@ if(isset($success))
 							</tr>
 						</table>
 					<?php echo form_close(); ?>
-					<?php if($this->config->item('quick_cash_enable') && $mode == "sale" ){ ?>
+					<?php if($this->config->item('quick_cash_enable') && $mode == "sale" ):?>
 					<div align="center">
-						<?php if(!empty($quick_cash_1)){?>				
+						<?php if(!empty($quick_cash_1)):?>				
 							<div class='btn btn-sm btn-success float-left' id='add_payment_button_1' tabindex='<?php echo ++$tabindex; ?>'><?php echo $this->config->item('currency_symbol'); ?><?php echo intval($quick_cash_1); ?></div>
-						<?php }	?>
+						<?php endif?>
 					
-						<?php if(!empty($quick_cash_2)){?>
+						<?php if(!empty($quick_cash_2)):?>
 							<div class='btn btn-sm btn-success float-left' id='add_payment_button_2' tabindex='<?php echo ++$tabindex; ?>'><?php echo $this->config->item('currency_symbol'); ?><?php echo intval($quick_cash_2); ?></div>
-						<?php } ?>
+						<?php endif ?>
 					
-						<?php if(!empty($quick_cash_3)){?>
+						<?php if(!empty($quick_cash_3)):?>
 							<div class='btn btn-sm btn-success float-left' id='add_payment_button_3' tabindex='<?php echo ++$tabindex; ?>'><?php echo $this->config->item('currency_symbol'); ?><?php echo intval($quick_cash_3); ?></div>
-						<?php } ?>
+						<?php endif ?>
 					
-						<?php if(!empty($quick_cash_4)){?>
+						<?php if(!empty($quick_cash_4)):?>
 							<div class='btn btn-sm btn-success float-left' id='add_payment_button_4' tabindex='<?php echo ++$tabindex; ?>'><?php echo $this->config->item('currency_symbol'); ?><?php echo intval($quick_cash_4); ?></div>
-						<?php } ?>
+						<?php endif ?>
 					
-						<?php if(!empty($quick_cash_5)){?>
+						<?php if(!empty($quick_cash_5)):?>
 							<div class='btn btn-sm btn-success float-left' id='add_payment_button_5' tabindex='<?php echo ++$tabindex; ?>'><?php echo $this->config->item('currency_symbol'); ?><?php echo intval($quick_cash_5); ?></div>
-						<?php } ?>
+						<?php endif ?>
 					
-						<?php if(!empty($quick_cash_6)){?>			
+						<?php if(!empty($quick_cash_6)):?>			
 							<div class='btn btn-sm btn-success float-left' id='add_payment_button_6' tabindex='<?php echo ++$tabindex; ?>'><?php echo $this->config->item('currency_symbol'); ?><?php echo intval($quick_cash_6); ?></div>
-						<?php } ?>					
+						<?php endif ?>					
 					</div>
-					<?php } ?>
+					<?php endif ?>
 
 					<div class='btn btn-sm btn-success pull-right' id='add_payment_button' tabindex="<?php echo ++$tabindex; ?>"><span class="glyphicon glyphicon-credit-card">&nbsp</span><?php echo $this->lang->line('sales_add_payment'); ?></div>
 				<?php
