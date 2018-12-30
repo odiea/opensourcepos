@@ -587,7 +587,6 @@ class Item extends CI_Model
 		$this->db->where('deleted', $filters['is_deleted']);
 		$this->db->where_in('item_type', $non_kit); // standard, exclude kit items since kits will be picked up later
 		$this->db->where('item_id', $search);
-		$this->db->distinct();
 		$this->db->order_by('item_id', 'asc');
 		foreach($this->db->get()->result() as $row)
 		{
