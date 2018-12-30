@@ -528,7 +528,10 @@ class Item extends CI_Model
 		}
 		else
 		{
-			$label = $result_row->$label1;
+			if($label1 !== '')			
+			{
+		$label = $result_row->$label1;
+			}
 			if($label2 !== '')
 			{
 				$label .= NAME_SEPARATOR . $result_row->$label2;
@@ -578,6 +581,18 @@ class Item extends CI_Model
 	{
 		$suggestions = array();
 		$non_kit = array(ITEM, ITEM_AMOUNT_ENTRY);
+		
+		$this->db->select($this->get_search_suggestion_format('item_id, item_id, pack_name'));
+		$this->db->from('items');
+		$this->db->where('deleted', $filters['is_deleted']);
+		$this->db->where_in('item_type', $non_kit); // standard, exclude kit items since kits will be picked up later
+		$this->db->where('item_id', $search);
+		$this->db->distinct();
+		$this->db->order_by('item_id', 'asc');
+		foreach($this->db->get()->result() as $row)
+		{
+			$suggestions[] = array('value' => $row->item_id, 'label' => $this->get_search_suggestion_label($row));
+		}	
 
 		$this->db->select($this->get_search_suggestion_format('item_id, name, pack_name'));
 		$this->db->from('items');
@@ -599,8 +614,8 @@ class Item extends CI_Model
 		foreach($this->db->get()->result() as $row)
 		{
 			$suggestions[] = array('value' => $row->item_id, 'label' => $this->get_search_suggestion_label($row));
-		}
-
+		}	
+		
 		if(!$unique)
 		{
 			//Search by category
