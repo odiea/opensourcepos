@@ -501,9 +501,8 @@ class Item extends CI_Model
 		{
 			$seed .= ',' . $this->config->item('suggestions_third_column');
 		}
-
-			   
-   if($this->config->item('suggestions_fourth_column') !== '')
+		
+		if($this->config->item('suggestions_fourth_column') !== '')
 		{
 			$seed .= ','.$this->config->item('suggestions_fourth_column');
 		}			
@@ -518,12 +517,14 @@ class Item extends CI_Model
 		$label1 = $this->config->item('suggestions_first_column');
 		$label2 = $this->config->item('suggestions_second_column');
 		$label3 = $this->config->item('suggestions_third_column');
+		$label4 = $this->config->item('suggestions_fourth_column');
 		// If multi_pack enabled then if "name" is part of the search suggestions then append pack
 		if($this->config->item('multi_pack_enabled') == '1')
 		{
 			$this->append_label($label, $label1, $result_row);
 			$this->append_label($label, $label2, $result_row);
 			$this->append_label($label, $label3, $result_row);
+			$this->append_label($label, $label4, $result_row);
 		}
 		else
 		{
@@ -535,6 +536,10 @@ class Item extends CI_Model
 			if($label3 !== '')
 			{
 				$label .= NAME_SEPARATOR . $result_row->$label3;
+			}
+			if($label4 !== '')
+			{
+				$label .= NAME_SEPARATOR . $result_row->$label4;
 			}
 		}
 		return $label;

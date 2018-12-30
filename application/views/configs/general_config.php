@@ -180,7 +180,8 @@
 								'name' => $this->lang->line('items_name'),
 								'item_number' => $this->lang->line('items_number_information'),
 								'item_id' => $this->lang->line('items_item_id'),
-								'unit_price' => $this->lang->line('items_unit_price')
+								'unit_price' => $this->lang->line('items_unit_price'),
+								'cost_price' => $this->lang->line('items_cost_price')
 							),
 							$this->config->item('suggestions_first_column'), array('class' => 'form-control input-sm')); ?>
 						</div>
@@ -191,8 +192,9 @@
 									'name' => $this->lang->line('items_name'),
 									'item_number' => $this->lang->line('items_number_information'),
 									'item_id' => $this->lang->line('items_item_id'),
-									'unit_price' => $this->lang->line('items_unit_price')
-							),
+									'unit_price' => $this->lang->line('items_unit_price'),
+									'cost_price' => $this->lang->line('items_cost_price')
+								),
 							$this->config->item('suggestions_second_column'), array('class' => 'form-control input-sm')); ?>
 						</div>
 						<label class="control-label col-sm-1"><?php echo $this->lang->line('config_suggestions_third_column').' '; ?></label>
@@ -202,8 +204,9 @@
 									'name' => $this->lang->line('items_name'),
 									'item_number' => $this->lang->line('items_number_information'),
 									'item_id' => $this->lang->line('items_item_id'),
-									'unit_price' => $this->lang->line('items_unit_price')
-						),
+									'unit_price' => $this->lang->line('items_unit_price'),
+								'cost_price' => $this->lang->line('items_cost_price')
+								),
 							$this->config->item('suggestions_third_column'), array('class' => 'form-control input-sm')); ?>
 						</div>
 						<label class="control-label col-sm-1"><?php echo $this->lang->line('config_suggestions_fourth_column').' '; ?></label>
@@ -213,8 +216,9 @@
 									'name' => $this->lang->line('items_name'),
 									'item_number' => $this->lang->line('items_number_information'),
 									'item_id' => $this->lang->line('items_item_id'),
-									'unit_price' => $this->lang->line('items_unit_price')
-							),
+									'unit_price' => $this->lang->line('items_unit_price'),
+								'cost_price' => $this->lang->line('items_cost_price')
+								),
 							$this->config->item('suggestions_fourth_column'), array('class' => 'form-control input-sm')); ?>
 						</div>
 					</div>
