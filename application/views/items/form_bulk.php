@@ -193,7 +193,7 @@ $(document).ready(function()
 			{
 				$(form).ajaxSubmit({
 					beforeSubmit: function(arr, $form, options) {
-						arr.push({name: 'item_ids', value: table_support.selected_ids().join(": ")});
+						arr.push({name: 'item_ids', value: table_support.selected_ids().join(":")});
 					},
 					success: function(response)
 					{
