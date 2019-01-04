@@ -980,7 +980,7 @@ class Item extends CI_Model
 	 * caution: must be used before item_quantities gets updated, otherwise the average price is wrong!
 	 *
 	 */
-	public function change_cost_price($item_id, $items_received, $new_price, $old_price = NULL)
+	/*public function change_cost_price($item_id, $items_received, $new_price, $old_price = NULL)
 	{
 		if($old_price === NULL)
 		{
@@ -1001,7 +1001,7 @@ class Item extends CI_Model
 		$data = array('cost_price' => $new_price);
 
 		return $this->save($data, $item_id);
-	}
+	}*/
 	
 	public function change_average_price($item_id, $items_received, $new_price, $old_price = null)
 	{
@@ -1021,7 +1021,7 @@ class Item extends CI_Model
 		$total_quantity = $old_total_quantity + $items_received;
 		$average_price = bcdiv(bcadd(bcmul($items_received, $new_price), bcmul($old_total_quantity, $old_price)), $total_quantity);
 
-		$data = array('cost_price' => $average_price);
+		$data = array('cost_price' => $new_price);
 
 		return $this->save($data, $item_id);
 	}

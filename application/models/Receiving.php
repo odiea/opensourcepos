@@ -110,10 +110,10 @@ class Receiving extends CI_Model
 				$this->Item->change_average_price($item['item_id'], $items_received, $item['price'], $cur_item_info->cost_price);
 			}
 
-			if($cur_item_info->cost_price != $item['price'] && $this->config->item('receiving_calculate_average_price') == FALSE)
+			/*if($cur_item_info->cost_price != $item['price'] && $this->config->item('receiving_calculate_average_price') == FALSE)
 			{
 				$this->Item->change_cost_price($item['item_id'], $items_received, $item['price'], $cur_item_info->cost_price);
-			}
+			}*/
 			
 			//Update stock quantity
 			$item_quantity = $this->Item_quantity->get_item_quantity($item['item_id'], $item['item_location']);
