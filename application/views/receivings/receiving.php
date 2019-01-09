@@ -22,6 +22,12 @@ if (isset($success))
 <!-- Top register controls -->
 
 	<?php echo form_open($controller_name."/change_mode", array('id'=>'mode_form', 'class'=>'form-horizontal panel panel-default')); ?>
+		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
+			<div id='quickpick' align='center'>            
+			    <ul>
+                 
+			   </ul>				
+			</div>
 		<div class="panel-body form-group">
 			<ul>
 				<li class="pull-left first_li">
@@ -537,6 +543,41 @@ $(document).ready(function()
 	});
 
 });
+$.getJSON( '<?php echo site_url("sales/get_item_categories"); ?>', function(data)
+ {
+        var items = [];		
+        $.each( data, function (key,val)
+		{                
+                items.push("<div id='quickpick' class='btn-group' style='padding-left: 3px; padding-bottom: 2px;'>");
+              	items.push("<button type='button' class='btn btn-sm btn-primary'>" ); 
+                items.push(key + "<span class='dropdown-toggle'></span>");
+                items.push("<button type='button' class='btn btn-sm btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
+			    items.push("<span class='caret'></span>");
+				items.push("<span class='sr-only'></span>");
+				items.push("</button>");
+                items.push("<ul class='dropdown-menu scrollable-menu'>");
+                $.each(val,function(ikey,ival) 
+				{
+                    items.push("<li><a onclick='additem(" + ival + ")'> "+ival+"</a></li>"); 
+                });
+                items.push( "</ul>");
+                items.push( "</div>");       
+                console.log(items);				
+        });
+        
+        $("#quickpick").html(items.join(""));
+		$('#quickpickhide').dblclick(function() { $('#quickpick').toggle()} );
+	
+	 // Get Items   
+	
+    });
+
+	function additem(val)
+{
+$('#item').val(val);
+$("#add_item_form").submit();
+}
+$('.dropdown-toggle').dropdown();
 
 </script>
 

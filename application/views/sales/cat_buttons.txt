@@ -1,0 +1,74 @@
+Application/models/item.php. Should look like the following.
+public function get_categories()
+	{
+		$this->db->select('category, item_id, name, item_number');		
+		$this->db->from('items');
+		$this->db->where('deleted', 0);
+		$this->db->distinct();
+		$this->db->order_by('category', 'asc');
+		$this->db->order_by('name', 'asc');
+		return $this->db->get();
+	}
+	
+	Application/controller/sales.php. Should look like the following.
+	public function get_item_categories()
+    {
+        $this->load->model('item');        
+		$item = $this->Item->get_categories();     
+       $this->db->order_by('name', 'asc');
+	   $categories = array();               
+        foreach($item->result() as $result)
+		{            
+			$categories[$result->category][] = $result->name; 	
+			$categories[$result->category][] = $result->item_number ?: $result->item_id;
+	    }	
+		
+        echo json_encode($categories);
+    }
+	Application/views/sales/register.php. Should look like the following.
+	Can go above or below the first form_open. Place it where you want to.
+	<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
+			<div id='quickpick' align='center'>            
+			    <ul>
+                 
+			   </ul>				
+			</div>
+	
+This will go at the bottom of the register before the </script>	
+	$.getJSON( '<?php echo site_url($controller_name."/get_item_categories"); ?>', function(data)
+ {
+        var items = [];		
+        $.each( data, function (key,val)
+		{                
+                items.push("<div id='quickpick' class='btn-group' style='padding-left: 3px; padding-bottom: 2px;'>");
+              	items.push("<button type='button' class='btn btn-sm btn-primary'>" ); 
+                items.push(key + "<span class='dropdown-toggle'></span>");
+                items.push("<button type='button' class='btn btn-sm btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
+			    items.push("<span class='caret'></span>");
+				items.push("<span class='sr-only'></span>");
+				items.push("</button>");
+                items.push("<ul class='dropdown-menu scrollable-menu'>");
+                $.each(val,function(ikey,ival) 
+				{
+                    items.push("<li><a onclick='additem(" + ival + ")'> "+ival+"</a></li>"); 
+                });
+                items.push( "</ul>");
+                items.push( "</div>");       
+                console.log(items);				
+        });
+        
+        $("#quickpick").html(items.join(""));
+		$('#quickpickhide').dblclick(function() { $('#quickpick').toggle()} );
+	
+	 // Get Items   
+	
+    });
+
+	function additem(val)
+{
+$('#item').val(val);
+$("#add_item_form").submit();
+}
+$('.dropdown-toggle').dropdown();
+
+Application/views/receivings/receiving.php. Add the following before the </script> to have the buttons on the Receivings form.
