@@ -1507,7 +1507,7 @@ class Sales extends Secure_Controller
         foreach($item->result() as $result)
 		{            
 			$categories[$result->category][] = $result->name; 	
-			$categories[$result->category][] = $result->item_number ?: $result->item_id;
+			$categories[$result->category][] = $result->item_id;
 	    }	
 		
         echo json_encode($categories);
