@@ -40,8 +40,14 @@ float:none;
 /*.table-striped>tbody>tr:nth-child(even)>td,
 .table-striped>tbody>tr:nth-child(even)>th {
   background-color: #f8ffdd;  
-}
+}*/
 
 /*table {
-  background-color: #AAEEFF;
+  color: #AAEEFF;
 }*/
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  background-color: #AAEEFF;
+}
