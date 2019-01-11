@@ -32,11 +32,11 @@ $(document).ready(function()
 
 <div id="toolbar">
 	<div class="pull-left btn-toolbar">
-		<button id="delete" class="btn btn-default btn-sm">
+		<button id="delete" class="btn btn-danger btn-sm">
 			<span class="glyphicon glyphicon-trash">&nbsp</span><?php echo $this->lang->line("common_delete"); ?>
 		</button>
 
-		<button id="generate_barcodes" class="btn btn-default btn-sm" data-href='<?php echo site_url($controller_name."/generate_barcodes"); ?>'>
+		<button id="generate_barcodes" class="btn btn-primary btn-sm" data-href='<?php echo site_url($controller_name."/generate_barcodes"); ?>'>
 			<span class="glyphicon glyphicon-barcode">&nbsp</span><?php echo $this->lang->line("items_generate_barcodes");?>
 		</button>
 	</div>

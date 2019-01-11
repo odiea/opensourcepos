@@ -21,7 +21,7 @@ $(document).ready(function()
 
 <div id="toolbar">
 	<div class="pull-left btn-toolbar">
-		<button id="delete" class="btn btn-default btn-sm">
+		<button id="delete" class="btn btn-danger btn-sm">
 			<span class="glyphicon glyphicon-trash">&nbsp</span><?php echo $this->lang->line("common_delete"); ?>
 		</button>
 	</div>

@@ -48,10 +48,10 @@ $(document).ready(function()
 
 <div id="toolbar">
 	<div class="pull-left btn-toolbar">
-		<button id="delete" class="btn btn-default btn-sm">
+		<button id="delete" class="btn btn-danger btn-sm">
 			<span class="glyphicon glyphicon-trash">&nbsp</span><?php echo $this->lang->line("common_delete");?>
 		</button>
-		<button id="email" class="btn btn-default btn-sm">
+		<button id="email" class="btn btn-warning btn-sm">
 			<span class="glyphicon glyphicon-envelope">&nbsp</span><?php echo $this->lang->line("common_email");?>
 		</button>
 	</div>

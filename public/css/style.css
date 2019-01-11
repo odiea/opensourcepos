@@ -32,19 +32,13 @@ float:none;
   margin: 100px auto;
   width: 100%;  
 }
-
-.table-striped>tbody>tr:nth-child(odd)>td,
-.table-striped>tbody>tr:nth-child(odd)>th {
-  background-color:  #ddf8ff;  
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #ddf8ff;
 }
-/*.table-striped>tbody>tr:nth-child(even)>td,
-.table-striped>tbody>tr:nth-child(even)>th {
-  background-color: #f8ffdd;  
-}*/
 
-/*table {
-  color: #AAEEFF;
-}*/
+.table-hover > tbody > tr:hover {
+  background-color: #bfdcf8;
+}
 .table {
   width: 100%;
   max-width: 100%;
