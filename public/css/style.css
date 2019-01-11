@@ -35,13 +35,13 @@ float:none;
 
 .table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th {
-  background-color: #B1DBFF;  
+  background-color:  #ddf8ff;  
 }
-.table-striped>tbody>tr:nth-child(even)>td,
+/*.table-striped>tbody>tr:nth-child(even)>td,
 .table-striped>tbody>tr:nth-child(even)>th {
-  background-color: #AAEEFF;  
+  background-color: #f8ffdd;  
 }
 
-table {
+/*table {
   background-color: #AAEEFF;
-}
+}*/
