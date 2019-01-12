@@ -491,13 +491,13 @@ class Items extends Secure_Controller
 		$cost_price = parse_decimals($this->input->post('cost_price'));
 		//Save item data
 		if ($markup > 0 )
-					{			
-		    $unit_price = parse_decimals($this->input->post('cost_price') * (1 +$markup / 100));
-					}
-					else
-					{
-					$unit_price = parse_decimals($this->input->post('unit_price'));
-					}			   
+		{			
+		    $unit_price = parse_decimals($this->input->post('cost_price') * (1 + $markup / 100));
+		}
+		else
+		{
+			$unit_price = parse_decimals($this->input->post('unit_price'));
+		}			   
 
 		if($receiving_quantity == '0' && $item_type!= ITEM_TEMP)
 		{
@@ -527,8 +527,8 @@ class Items extends Secure_Controller
 			'stock_type' => $this->input->post('stock_type') == NULL ? HAS_STOCK : $this->input->post('stock_type'),
 			'supplier_id' => $this->input->post('supplier_id') == '' ? NULL : $this->input->post('supplier_id'),
 			'item_number' => $this->input->post('item_number') == '' ? NULL : $this->input->post('item_number'),
-			'cost_price' => parse_decimals($this->input->post('cost_price')),
-			'unit_price' => parse_decimals($this->input->post('unit_price')),
+			'cost_price' => parse_decimals(parse_decimals($cost_price)),
+			'unit_price' => parse_decimals(parse_decimals($unit_price)),
 			'reorder_level' => parse_decimals($this->input->post('reorder_level')),
 			'receiving_quantity' => $receiving_quantity,
 			'allow_alt_description' => $this->input->post('allow_alt_description') != NULL,

@@ -1,5 +1,8 @@
+<?php $markup = $this->config->item('item_markup');?>
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
-
+<?php if ($markup > 0 ) :?>
+<div id="required_fields_message"><?php echo $this->lang->line('items_markup'); ?></div>
+<?php endif ;?>
 <ul id="error_message_box" class="error_message_box"></ul>
 
 <?php echo form_open('items/save/'.$item_info->item_id, array('id'=>'item_form', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal')); ?>
@@ -167,6 +170,15 @@
 					<?php if (!currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
 					<?php endif; ?>
+					<?php if($markup > 0 )
+					{
+					?>
+                   <?php $unit_price = parse_decimals($this->input->post('cost_price') * (1 +$markup / 100));?>
+				   <?php
+                    }
+                    else
+                    {
+                    ?>	
 					<?php echo form_input(array(
 							'name'=>'unit_price',
 							'id'=>'unit_price',
@@ -176,6 +188,9 @@
 					<?php if (currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
 					<?php endif; ?>
+					<?php
+					}
+					?>
 				</div>
 			</div>
 		</div>

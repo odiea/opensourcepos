@@ -31,7 +31,7 @@
 		<link rel="stylesheet" type="text/css" href="css/receipt.css"/>
 		<link rel="stylesheet" type="text/css" href="css/register.css"/>
 		<link rel="stylesheet" type="text/css" href="css/reports.css"/>
-		<!--<link rel="stylesheet" type="text/css" href="css/style.css"/>-->
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 		<!-- end css template tags -->
 		<!-- bower:js -->
 		<script src="bower_components/jquery/dist/jquery.js"></script>
