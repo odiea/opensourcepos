@@ -23,25 +23,64 @@
     style="font-size:<?php echo $barcode_config['barcode_font_size']; ?>px">
 	<table cellspacing=<?php echo $barcode_config['barcode_page_cellspacing']; ?> width='<?php echo $barcode_config['barcode_page_width']."%"; ?>' >
 		<tr>
-			<?php
-			$x = 0;
-			$count = 0;
-			do{
-			foreach($items as $item)
-			{
-				if ($count % $barcode_config['barcode_num_in_row'] == 0 and $count != 0)
-				{
-					echo '</tr><tr>';
-				}
-				echo '<td>' . $this->barcode_lib->display_barcode($item, $barcode_config) . '</td>';
-				++$count;
-			    $item_qty = 3 - 1;//$item['custom1'];
-			}
-			$x++;
-				}
-			while($x <= $item_qty);
-		?>
-		</tr>
+            <?php
+               $count = 0;
+               $count_items = 0;
+			   $item['barcodes'] = 0;
+               $qty = array();
+               $num_row = $barcode_config['barcode_num_in_row'];
+               
+                          $item_arr = array();
+                              foreach($items as $item)
+                              {
+                              	if ($item['barcodes'] == " " or $item['barcodes'] <= 0)
+								{
+							$qty[] = 1;							
+								}
+								else
+								{
+								$qty[] = $item['barcodes'];
+								}					
+							$item_arr[] = $item;              						
+               				
+               			   }
+               
+                       //Below loop counts total quantity of all items across all items for which BC is to be printed
+                        for($i=0;$i<count($items);$i++)
+                            {
+                             for($j=0;$j<$qty[$i];$j++)
+                              {
+                                $item[$count] = $items[$i];
+                                  $count++;
+                              }
+                            }            
+            
+               		   $count_items = $i;
+               
+                          $x = 0;
+                           for($i=0;$i<$count/$num_row;$i++)
+                            {
+                                echo "<tr>";
+                             
+                             for($j=0;$j<$num_row;$j++)
+                            {
+                                echo "<td>";
+                                if($x < $count)
+								{
+               				 echo  $this->barcode_lib->display_barcode($item[$x], $barcode_config);
+								}
+                                else
+								{
+                                echo "";
+                                  echo "</td>";
+								}
+							 $x++;
+               				 
+                            }
+                              echo '</tr>';
+                            }
+               			 ?>
+         </tr>
 	</table>
 	
 </div>

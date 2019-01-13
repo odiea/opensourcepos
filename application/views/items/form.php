@@ -332,6 +332,18 @@
 						);?>
 			</div>
 		</div>
+		
+		<div class="form-group form-group-sm">
+			<?php echo form_label($this->lang->line('items_number_required'), 'barcodes', array('class'=>'required control-label col-xs-3')); ?>
+			<div class='col-xs-4'>
+				<?php echo form_input(array(
+						'name'=>'barcodes',
+						'id'=>'barcodes',
+						'class'=>'form-control input-sm',
+						'value'=>$item_info->barcodes )
+						);?>
+			</div>
+		</div>
 
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('items_description'), 'description', array('class'=>'control-label col-xs-3')); ?>

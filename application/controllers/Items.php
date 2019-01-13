@@ -531,6 +531,7 @@ class Items extends Secure_Controller
 			'unit_price' => parse_decimals(parse_decimals($unit_price)),
 			'reorder_level' => parse_decimals($this->input->post('reorder_level')),
 			'receiving_quantity' => $receiving_quantity,
+			'barcodes' => $this->input->post('barcodes'),
 			'allow_alt_description' => $this->input->post('allow_alt_description') != NULL,
 			'is_serialized' => $this->input->post('is_serialized') != NULL,
 		    'printed'=>$this->input->post('printed') != Null,											 
