@@ -6,14 +6,27 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title><?php echo $this->lang->line('items_generate_barcodes'); ?></title>
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/barcode_font.css" />
-</head>
+<style type="text/css">
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
 
-<body class=<?php echo "font_".$this->barcode_lib->get_font_name($barcode_config['barcode_font']); ?> 
-      style="font-size:<?php echo $barcode_config['barcode_font_size']; ?>px">
+</style>
+	</head>
+<!--<body  class=<?php echo "font_".$this->barcode_lib->get_font_name($barcode_config['barcode_font']); ?> 
+    style="font-size:<?php echo $barcode_config['barcode_font_size']; ?>px">-->
+<body onLoad="print_doc()" class=<?php echo "font_".$this->barcode_lib->get_font_name($barcode_config['barcode_font']); ?> 
+    style="font-size:<?php echo $barcode_config['barcode_font_size']; ?>px">
 	<table cellspacing=<?php echo $barcode_config['barcode_page_cellspacing']; ?> width='<?php echo $barcode_config['barcode_page_width']."%"; ?>' >
 		<tr>
 			<?php
+			$x = 0;
 			$count = 0;
+			do{
 			foreach($items as $item)
 			{
 				if ($count % $barcode_config['barcode_num_in_row'] == 0 and $count != 0)
@@ -22,10 +35,25 @@
 				}
 				echo '<td>' . $this->barcode_lib->display_barcode($item, $barcode_config) . '</td>';
 				++$count;
+			    $item_qty = 3 - 1;//$item['custom1'];
 			}
-			?>
+			$x++;
+				}
+			while($x <= $item_qty);
+		?>
 		</tr>
 	</table>
-</body>
+	
+</div>
+	</body>
 
+<script type="text/javascript">
+ function print_doc()
+  {
+   jsPrintSetup.clearSilentPrint();
+   jsPrintSetup.setOption('printSilent', 1);
+  	jsPrintSetup.print();
+	self.close();
+}	
+</script>
 </html>
