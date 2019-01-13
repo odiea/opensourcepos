@@ -79,6 +79,7 @@ $lang["config_default_barcode_width_required"] = "Default Barcode Width is a req
 $lang["config_default_item_columns"] = "Default Visible Item Columns";
 $lang["config_default_origin_tax_code"] = "Default Origin Tax Code";
 $lang["config_default_sales_discount"] = "Default Sales Discount";
+$lang["config_default_receivings_discount"] = "Default Receivings Discount";
 $lang["config_default_receivings_discount_number"] = "Default Receivings Discount must be a number.";
 $lang["config_default_receivings_discount_required"] = "Default Receivings Discount is a required field.";
 $lang["config_default_sales_discount"] = "Default Sales Discount";
