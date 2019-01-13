@@ -44,7 +44,13 @@ $(document).ready(function()
 <div id="title_bar" class="print_hide btn-toolbar">
 	<button onclick="javascript:printdoc()" class='btn btn-info btn-sm pull-right'>
 		<span class="glyphicon glyphicon-print">&nbsp;</span><?php echo $this->lang->line('common_print'); ?>
-	</button>
+	</button>	
+	
+	<button  class='btn btn-info btn-sm pull-right modal-dlg' data-btn-submit='<?php echo $this->lang->line('common_submit') ?>' data-href="<?php echo site_url("suppliers/view"); ?>"
+		title="<?php echo $this->lang->line($controller_name . '_new'); ?>">
+		<span class="glyphicon glyphicon-user">&nbsp</span><?php echo $this->lang->line($controller_name. '_new_supplier'); ?>
+	</button>		
+	
 	<button class='btn btn-info btn-sm pull-right modal-dlg' data-btn-submit='<?php echo $this->lang->line('common_submit') ?>' data-href='<?php echo site_url($controller_name."/view"); ?>'
 			title='<?php echo $this->lang->line($controller_name.'_new'); ?>'>
 		<span class="glyphicon glyphicon-tags">&nbsp</span><?php echo $this->lang->line($controller_name . '_new'); ?>
