@@ -47,8 +47,8 @@ $(document).ready(function()
 	</button>	
 	
 	<button  class='btn btn-info btn-sm pull-right modal-dlg' data-btn-submit='<?php echo $this->lang->line('common_submit') ?>' data-href="<?php echo site_url("suppliers/view"); ?>"
-		title="<?php echo $this->lang->line($controller_name . '_new'); ?>">
-		<span class="glyphicon glyphicon-user">&nbsp</span><?php echo $this->lang->line($controller_name. '_new_supplier'); ?>
+		title="<?php echo $this->lang->line('suppliers_new'); ?>">
+		<span class="glyphicon glyphicon-user">&nbsp</span><?php echo $this->lang->line('suppliers_new'); ?>
 	</button>		
 	
 	<button class='btn btn-info btn-sm pull-right modal-dlg' data-btn-submit='<?php echo $this->lang->line('common_submit') ?>' data-href='<?php echo site_url($controller_name."/view"); ?>'
