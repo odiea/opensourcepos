@@ -1500,7 +1500,7 @@ class Sales extends Secure_Controller
 	   $categories = array();               
         foreach($item->result() as $result)
 		{            
-			$categories[$result->category][] = $result->name; 	
+			$categories[$result->category][] = $result->name.' : $ ' .$result->cost_price.' :$ '.$result->unit_price ; 	
 			$categories[$result->category][] = $result->item_id;
 	    }	
 		
