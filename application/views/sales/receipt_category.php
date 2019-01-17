@@ -61,11 +61,11 @@
 
 	<table id="receipt_items">
 		<tr>
-			<th style="width:35%;border-bottom: 2px solid "><?php echo $this->lang->line('sales_item_name'); ?></th>
-			<th style="width:25%;border-bottom: 2px solid"><?php echo $this->lang->line('items_category'); ?></th>
-			<th style="width:15%;border-bottom: 2px solid"><?php echo $this->lang->line('sales_price'); ?></th>
-			<th style="width:15%;border-bottom: 2px solid"><?php echo $this->lang->line('sales_quantity'); ?></th>
-			<th style="width:20%;border-bottom: 2px solid" class="total-value"><?php echo $this->lang->line('sales_total'); ?></th>		   
+			<th style="width:35%;"><?php echo $this->lang->line('sales_item_name'); ?></th>
+			<th style="width:25%;"><?php echo $this->lang->line('items_category'); ?></th>
+			<th style="width:15%;"><?php echo $this->lang->line('sales_price'); ?></th>
+			<th style="width:15%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
+			<th style="width:20%;" class="total-value"><?php echo $this->lang->line('sales_total'); ?></th>		   
 		</tr>
 		<?php
 		foreach($cart as $line=>$item)
