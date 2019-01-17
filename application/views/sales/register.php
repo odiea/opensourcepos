@@ -1100,7 +1100,7 @@ function check_payment_type()
 	function additem(val)
 {
 $('#item').val(val);
-$("#add_item_form").submit();
+$('#add_item_form').submit();
 }
 $('.dropdown-toggle').dropdown();
 </script>
