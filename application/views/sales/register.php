@@ -1071,7 +1071,8 @@ function check_payment_type()
 	$.getJSON( '<?php echo site_url($controller_name."/get_item_categories"); ?>', function(data)
  {
         var items = [];		
-        $.each( data, function (key,val)
+       
+	   $.each( data, function (key,val)
 		{                
                 items.push("<div id='quickpick' class='btn-group' style='padding-left: 3px; padding-bottom: 2px;'>");
               	items.push("<button type='button' class='btn btn-sm btn-primary'>" ); 
