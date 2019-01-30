@@ -124,7 +124,7 @@
 					</div>
 
 					<div class="form-group form-group-sm">
-						<?php echo form_label($this->lang->line('customers_available_points'), 'available_points', array('class' => 'control-label col-xs-3')); ?>
+						<?php echo form_label($this->lang->line('customers_available_points_value'), 'available_points', array('class' => 'control-label col-xs-3')); ?>
 						<div class='col-xs-4'>
 							<?php echo form_input(array(
 									'name'=>'available_points',

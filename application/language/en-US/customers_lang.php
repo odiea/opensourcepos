@@ -2,8 +2,8 @@
 
 $lang["customers_account_number"] = "Account #";
 $lang["customers_account_number_duplicate"] = "Account Number is already present in the database.";
-$lang["customers_available_points"] = "Available Points";
-$lang["customers_available_points_value"] = "Available Points Value";
+$lang["customers_available_points_value"] = "Points Value";
+$lang["customers_available_points"] = "Points Value";
 $lang["customers_average"] = "Average spent";
 $lang["customers_avg_discount"] = "Average discount";
 $lang["customers_basic_information"] = "Information";
