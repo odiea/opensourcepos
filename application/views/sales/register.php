@@ -657,8 +657,8 @@ if(isset($success))
 							<th style="width: 45%; text-align: right;"><?php echo $customer_rewards['package_name']; ?></th>
 						</tr>
 						<tr>
-							<th style='width: 55%;'><?php echo $this->lang->line("customers_available_points"); ?></th>
-							<th style="width: 45%; text-align: right;"><?php echo $customer_rewards['points']; ?></th>
+							<th style='width: 55%;'><?php echo $this->lang->line("customers_available_points_value"); ?></th>
+							<th style="width: 45%; text-align: right;"><?php echo to_currency($customer_rewards['points']); ?></th>
 						</tr>
 					<?php
 					}

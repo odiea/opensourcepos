@@ -130,7 +130,7 @@
 									'name'=>'available_points',
 									'id'=>'available_points',
 									'class'=>'form-control input-sm',
-									'value'=>$person_info->points,
+									'value'=>to_currency($person_info->points),
 									'disabled'=>'')
 									); ?>
 						</div>
