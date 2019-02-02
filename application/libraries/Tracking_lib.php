@@ -40,14 +40,14 @@ class Tracking_lib
 			)
 		);
 
-		$this->tracking = new \Racecore\GATracking\GATracking('UA-82359828-2', $options);
+		//$this->tracking = new \Racecore\GATracking\GATracking('UA-82359828-2', $options);
 
-		if(empty($clientId))
+		/*if(empty($clientId))
 		{
 			$clientId = $this->tracking->getClientId();
 
 			$this->CI->Appconfig->batch_save(array('client_id' => $clientId));
-		}
+		}*/
 	}
 
 	/*
@@ -80,17 +80,7 @@ class Tracking_lib
 	{
 		try
 		{
-			/** @var Tracking/Factory $event */
-			$event = $this->tracking->createTracking('Factory', array(
-				'an' => 'OSPOS',
-				'av' => $this->CI->config->item('application_version') . ' - ' . substr($this->CI->config->item('commit_sha1'), 5, 12),
-				'ul' => current_language_code(),
-				'dp' => $path,
-				'dt' => $title,
-				'cd' => $description
-			));
-
-			return $this->tracking->sendTracking($event);
+			
 		}
 		catch(Exception $e)
 		{
