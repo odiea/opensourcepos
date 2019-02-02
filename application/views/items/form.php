@@ -1,7 +1,7 @@
 <?php $markup = $this->config->item('item_markup');?>
 <div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <?php if ($markup > 0 ) :?>
-<div id="required_fields_message" style="color:red";><?php echo $this->lang->line('items_markup'); ?></div>
+<div id="required_fields_message" style="color:red; font-weight:bold";><?php echo $this->lang->line('items_markup'); ?></div>
 <?php endif ;?>
 <ul id="error_message_box" class="error_message_box"></ul>
 
