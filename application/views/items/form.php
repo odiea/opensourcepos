@@ -171,16 +171,14 @@
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
 					<?php endif; ?>
 					<?php if($markup > 0 )					
-					{
-					$cost_price = $item_info->cost_price;
-					?>
-                    <?php $unit_price = parse_decimals($cost_price * (1 +$markup / 100));?>
+					{					
+					?>                   
 				    <?php echo form_input(array(
 							'name'=>'unit_price',
 							'id'=>'unit_price',
 							'readonly'=>'true',
 							'class'=>'form-control input-sm',
-							'value'=>to_currency_no_money($unit_price))
+							'value'=>to_currency_no_money($item_info->unit_price))
 							);?>
 					<?php if (currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
