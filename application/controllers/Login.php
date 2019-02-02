@@ -26,18 +26,7 @@ class Login extends CI_Controller
 				$this->load->view('login');
 			}
 			else
-			{
-				if($this->config->item('statistics'))
-				{
-					$this->load->library('tracking_lib');
-
-					$this->tracking_lib->track_page('login', 'login');
-
-					$this->tracking_lib->track_event('Stats', 'Theme', $this->config->item('theme'));
-					$this->tracking_lib->track_event('Stats', 'Language', $this->config->item('language'));
-					$this->tracking_lib->track_event('Stats', 'Timezone', $this->config->item('timezone'));
-					$this->tracking_lib->track_event('Stats', 'Currency', $this->config->item('currency_symbol'));
-				}
+			{				
 
 				redirect('home');
 			}
