@@ -7,6 +7,23 @@
 
 <?php echo form_open('items/save/'.$item_info->item_id, array('id'=>'item_form', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal')); ?>
 	<fieldset id="item_basic_info">
+		<div class="form-group form-group-sm">	
+				<?php echo form_label($this->lang->line('config_item_markup'), 'item_markup', array('class'=>'control-label col-xs-3')); ?>
+				<div class='col-xs-4'>
+					<div class="input-group">
+						<?php echo form_input(array(
+							'name'=>'item_markup',
+							'id'=>'item_markup',
+							'class'=>'form-control input-sm',
+							'type'=>'number',
+							'min'=>0,
+							'max'=>100,
+							'value'=>$this->config->item('item_markup'))); ?>
+						<span class="input-group-addon input-sm">%</span>
+					</div>
+				</div>
+			</div>
+			
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('items_item_number'), 'item_number', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-8'>
@@ -170,7 +187,7 @@
 					<?php if (!currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
 					<?php endif; ?>
-					<?php if($markup > 0 )					
+					<?php if($this->config->item('item_markup') > 0 )					
 					{					
 					?>                   
 				    <?php echo form_input(array(
@@ -535,14 +552,15 @@ $(document).ready(function()
 			dataType: 'json'
 		})
 	});
-	<?php if($markup > 0 )	
+	<?php if($markup > 0 && $markup != '')	
 	{	
 	?>
-	$('#cost_price, #unit_price').keyup(function() {
+	$('#cost_price, #unit_price, #item_markup').keyup(function() {
 		$.post("<?php echo site_url($controller_name . '/ajax_unit_price')?>",
 			$.extend(csrf_form_base(), {
 					'cost_price': $('#cost_price').val(),
-					'unit_price': $('#unit_price').val(),							
+					'unit_price': $('#unit_price').val(),	
+					'item_markup': $('#item_markup').val(),
 			}),
 			function(response) {
 				$('#unit_price').val(response.unit_price);				
@@ -554,6 +572,7 @@ $(document).ready(function()
 	}
 	?>
 	
+
 	$.validator.addMethod('valid_chars', function(value, element) {
 		return value.match(/(\||:)/g) == null;
 	}, "<?php echo $this->lang->line('attributes_attribute_value_invalid_chars'); ?>");
