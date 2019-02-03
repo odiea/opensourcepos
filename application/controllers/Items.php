@@ -490,15 +490,8 @@ class Items extends Secure_Controller
 		$markup = $this->config->item('item_markup');
 		$cost_price = parse_decimals($this->input->post('cost_price'));
 		//Save item data
-		if ($markup > 0 )
-		{			
-		    $unit_price = parse_decimals($this->input->post('cost_price') * (1 + $markup / 100));
-		}
-		else
-		{
-			$unit_price = parse_decimals($this->input->post('unit_price'));
-		}			   
-
+		$unit_price = parse_decimals($this->input->post('unit_price'));
+		
 		if($receiving_quantity == '0' && $item_type!= ITEM_TEMP)
 		{
 			$receiving_quantity = '1';
@@ -1025,6 +1018,27 @@ class Items extends Secure_Controller
 					$this->Item->save($item_data, $item->item_id);
 				}
 			}
+		}
+	}
+	
+	public function ajax_unit_price()
+	{		
+		$cost_price = parse_decimals($this->input->post('cost_price'));
+		$unit_price = parse_decimals($this->input->post('unit_price'));	        
+		$unit_price= $this->_calculate_unit_price($cost_price, $unit_price);
+
+		echo json_encode(array('unit_price' => to_currency_no_money($unit_price)));
+	}
+
+	/*
+	Calculate total
+	*/
+	private function _calculate_unit_price($cost_price, $unit_price )
+	{
+		$markup = $this->config->item('item_markup');
+		if($markup > 0 )
+		{			
+		return $cost_price * (1 + $markup / 100);
 		}
 	}
 }

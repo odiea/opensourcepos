@@ -535,7 +535,25 @@ $(document).ready(function()
 			dataType: 'json'
 		})
 	});
-
+	<?php if($markup > 0 )	
+	{	
+	?>
+	$('#cost_price, #unit_price').keyup(function() {
+		$.post("<?php echo site_url($controller_name . '/ajax_unit_price')?>",
+			$.extend(csrf_form_base(), {
+					'cost_price': $('#cost_price').val(),
+					'unit_price': $('#unit_price').val(),							
+			}),
+			function(response) {
+				$('#unit_price').val(response.unit_price);				
+			},
+			'json'
+		);
+	});
+	<?php
+	}
+	?>
+	
 	$.validator.addMethod('valid_chars', function(value, element) {
 		return value.match(/(\||:)/g) == null;
 	}, "<?php echo $this->lang->line('attributes_attribute_value_invalid_chars'); ?>");
