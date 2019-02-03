@@ -1024,9 +1024,10 @@ class Items extends Secure_Controller
 	public function ajax_unit_price()
 	{		
 		$markup = parse_decimals($this->input->post('item_markup'));
+		$markup2 = $this->config->item('item_markup');
 		$cost_price = parse_decimals($this->input->post('cost_price'));
 		$unit_price = parse_decimals($this->input->post('unit_price'));	        
-		$unit_price= $this->_calculate_unit_price($cost_price, $unit_price,$markup);
+		$unit_price= $this->_calculate_unit_price($cost_price, $unit_price, $markup, $markup2);
 
 		echo json_encode(array('unit_price' => to_currency_no_money($unit_price)));
 	}
@@ -1034,7 +1035,7 @@ class Items extends Secure_Controller
 	/*
 	Calculate total
 	*/
-	private function _calculate_unit_price($cost_price, $unit_price, $markup )
+	private function _calculate_unit_price($cost_price, $unit_price, $markup, $markup2 )
 	{
 		$markup = $this->input->post('item_markup');
 		if($markup > 0 )
@@ -1043,7 +1044,7 @@ class Items extends Secure_Controller
 		}
 		else
 		{
-		return $cost_price * (1 + 50 / 100);
+		return $cost_price * (1 + $markup2 / 100);
 		}		
 	}
 }
