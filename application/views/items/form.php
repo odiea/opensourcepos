@@ -7,6 +7,7 @@
 
 <?php echo form_open('items/save/'.$item_info->item_id, array('id'=>'item_form', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal')); ?>
 	<fieldset id="item_basic_info">
+		<?php if ($markup > 0 ) :?>
 		<div class="form-group form-group-sm">	
 				<?php echo form_label($this->lang->line('config_item_markup'), 'item_markup', array('class'=>'control-label col-xs-3')); ?>
 				<div class='col-xs-4'>
@@ -23,7 +24,7 @@
 					</div>
 				</div>
 			</div>
-			
+		<?php endif ;?>	
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('items_item_number'), 'item_number', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-8'>
