@@ -16,9 +16,6 @@
 							'name'=>'item_markup',
 							'id'=>'item_markup',
 							'class'=>'form-control input-sm',
-							'type'=>'number',
-							'min'=>0,
-							'max'=>100,
 							'value'=>$this->config->item('item_markup'))); ?>
 						<span class="input-group-addon input-sm">%</span>
 					</div>
