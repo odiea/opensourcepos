@@ -38,23 +38,6 @@
 					</div>
 				</div>
 			</div>		
-			<div class="form-group form-group-sm">	
-				<?php echo form_label($this->lang->line('config_item_markup'), 'item_markup', array('class'=>'control-label col-xs-2')); ?>
-				<div class='col-xs-2'>
-					<div class="input-group">
-						<?php echo form_input(array(
-							'name'=>'item_markup',
-							'id'=>'item_markup',
-							'class'=>'form-control input-sm',
-							'type'=>'number',
-							'min'=>0,
-							'max'=>100,
-							'value'=>$this->config->item('item_markup'))); ?>
-						<span class="input-group-addon input-sm">%</span>
-					</div>
-				</div>
-			</div>
-			
 			
 			<div class="form-group form-group-sm">
 				<?php echo form_label($this->lang->line('config_default_receivings_discount'), 'default_receivings_discount', array('class' => 'control-label col-xs-2 required')); ?>

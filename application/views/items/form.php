@@ -1,7 +1,5 @@
-
 <div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box" class="error_message_box"></ul>
-<?php $markup = 1;?>
 <?php echo form_open('items/save/'.$item_info->item_id, array('id'=>'item_form', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal')); ?>
 	<fieldset id="item_basic_info">		
 		<div class="form-group form-group-sm">	
