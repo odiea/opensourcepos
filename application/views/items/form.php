@@ -1,27 +1,23 @@
-<?php $markup = $this->config->item('item_markup');?>
-<div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?></div>
-<?php if ($markup > 0 ) :?>
-<div id="required_fields_message" style="color:red; font-weight:bold";><?php echo $this->lang->line('items_markup'); ?></div>
-<?php endif ;?>
-<ul id="error_message_box" class="error_message_box"></ul>
 
+<div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?></div>
+<ul id="error_message_box" class="error_message_box"></ul>
+<?php $markup = 1;?>
 <?php echo form_open('items/save/'.$item_info->item_id, array('id'=>'item_form', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal')); ?>
-	<fieldset id="item_basic_info">
-		<?php if ($markup > 0 ) :?>
+	<fieldset id="item_basic_info">		
 		<div class="form-group form-group-sm">	
 				<?php echo form_label($this->lang->line('config_item_markup'), 'item_markup', array('class'=>'control-label col-xs-3')); ?>
 				<div class='col-xs-4'>
-					<div class="input-group">
+					<div class="input-group">						
 						<?php echo form_input(array(
 							'name'=>'item_markup',
 							'id'=>'item_markup',
 							'class'=>'form-control input-sm',
-							'value'=>$this->config->item('item_markup'))); ?>
+							'value'=>($this->input->post('markup')? 1 : 0))); ?>
 						<span class="input-group-addon input-sm">%</span>
 					</div>
 				</div>
 			</div>
-		<?php endif ;?>	
+			
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('items_item_number'), 'item_number', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-8'>
@@ -184,25 +180,7 @@
 				<div class="input-group input-group-sm">
 					<?php if (!currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
-					<?php endif; ?>
-					<?php if($this->config->item('item_markup') > 0 )					
-					{					
-					?>                   
-				    <?php echo form_input(array(
-							'name'=>'unit_price',
-							'id'=>'unit_price',
-							'readonly'=>'true',
-							'class'=>'form-control input-sm',
-							'value'=>to_currency_no_money($item_info->unit_price))
-							);?>
-					<?php if (currency_side()): ?>
-						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
-					<?php endif; ?>
-				   <?php
-                    }
-                    else
-                    {
-                    ?>	
+					<?php endif; ?>				                     
 					<?php echo form_input(array(
 							'name'=>'unit_price',
 							'id'=>'unit_price',
@@ -211,10 +189,7 @@
 							);?>
 					<?php if (currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
-					<?php endif; ?>
-					<?php
-					}
-					?>
+					<?php endif; ?>					
 				</div>
 			</div>
 		</div>
@@ -550,9 +525,7 @@ $(document).ready(function()
 			dataType: 'json'
 		})
 	});
-	<?php if($markup > 0 && $markup != '')	
-	{	
-	?>
+	
 	$('#cost_price, #unit_price, #item_markup').keyup(function() {
 		$.post("<?php echo site_url($controller_name . '/ajax_unit_price')?>",
 			$.extend(csrf_form_base(), {
@@ -565,11 +538,7 @@ $(document).ready(function()
 			},
 			'json'
 		);
-	});
-	<?php
-	}
-	?>
-	
+	});	
 
 	$.validator.addMethod('valid_chars', function(value, element) {
 		return value.match(/(\||:)/g) == null;

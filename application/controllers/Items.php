@@ -1023,29 +1023,22 @@ class Items extends Secure_Controller
 	
 	public function ajax_unit_price()
 	{		
-		$markup = parse_decimals($this->input->post('item_markup'));
-		$markup2 = $this->config->item('item_markup');
+		$markup = parse_decimals($this->input->post('item_markup'));		
 		$cost_price = parse_decimals($this->input->post('cost_price'));
 		$unit_price = parse_decimals($this->input->post('unit_price'));	        
-		$unit_price= $this->_calculate_unit_price($cost_price, $unit_price, $markup, $markup2);
-
-		echo json_encode(array('unit_price' => to_currency_no_money($unit_price)));
+		if($markup > 0 && $markup != '')
+		{
+			$unit_price= $this->_calculate_unit_price($cost_price, $unit_price, $markup);
+			echo json_encode(array('unit_price' => to_currency_no_money($unit_price)));
+		}
 	}
 
 	/*
 	Calculate total
 	*/
-	private function _calculate_unit_price($cost_price, $unit_price, $markup, $markup2 )
-	{
-		$markup = $this->input->post('item_markup');
-		if($markup > 0 )
-		{			
-		return $unit_price = $cost_price * (1 + $markup / 100);		
-		}
-		else
-		{
-		return $cost_price * (1 + $markup2 / 100);
-		}		
+	private function _calculate_unit_price($cost_price, $unit_price, $markup )
+	{				
+		return $unit_price = $cost_price * (1 + $markup / 100);				
 	}
 }
 ?>
