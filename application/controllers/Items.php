@@ -1040,7 +1040,7 @@ class Items extends Secure_Controller
 		$markup = $this->input->post('item_markup');
 		if($markup > 0 )
 		{			
-		return $cost_price * (1 + $markup / 100);		
+		return $unit_price = $cost_price * (1 + $markup / 100);		
 		}
 		else
 		{
