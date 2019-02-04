@@ -77,6 +77,7 @@
 		<link rel="stylesheet" type="text/css" href="dist/opensourcepos.min.css?rel=84371241b2"/>
 		<link rel="stylesheet" type="text/css" href="css/ospos.css"/>		
 		<!-- end mincss template tags -->
+		<link rel="stylesheet" type="text/css" href="css/ospos.css"/>
 		<!-- start minjs template tags -->
 		<script type="text/javascript" src="dist/opensourcepos.min.js?rel=aaf585bba7"></script>
 		<!-- end minjs template tags -->
