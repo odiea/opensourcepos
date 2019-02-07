@@ -174,7 +174,7 @@ if(isset($success))
 							?>
 								<td><?php echo $item['item_number'] ?: $item['item_id'];?></td>
 								<td style="align: center;">
-									<?php echo $item['name'] . ' ' . $item['attribute_values']; ?>
+									<?php echo $item['name'] ; ?>
 									<br/>
 									<?php if ($item['stock_type'] == '0'): echo '[' . to_quantity_decimals($item['in_stock']) . ' in ' . $item['stock_name'] . ']'; endif; ?>
 								</td>
@@ -272,7 +272,7 @@ if(isset($success))
 									{
 										if($item['description']!='' && $item['description']!= 0)
 										{
-											echo $item['description'];
+											echo $item['description'] ." | ". $item['attribute_values'] ;
 											echo form_hidden('description', $item['description']);
 										}
 										else
