@@ -18,17 +18,7 @@ if(isset($success))
 
 ?>
 <div id="register_wrapper">
-<?php $quick_cash_1 = $this->config->item('quick_cash_1');  ?>
-<?php $quick_cash_2 = $this->config->item('quick_cash_2'); ?>
-<?php $quick_cash_3 = $this->config->item('quick_cash_3'); ?>
-<?php $quick_cash_4 = $this->config->item('quick_cash_4'); ?>
-<?php $quick_cash_5 = $this->config->item('quick_cash_5'); ?>
-<?php $quick_cash_6 = $this->config->item('quick_cash_6'); ?>
-
-<!-- Top register controls -->
-
-	<?php echo form_open($controller_name."/change_mode", array('id'=>'mode_form', 'class'=>'form-horizontal panel panel-default')); ?>
-		<?php if(!$this->config->item('quick_cash_enable'))
+<?php if(!$this->config->item('quick_cash_enable'))
 		{
 			?>	
 		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
@@ -41,6 +31,29 @@ if(isset($success))
 		<?php 
 		}
 		?>
+<?php $quick_cash_1 = $this->config->item('quick_cash_1');  ?>
+<?php $quick_cash_2 = $this->config->item('quick_cash_2'); ?>
+<?php $quick_cash_3 = $this->config->item('quick_cash_3'); ?>
+<?php $quick_cash_4 = $this->config->item('quick_cash_4'); ?>
+<?php $quick_cash_5 = $this->config->item('quick_cash_5'); ?>
+<?php $quick_cash_6 = $this->config->item('quick_cash_6'); ?>
+
+<!-- Top register controls -->
+
+	<?php echo form_open($controller_name."/change_mode", array('id'=>'mode_form', 'class'=>'form-horizontal panel panel-default')); ?>
+	<!--	<?php if(!$this->config->item('quick_cash_enable'))
+		{
+			?>	
+		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
+			<div id='quickpick' align='center'>            
+			    <ul>
+                 
+			   </ul>				
+			</div>
+			
+		<?php 
+		}
+		?>-->
 		<div class="panel-body form-group">
 			<ul>
 				<li class="pull-left first_li">
@@ -1075,10 +1088,11 @@ function check_payment_type()
 	   $.each( data, function (key,val)
 		{                
                 items.push("<div id='quickpick' class='btn-group' style='padding-left: 3px; padding-bottom: 2px;'>");
-              	items.push("<button type='button' class='btn btn-sm btn-primary'>" ); 
+                items.push("<button type='button' class='btn btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
+				//items.push("<button type='button' class='btn btn-sm btn-primary'>" ); 
                 items.push(key + "<span class='dropdown-toggle'></span>");
-                items.push("<button type='button' class='btn btn-sm btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
-			    items.push("<span class='caret'></span>");
+                //items.push("<button type='button' class='btn btn-sm btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
+			    //items.push("<span class='caret'></span>");
 				items.push("<span class='sr-only'></span>");
 				items.push("</button>");
                 items.push("<ul class='dropdown-menu scrollable-menu'>");
