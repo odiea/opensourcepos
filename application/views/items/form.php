@@ -64,7 +64,6 @@
 			</script>
 		</div>
 
-		<?php if ($item_kits_enabled == '1'): ?>
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('items_stock_type'), 'stock_type', !empty($basic_version) ? array('class'=>'required control-label col-xs-3') : array('class'=>'control-label col-xs-3')); ?>
 			<div class="col-xs-8">
@@ -98,6 +97,7 @@
 							'type'=>'radio',
 							'id'=>'item_type',
 							'value'=>0,
+							'disabled'=>$item_type_disabled,
 							'checked'=>$item_info->item_type == ITEM)
 					); ?> <?php echo $this->lang->line('items_standard'); ?>
 				</label>
@@ -107,6 +107,7 @@
 							'type'=>'radio',
 							'id'=>'item_type',
 							'value'=>1,
+							'disabled'=>$item_type_disabled,
 							'checked'=>$item_info->item_type == ITEM_KIT)
 					); ?> <?php echo $this->lang->line('items_kit'); ?>
 				</label>
@@ -143,7 +144,6 @@
 				?>
 			</div>
 		</div>
-		<?php endif; ?>
 
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('items_supplier'), 'supplier', array('class'=>'control-label col-xs-3')); ?>
