@@ -18,19 +18,6 @@ if(isset($success))
 
 ?>
 <div id="register_wrapper">
-<?php if(!$this->config->item('quick_cash_enable'))
-		{
-			?>	
-		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; text-align:center;} </style>		
-			<div id='quickpick' align='center'>            
-			    <ul>
-                 
-			   </ul>				
-			</div>
-			
-		<?php 
-		}
-		?>
 <?php $quick_cash_1 = $this->config->item('quick_cash_1');  ?>
 <?php $quick_cash_2 = $this->config->item('quick_cash_2'); ?>
 <?php $quick_cash_3 = $this->config->item('quick_cash_3'); ?>
@@ -41,11 +28,11 @@ if(isset($success))
 <!-- Top register controls -->
 
 	<?php echo form_open($controller_name."/change_mode", array('id'=>'mode_form', 'class'=>'form-horizontal panel panel-default')); ?>
-	<!--	<?php if(!$this->config->item('quick_cash_enable'))
+	<?php if(!$this->config->item('quick_cash_enable'))
 		{
 			?>	
 		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; text-align:center;} </style>		
-			<div id='quickpick' align='center'>            
+			<div id='quickpick' align = 'center'>            
 			    <ul>
                  
 			   </ul>				
@@ -53,7 +40,7 @@ if(isset($success))
 			
 		<?php 
 		}
-		?>-->
+		?>
 		<div class="panel-body form-group">
 			<ul>
 				<li class="pull-left first_li">
@@ -1093,7 +1080,7 @@ function check_payment_type()
                 items.push("<ul class='dropdown-menu scrollable-menu'>");
                 $.each(val,function(ikey,ival) 
 				{
-                    items.push("<li><button type='button' class='btn btn-secondary' onclick='additem(" + ival + ")'>"+ival+"</a></li>"); 
+                    items.push("<li><button type='button' class='btn btn-primary' onclick='additem(" + ival + ")'>"+ival+"</a></li>"); 
                 });
                 items.push( "</ul>");
                 items.push( "</div>");       
