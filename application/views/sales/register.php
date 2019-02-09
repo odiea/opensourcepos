@@ -21,7 +21,7 @@ if(isset($success))
 <?php if(!$this->config->item('quick_cash_enable'))
 		{
 			?>	
-		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
+		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; text-align:center;} </style>		
 			<div id='quickpick' align='center'>            
 			    <ul>
                  
@@ -44,7 +44,7 @@ if(isset($success))
 	<!--	<?php if(!$this->config->item('quick_cash_enable'))
 		{
 			?>	
-		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
+		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; text-align:center;} </style>		
 			<div id='quickpick' align='center'>            
 			    <ul>
                  
@@ -339,10 +339,9 @@ if(isset($success))
 			{
 		?>
 		<th style='width: 55%; text-align:center;'><?php echo $this->lang->line("items_categories"); ?></th>
-		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; } </style>		
-			<div id='quickpick' align='center'>    
-				<ul>
-                 
+		<style type='text/css'> .scrollable-menu { max-height: 400px; overflow-x: hidden; height: auto; text-align:center; } </style>		
+			<div id='quickpick' >    
+				<ul>                 
 			   </ul>				
 			</div>			
 		<?php 
@@ -1089,16 +1088,12 @@ function check_payment_type()
 		{                
                 items.push("<div id='quickpick' class='btn-group' style='padding-left: 3px; padding-bottom: 2px;'>");
                 items.push("<button type='button' class='btn btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
-				//items.push("<button type='button' class='btn btn-sm btn-primary'>" ); 
-                items.push(key + "<span class='dropdown-toggle'></span>");
-                //items.push("<button type='button' class='btn btn-sm btn-primary' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>");
-			    //items.push("<span class='caret'></span>");
-				items.push("<span class='sr-only'></span>");
+			    items.push(key + "<span class='dropdown-toggle'></span>"); 			
 				items.push("</button>");
                 items.push("<ul class='dropdown-menu scrollable-menu'>");
                 $.each(val,function(ikey,ival) 
 				{
-                    items.push("<li><a onclick='additem(" + ival + ")'> "+ival+"</a></li>"); 
+                    items.push("<li><button type='button' class='btn btn-secondary' onclick='additem(" + ival + ")'>"+ival+"</a></li>"); 
                 });
                 items.push( "</ul>");
                 items.push( "</div>");       
