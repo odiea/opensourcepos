@@ -23,7 +23,13 @@
 		<div id="company_address"><?php echo nl2br($this->config->item('address')); ?></div>
 		<div id="company_phone"><?php echo $this->config->item('phone'); ?></div>
 		<br>
-		<div id="sale_receipt"><?php echo $this->lang->line('sales_receipt'); ?></div>
+		<?php if(!empty($invoice_number)):?>		
+		<div id="sale_receipt" style="font-size:110%; font-weight:bold;"><?php echo $this->lang->line('sales_invoice') ?></div>
+		<?php elseif($total <= 0 ):?>		
+		<div id="sale_receipt" style="font-size:110%; font-weight:bold;"><?php echo $this->lang->line('sales_return')?></div>
+         <?php else:?>		
+		<div id="sale_receipt" style="font-size:110%; font-weight:bold;"><?php echo $this->lang->line('sales_receipt'); ?></div>
+		<?php endif ?>	
 		<div id="sale_time"><?php echo $transaction_time ?></div>
 	</div>
 
@@ -34,12 +40,23 @@
 		if(isset($customer))
 		{
 		?>
+			<?php if(!empty($company_name)):?>
+			<div id="customer"><?php echo $this->lang->line('customers_company_name').": ". $company_name; ?></div>
+			<?php endif?>
 			<div id="customer"><?php echo $this->lang->line('customers_customer').": ".$customer; ?></div>
 		<?php
 		}
 		?>
 
 		<div id="sale_id"><?php echo $this->lang->line('sales_id').": ".$sale_id; ?></div>
+		<?php
+		if(!empty($invoice_number))
+		{
+		?>
+			<div id="invoice_number"><?php echo $this->lang->line('sales_invoice_number').": ".$invoice_number; ?></div>
+		<?php
+		}
+		?>
 		<div id="employee"><?php echo $this->lang->line('employees_employee').": ".$employee; ?></div>
 	</div>
 
@@ -100,7 +117,7 @@
 						<?php
 						}	
 						?>
-						<td class="total-value"><?php echo to_currency($item['discounted_total']); ?></td>
+						<td class="total-value" style="text-align:right;"><?php echo to_currency($item['discounted_total']); ?></td>
 					</tr>
 				<?php
 				}
@@ -201,6 +218,10 @@
 	</table>
 
 	<div id="sale_return_policy" style="text-align:center">
+		<?php if(!empty($invoice_number)):?>
+		<?php echo $this->config->item('invoice_default_comments'); ?>
+		<br>
+		<?php endif ?>		
 		<?php echo nl2br($this->config->item('return_policy')); ?>
 	</div>
 

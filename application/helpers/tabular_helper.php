@@ -73,7 +73,7 @@ function get_sales_manage_table_headers()
 	if($CI->config->item('invoice_enable') == TRUE)
 	{
 		$headers[] = array('invoice_number' => $CI->lang->line('sales_invoice_number'));
-		$headers[] = array('invoice' => '&nbsp', 'sortable' => FALSE);
+		//$headers[] = array('invoice' => '&nbsp', 'sortable' => FALSE);
 	}
 	$headers[] = array('receipt' => '&nbsp', 'sortable' => FALSE);
 
@@ -102,9 +102,9 @@ function get_sale_data_row($sale)
 	if($CI->config->item('invoice_enable'))
 	{
 		$row['invoice_number'] = $sale->invoice_number;
-		$row['invoice'] = empty($sale->invoice_number) ? '' : anchor($controller_name."/invoice/$sale->sale_id", '<span class="glyphicon glyphicon-list-alt"></span>',
+		$row['invoice'] = empty($sale->invoice_number) ? '' : '';/*anchor($controller_name."/invoice/$sale->sale_id", '<span class="glyphicon glyphicon-list-alt"></span>',
 			array('title'=>$CI->lang->line('sales_show_invoice'))
-		);
+		);*/
 	}
 
 	$row['receipt'] = anchor($controller_name."/receipt/$sale->sale_id", '<span class="glyphicon glyphicon-usd"></span>',

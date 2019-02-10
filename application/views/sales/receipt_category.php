@@ -97,16 +97,29 @@
 				?>
 			</tr>
 			<?php
-			if($item['discount'] > 0)
-			{
-			?>
-				<tr>
-					<td colspan="4" class="discount"><?php echo number_format($item['discount'], 0) . " " . $this->lang->line("sales_discount_included")?></td>
-					<td class="total-value"><?php echo to_currency($item['discounted_total']) ; ?></td>
-				</tr>
-			<?php
-			}
-			?>
+				if($item['discount'] > 0)
+				{
+				?>
+					<tr>
+						<?php
+						if($item['discount_type'] == FIXED)
+						{
+						?>
+							<td colspan="4" class="discount"><?php echo to_currency($item['discount']) . " " . $this->lang->line("sales_discount") ?></td>
+						<?php
+						}
+						elseif($item['discount_type'] == PERCENT)
+						{
+						?>
+							<td colspan="4" class="discount"><?php echo number_format($item['discount'], 0) . " " . $this->lang->line("sales_discount_included") ?></td>
+						<?php
+						}	
+						?>
+						<td class="total-value"><?php echo to_currency($item['discounted_total']); ?></td>
+					</tr>
+				<?php
+				}
+				?>
 		<?php
 		}
 		?>
