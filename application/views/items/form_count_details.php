@@ -70,12 +70,13 @@
 <table id="items_count_details" class="table table-striped table-hover">
 	<thead>
 		<tr style="background-color: #999 !important;">
-			<th colspan="4"><?php echo $this->lang->line('items_inventory_data_tracking'); ?></th>
+			<th colspan="5"><?php echo $this->lang->line('items_inventory_data_tracking'); ?></th>
 		</tr>
 		<tr>
 			<th width="30%"><?php echo $this->lang->line('items_inventory_date'); ?></th>
 			<th width="20%"><?php echo $this->lang->line('items_inventory_employee'); ?></th>
 			<th width="20%"><?php echo $this->lang->line('items_inventory_in_out_quantity'); ?></th>
+			<th width="20%"><?php echo $this->lang->line('items_current_quantity'); ?></th>
 			<th width="30%"><?php echo $this->lang->line('items_inventory_remarks'); ?></th>
 		</tr>
 	</thead>
@@ -140,8 +141,12 @@ function display_stock(location_id)
             td.appendChild(document.createTextNode(parseFloat(data['trans_inventory']).toFixed(<?php echo quantity_decimals(); ?>)));
 			td.setAttribute("style", "text-align:center");
             tr.appendChild(td);
-
+ 
             td = document.createElement('td');
+            td.appendChild(document.createTextNode(parseFloat(item_quantities[location_id]).toFixed(<?php echo quantity_decimals(); ?>)));
+            tr.appendChild(td);
+			
+			td = document.createElement('td');
             td.appendChild(document.createTextNode(data['trans_comment']));
             tr.appendChild(td);
 
