@@ -1,6 +1,6 @@
 <div id="config_wrapper">
 	<?php echo $this->lang->line('config_server_notice'); ?>
-	<table class="table text-left" >
+	<table class="table text-left" style="background-color: white"; >
 		<tbody>
 		<tr>
 		  <th>OSPOS Info</th>
@@ -18,9 +18,6 @@
 				echo "OpenSSL: ", extension_loaded('openssl') ? 'Enabled &#x2713' : 'MISSING &#x2717', '<br>';
 				echo "MBString: ", extension_loaded('mbstring') ? 'Enabled &#x2713' : 'MISSING &#x2717', '<br>';
 				echo "Curl: ", extension_loaded('curl') ? 'Enabled &#x2713' : 'MISSING &#x2717', '<br>';
-			//	echo print_r(apache_get_modules()); 
-				//echo "Rewrite Module: ", $isEnabled = in_array('mod_rewrite', apache_get_modules());
-				//echo ($isEnabled) ? 'OK &#x2713' : 'MISSING &#x2717', '<br>'; 
 			?>	
 			</td>
 		</tr>
@@ -40,17 +37,13 @@
 					return 'Other';
 				}
 				echo get_browser_name($_SERVER['HTTP_USER_AGENT']);
-			?><br>
-
+			?><br>				
 				Server Software: 
-				<?php echo $_SERVER['SERVER_SOFTWARE']; ?><br>
-				PHP Version: 
-				<?php echo PHP_VERSION; ?> <br>
-				Apache Version: <br>
+				<?php echo $_SERVER['SERVER_SOFTWARE']; ?><br>						
 				Server Port: 
 				<?php echo $_SERVER['SERVER_PORT']; ?><br>
-				DB Version: 
-				<?php print mysqli_get_client_info(); ?><br>
+				DB Version: 				
+				<?php print mysqli_get_client_info(); ?><br>				
 				OS: 
 				<?php echo php_uname();	?></td>
 		</tr>
@@ -98,3 +91,23 @@
 			</td>
 	</table>
 </div>
+<script type="text/javascript">
+$(document).ready(function()
+{
+function get_active_db(){
+
+    $sql='SELECT DATABASE()';
+
+    $sqlresult=mysql_query($sql);
+
+    $row=mysql_fetch_row($sqlresult);
+
+    $active_db=$row[0];
+
+    echo "Active Database :<b> $active_db</b> ";
+
+    }
+}
+	</script>
+___
+
