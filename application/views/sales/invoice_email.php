@@ -84,7 +84,7 @@
 			{
 			?>
 			<tr class="item-row">
-				<td><?php echo $item['item_number']; ?></td>
+				<td><?php echo $item['item_number'] ?: $item['item_id'];?></td>
 				<td class="item-name"><?php echo $item['name']; ?></td>
 				<td><?php echo to_quantity_decimals($item['quantity']); ?></td>
 				<td><?php echo to_currency($item['price']); ?></td>
