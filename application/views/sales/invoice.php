@@ -132,7 +132,7 @@ $(document).ready(function()
 			{
 			?>
 				<tr class="item-row">
-					<td><?php echo $item['item_number']; ?></td>
+					<td><?php echo $item['item_number'] ?: $item['item_id'];?></td>
 					<?php if($include_hsn): ?>
 						<td style='text-align:center;'><textarea rows="4" cols="6"><?php echo $item['hsn_code']; ?></textarea>
 						</td>
