@@ -23,13 +23,13 @@
 				?>
 			</td>
 			<td id="customer-title">
-				<pre><?php if(isset($customer)) { echo $customer_info; } ?></pre>
+				<pre><?php if(isset($customer)) { echo nl2br($customer_info); } ?></pre>
 			</td>
 		</tr>
 		<tr>
 			<td id="company-title">
 				<pre><?php echo $this->config->item('company'); ?></pre>
-				<pre><?php echo $company_info; ?></pre>
+				<pre><?php echo nl2br($company_info); ?></pre>
 			</td>
 			<td id="meta">
 				<table align="right">
