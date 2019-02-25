@@ -279,6 +279,11 @@ class Sale extends CI_Model
 			$this->db->group_end();
 		}
 
+		if($filters['only_credit'] != FALSE)
+		{
+			$this->db->like('payments.payment_type', $this->lang->line('sales_credit'));
+		}
+		
 		if($filters['only_due'] != FALSE)
 		{
 			$this->db->like('payments.payment_type', $this->lang->line('sales_due'));
@@ -287,6 +292,11 @@ class Sale extends CI_Model
 		if($filters['only_check'] != FALSE)
 		{
 			$this->db->like('payments.payment_type', $this->lang->line('sales_check'));
+		}
+		
+		if($filters['only_debit'] != FALSE)
+		{
+			$this->db->like('payments.payment_type', $this->lang->line('sales_debit'));
 		}
 
 		// get_found_rows case
@@ -384,6 +394,16 @@ class Sale extends CI_Model
 		if($filters['only_cash'] != FALSE)
 		{
 			$this->db->like('payment_type', $this->lang->line('sales_cash'));
+		}
+		
+		if($filters['only_credit'] != FALSE)
+		{
+			$this->db->like('payment_type', $this->lang->line('sales_credit'));
+		}
+		
+		if($filters['only_debit'] != FALSE)	
+		{
+			$this->db->like('payment_type', $this->lang->line('sales_debit'));
 		}
 
 		if($filters['only_due'] != FALSE)
