@@ -94,28 +94,28 @@ class Cashups extends Secure_Controller
 			$this->load->model('reports/Summary_cashups_payments');
 			$reports_data = $this->Summary_cashups_payments->getData($inputs);		
 					
-			$cash_ups_info->expected_closed_amount_cash = 0;
-			$cash_ups_info->expected_closed_amount_cash = $cash_ups_info->open_amount_cash - $cash_ups_info->transfer_amount_cash ;
-			$cash_ups_info->expected_closed_amount_card = 0;
-			$cash_ups_info->expected_closed_amount_check = 0;
+			$cash_ups_info->closed_amount_cash = 0;
+			$cash_ups_info->closed_amount_cash = $cash_ups_info->open_amount_cash - $cash_ups_info->transfer_amount_cash ;
+			$cash_ups_info->closed_amount_card = 0;
+			$cash_ups_info->closed_amount_check = 0;
 			foreach($reports_data as $row)
 			{
 				if($row['payment_type'] == $this->lang->line('sales_cash'))
 				{					
-					$cash_ups_info->expected_closed_amount_cash += $this->xss_clean($row['payment_amount']);
+					$cash_ups_info->closed_amount_cash += $this->xss_clean($row['payment_amount']);
 				}
 				elseif($row['payment_type'] == $this->lang->line('sales_due'))
 				{
-					$cash_ups_info->expected_closed_amount_cash -= $this->xss_clean($row['payment_amount']);
+					$cash_ups_info->closed_amount_cash -= $this->xss_clean($row['payment_amount']);
 				}
 				elseif($row['payment_type'] == $this->lang->line('sales_debit') || 
 						$row['payment_type'] == $this->lang->line('sales_credit'))
 				{					
-					$cash_ups_info->expected_closed_amount_card += $this->xss_clean($row['payment_amount']);
+					$cash_ups_info->closed_amount_card += $this->xss_clean($row['payment_amount']);
 				}
 				elseif($row['payment_type'] == $this->lang->line('sales_check'))
 				{
-					$cash_ups_info->expected_closed_amount_check += $this->xss_clean($row['payment_amount']);
+					$cash_ups_info->closed_amount_check += $this->xss_clean($row['payment_amount']);
 				}
 			}
 				
@@ -126,16 +126,31 @@ class Cashups extends Secure_Controller
 						 'only_check' => FALSE,
 						 'only_credit' => FALSE,
 						 'only_debit' => FALSE,
+						 'only_invoices' => FALSE,
 						 'is_deleted' => FALSE);
+						 
 			$payments = $this->Expense->get_payments_summary('', array_merge($inputs, $filters));
-			$cash_ups_info->transfer_amount_cash = 0;
+			$cash_ups_info->transfer_amount_cash = 0;			
+			//$cash_ups_info->expected_closed_amount_card = 0;
+			$cash_ups_info->expected_closed_amount_check  = 0;
 			foreach($payments as $row)
 			{				
 				$cash_ups_info->transfer_amount_cash += $this->xss_clean($row['amount']);
-			}
-            
-			$cash_ups_info->expected_closed_amount_total =  $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->expected_closed_amount_card + $cash_ups_info->expected_closed_amount_check;
+			}            
+			$cash_ups_info->expected_closed_amount_cash = $cash_ups_info->open_amount_cash - $cash_ups_info->transfer_amount_cash;
+
+			$incomes = $this->Sale->get_payments_summary('', array_merge($inputs, $filters));
 			
+			foreach($incomes as $row)
+			{	
+			if($row['payment_type'] == $this->lang->line('sales_cash'))
+				{
+					$cash_ups_info->expected_closed_amount_cash += $this->xss_clean($row['payment_amount']);
+				}
+			}	
+			
+		$cash_ups_info->expected_closed_amount_total =  $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->expected_closed_amount_card + $cash_ups_info->expected_closed_amount_check;
+
 		$data['cash_ups_info'] = $cash_ups_info;		
 	
 		$this->load->view("cashups/form", $data);
