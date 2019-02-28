@@ -33,7 +33,7 @@ class Cashups extends Secure_Controller
 					 'is_deleted' => FALSE);
 
 		// check if any filter is set in the multiselect dropdown
-		$filledup = array_fill_keys($this->input->get('filters'), TRUE);
+		$filledup = array_fill_keys($this->input->get('filters'), FALSE);
 		$filters = array_merge($filters, $filledup);
 		$cash_ups = $this->Cashup->search($search, $filters, $limit, $offset, $sort, $order);
 		$total_rows = $this->Cashup->get_found_rows($search, $filters);
@@ -121,7 +121,7 @@ class Cashups extends Secure_Controller
 				
 			// lookup expenses paid in cash
 			$filters = array(
-						 'only_cash' => TRUE,
+						 'only_cash' => FALSE,
 						 'only_due' => FALSE,
 						 'only_check' => FALSE,
 						 'only_credit' => FALSE,
@@ -131,7 +131,7 @@ class Cashups extends Secure_Controller
 						 
 			$payments = $this->Expense->get_payments_summary('', array_merge($inputs, $filters));
 			$cash_ups_info->transfer_amount_cash = 0;			
-			//$cash_ups_info->expected_closed_amount_card = 0;
+			$cash_ups_info->expected_closed_amount_card = 0;
 			$cash_ups_info->expected_closed_amount_check  = 0;
 			foreach($payments as $row)
 			{				
@@ -146,6 +146,15 @@ class Cashups extends Secure_Controller
 			if($row['payment_type'] == $this->lang->line('sales_cash'))
 				{
 					$cash_ups_info->expected_closed_amount_cash += $this->xss_clean($row['payment_amount']);
+				}
+			elseif($row['payment_type'] == $this->lang->line('sales_debit') || 
+						$row['payment_type'] == $this->lang->line('sales_credit'))
+				{					
+					$cash_ups_info->expected_closed_amount_card += $this->xss_clean($row['payment_amount']);
+				}	
+				elseif($row['payment_type'] == $this->lang->line('sales_check'))
+				{
+					$cash_ups_info->expected_closed_amount_check += $this->xss_clean($row['payment_amount']);
 				}
 			}	
 			
