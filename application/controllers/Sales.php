@@ -1253,7 +1253,7 @@ class Sales extends Secure_Controller
 		$newdate = $this->input->post('date');
 
 		$date_formatter = date_create_from_format($this->config->item('dateformat') . ' ' . $this->config->item('timeformat'), $newdate);
-
+		
 		$sale_data = array(
 			'sale_time' => $date_formatter->format('Y-m-d H:i:s'),
 			'customer_id' => $this->input->post('customer_id') != '' ? $this->input->post('customer_id') : NULL,
