@@ -68,16 +68,18 @@ class Cashups extends Secure_Controller
 			$cash_ups_info->$property = $this->xss_clean($value);
 		}
 
-		// open cashup
 		if(empty($cash_ups_info->cashup_id))
 		{
 			$cash_ups_info->open_date = date('Y-m-d H:i:s');
 			$cash_ups_info->close_date = $cash_ups_info->open_date;
 			$cash_ups_info->open_employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
 			$cash_ups_info->close_employee_id = $this->Employee->get_logged_in_employee_info()->person_id;
-			$cash_ups_info->open_amount_cash = 0;
-			$cash_ups_info->transfer_amount_cash = 0;			
-		}		
+		}
+		// if all the amounts are null or 0 that means it's a close cashup
+		elseif(floatval($cash_ups_info->closed_amount_cash) == 0 &&
+			floatval($cash_ups_info->closed_amount_card) == 0 &&
+			floatval($cash_ups_info->closed_amount_check) == 0)
+		{	
 			// if it's date mode only and not date & time truncate the open and end date to date only
 			if(empty($this->config->item('date_or_time_format')))
 			{
@@ -159,7 +161,7 @@ class Cashups extends Secure_Controller
 			}	
 			
 		$cash_ups_info->expected_closed_amount_total =  $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->expected_closed_amount_card + $cash_ups_info->expected_closed_amount_check;
-
+		}
 		$data['cash_ups_info'] = $cash_ups_info;		
 	
 		$this->load->view("cashups/form", $data);
