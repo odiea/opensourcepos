@@ -767,7 +767,7 @@ class Sales extends Secure_Controller
 				$sale_type = SALE_TYPE_POS;
 			}
 
-			$data['sale_id_num'] = $this->Sale->save($sale_id, $data['sale_status'], $data['cart'], $customer_id, $employee_id, $data['comments'], $invoice_number, $work_order_number, $quote_number, $sale_type, $data['payments'], $data['dinner_table'], $tax_details);
+			$data['sale_id_num'] = $this->Sale->save($sale_id, $data['sale_status'], $data['cart'], $customer_id, $employee_id, $data['comments'], $invoice_number, $work_order_number, $quote_number, $sale_type, $data['payments'], $data['total'], $data['dinner_table'], $tax_details);
 
 			$data['sale_id'] = 'POS ' . $data['sale_id_num'];
 
@@ -1265,6 +1265,7 @@ class Sales extends Secure_Controller
 		// go through all the payment type input from the form, make sure the form matches the name and iterator number
 		$payments = array();
 		$number_of_payments = $this->input->post('number_of_payments');
+		$total = $totals['total'];
 		for($i = 0; $i < $number_of_payments; ++$i)
 		{
 			$payment_amount = $this->input->post('payment_amount_' . $i);
@@ -1295,9 +1296,8 @@ class Sales extends Secure_Controller
 					$payments[$key]['payment_amount'] += $payment_amount;
 				}
 			}
-		}
-
-		if($this->Sale->update($sale_id, $sale_data, $payments))
+		}		
+		if($this->Sale->update($sale_id, $sale_data, $payments, $total))
 		{
 			echo json_encode(array('success' => TRUE, 'message' => $this->lang->line('sales_successfully_updated'), 'id' => $sale_id));
 		}

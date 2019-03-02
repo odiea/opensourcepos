@@ -605,7 +605,7 @@ class Sale extends CI_Model
 	 * The sales_taxes variable needs to be initialized to an empty array before calling
 	 */
 	public function save($sale_id, &$sale_status, &$items, $customer_id, $employee_id, $comment, $invoice_number,
-							$work_order_number, $quote_number, $sale_type, $payments, $dinner_table, &$sales_taxes)
+							$work_order_number, $quote_number, $sale_type, $payments, $totals,  $dinner_table, &$sales_taxes)
 	{
 		if($sale_id != -1)
 		{
@@ -671,7 +671,8 @@ class Sale extends CI_Model
 			$sales_payments_data = array(
 				'sale_id'		 => $sale_id,
 				'payment_type'	 => $payment['payment_type'],
-				'payment_amount' => $payment['payment_amount']
+				'payment_amount' => $payment['payment_amount'],
+				'total_amount' => $totals
 			);
 			$this->db->insert('sales_payments', $sales_payments_data);
 			$total_amount = floatval($total_amount) + floatval($payment['payment_amount']);
