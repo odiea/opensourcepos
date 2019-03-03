@@ -1,4 +1,7 @@
-<div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
+<h3><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
+<br>
+<?php echo 'Cancel if just checking';?>
+</div></h3>
 
 <ul id="error_message_box" class="error_message_box"></ul>
 
@@ -7,6 +10,7 @@
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_info'), 'cash_ups_info', array('class'=>'control-label col-xs-3')); ?>
 			<?php echo form_label(!empty($cash_ups_info->cashup_id) ? $this->lang->line('cashups_id') . ' ' . $cash_ups_info->cashup_id : '', 'cashup_id', array('class'=>'control-label col-xs-8', 'style'=>'text-align:left')); ?>
+		
 		</div>
 
 		<div class="form-group form-group-sm">
@@ -274,6 +278,10 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal-footer" style= "text-align: center;">
+      <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->lang->line('cashups_cancel_cashups')?></button>
+       </div>
 
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_description'), 'description', array('class'=>'control-label col-xs-3')); ?>
@@ -305,7 +313,7 @@
 		<?php
 		}
 		?>
-	</fieldset>
+	</fieldset>	
 <?php echo form_close(); ?>
 
 <script type='text/javascript'>
