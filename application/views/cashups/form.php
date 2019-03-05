@@ -202,6 +202,7 @@
 					<?php echo form_input(array(
 							'name'=>'closed_amount_card',
 							'id'=>'closed_amount_card',
+							'readonly'=>'true',
 							'class'=>'form-control input-sm',
 							'value'=>to_currency_no_money($cash_ups_info->closed_amount_card))
 							);?>
@@ -483,11 +484,11 @@ $(document).ready(function()
 		}
 	}, form_support.error));
 	
-	$("#cancel_sale_button").click(function()
+	$("#submit_form").click(function()
 	{
 		if(confirm("<?php echo $this->lang->line("sales_confirm_cancel_sale"); ?>"))
 		{
-			$('#buttons_form').attr('action', "<?php echo site_url($controller_name."/cancel"); ?>");
+			$('#buttons_form').attr('action', "<?php echo site_url($controller_name."/save"); ?>");
 			$('#buttons_form').submit();
 		}
 	});

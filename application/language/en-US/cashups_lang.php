@@ -4,6 +4,7 @@ $lang["cashups_amount"] = "Amount";
 $lang["cashups_amount_number"] = "Amount must be a number";
 $lang["cashups_amount_required"] = "Amount is a Required Field.";
 $lang["cashups_cancel_cashups"] = "Cancel";
+$lang["cashups_confirm_submit"] = "Are you sure you want to Submit this Cashup? The day will be closed.";
 $lang["cashups_cannot_be_deleted"] = "Cashup cannot be deleted";
 $lang["cashups_close_date"] = "Close Date";
 $lang["cashups_close_employee"] = "Closed By";
