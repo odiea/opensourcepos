@@ -77,6 +77,7 @@ class Cashups extends Secure_Controller
 		}
 		// if all the amounts are null or 0 that means it's a close cashup
 		elseif(floatval($cash_ups_info->closed_amount_cash) == 0 &&
+			floatval($cash_ups_info->closed_amount_due) == 0 &&
 			floatval($cash_ups_info->closed_amount_card) == 0 &&
 			floatval($cash_ups_info->closed_amount_check) == 0)
 		{	
@@ -110,7 +111,8 @@ class Cashups extends Secure_Controller
 				}
 				elseif($row['payment_type'] == $this->lang->line('sales_due'))
 				{
-					$cash_ups_info->closed_amount_cash -= $this->xss_clean($row['payment_amount']);
+					$cash_ups_info->closed_amount_due -= $this->xss_clean($row['payment_amount']);
+					$cash_ups_info->expected_closed_amount_due -= $this->xss_clean($row['payment_amount']);
 				}
 				elseif($row['payment_type'] == $this->lang->line('sales_debit') || 
 						$row['payment_type'] == $this->lang->line('sales_credit'))
@@ -182,9 +184,11 @@ class Cashups extends Secure_Controller
 			'open_amount_cash' => parse_decimals($this->input->post('open_amount_cash')),
 			'transfer_amount_cash' => parse_decimals($this->input->post('transfer_amount_cash')),
 			'closed_amount_cash' => parse_decimals($this->input->post('closed_amount_cash')),
+			'closed_amount_due' => parse_decimals($this->input->post('closed_amount_due')),
 			'closed_amount_card' => parse_decimals($this->input->post('closed_amount_card')),
 			'closed_amount_check' => parse_decimals($this->input->post('closed_amount_check')),
 			'closed_amount_total' => parse_decimals($this->input->post('closed_amount_total')),
+			'expected_closed_amount_due' => parse_decimals($this->input->post('expected_closed_amount_due')),
 			'expected_closed_amount_cash' => parse_decimals($this->input->post('expected_closed_amount_cash')),
 			'expected_closed_amount_card' => parse_decimals($this->input->post('expected_closed_amount_card')),
 			'expected_closed_amount_check' => parse_decimals($this->input->post('expected_closed_amount_check')),

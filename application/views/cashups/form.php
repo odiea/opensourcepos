@@ -1,7 +1,7 @@
-<h3><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
+<h4><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
 <br>
 <?php echo 'Cancel if just checking';?>
-</div></h3>
+</div></h4>
 
 <ul id="error_message_box" class="error_message_box"></ul>
 
@@ -150,7 +150,47 @@
 					'checked'=>($cash_ups_info->note) ? 1 : 0)
 				);?>
 			</div>
-		</div>	
+		</div>
+
+		<div class="form-group form-group-sm">
+			<?php echo form_label($this->lang->line('cashups_closed_amount_due'), 'closed_amount_due', array('class'=>'control-label col-xs-3')); ?>
+			<div class='col-xs-4'>
+				<div class="input-group input-group-sm">
+					<?php if (!currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+					<?php echo form_input(array(
+							'name'=>'closed_amount_due',
+							'id'=>'closed_amount_due',
+							'readonly'=>'true',
+							'class'=>'form-control input-sm',
+							'value'=>to_currency_no_money($cash_ups_info->closed_amount_due))
+							);?>
+					<?php if (currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+				</div>
+			</div>	
+
+			<div class='col-xs-4'>
+				<div class="input-group input-group-sm">
+					<?php if (!currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+					<?php echo form_input(array(
+							'name'=>'expected_closed_amount_due',
+							'id'=>'expected_closed_amount_due',
+							'readonly'=>'true',
+							'class'=>'form-control input-sm',
+							'value'=>to_currency_no_money($cash_ups_info->expected_closed_amount_due))
+							);?>
+					<?php if (currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+		
 		
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_closed_amount_card'), 'closed_amount_card', array('class'=>'control-label col-xs-3')); ?>
@@ -279,10 +319,17 @@
 			</div>
 		</div>
 		
+		<div style= "text-align: center; color:red;">
+		<?php $difference = (float)$cash_ups_info->closed_amount_cash - (float)$cash_ups_info->expected_closed_amount_cash;?>
+		<?php echo "Cash Difference: " .'$ '. $difference;?> 
+		</div>
+		
 		<div class="modal-footer" style= "text-align: center;">
-      <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->lang->line('cashups_cancel_cashups')?></button>
-       </div>
+	<!--<div class='btn btn-sm btn-danger' id='cancel_sale_button'><span class="glyphicon glyphicon-remove">&nbsp</span><?php echo $this->lang->line('cashups_cancel_cashups'); ?></div>-->
 
+	  <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->lang->line('cashups_cancel_cashups')?></button>
+       </div>	   
+	  
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_description'), 'description', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-6'>
@@ -436,6 +483,13 @@ $(document).ready(function()
 		}
 	}, form_support.error));
 	
-	
+	$("#cancel_sale_button").click(function()
+	{
+		if(confirm("<?php echo $this->lang->line("sales_confirm_cancel_sale"); ?>"))
+		{
+			$('#buttons_form').attr('action', "<?php echo site_url($controller_name."/cancel"); ?>");
+			$('#buttons_form').submit();
+		}
+	});
 });
 </script>
