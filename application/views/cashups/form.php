@@ -1,7 +1,7 @@
-<h4><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
+<h5><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
 <br>
 <?php echo 'Cancel if just checking';?>
-</div></h4>
+</div></h5>
 
 <ul id="error_message_box" class="error_message_box"></ul>
 
@@ -139,7 +139,8 @@
 				</div>				
 			</div>	
 		</div>
-
+	</div>
+	
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_note'), 'note', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-6'>
@@ -173,7 +174,11 @@
 			</div>	
 
 			<div class='col-xs-4'>
+				<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>
 				<div class="input-group input-group-sm">
+				<?php else:?>				
+				<div class="input-group input-group-sm hidden">	
+				<?php endif?>
 					<?php if (!currency_side()): ?>
 						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
 					<?php endif; ?>
@@ -190,7 +195,7 @@
 				</div>
 			</div>
 		</div>
-		
+	</div>
 		
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_closed_amount_card'), 'closed_amount_card', array('class'=>'control-label col-xs-3')); ?>
@@ -234,7 +239,8 @@
 				</div>
 			</div>
 		</div>
-
+	</div>
+	
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_closed_amount_check'), 'closed_amount_check', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-4'>
@@ -276,7 +282,8 @@
 				</div>
 			</div>
 		</div>
-
+	</div>
+	
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_closed_amount_total'), 'closed_amount_total', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-4'>
@@ -319,14 +326,14 @@
 				</div>
 			</div>
 		</div>
-		
+	</div>	
+	
 		<div style= "text-align: center; color:red;">
 		<?php $difference = (float)$cash_ups_info->closed_amount_cash - (float)$cash_ups_info->expected_closed_amount_cash;?>
 		<?php echo "Cash Difference: " .'$ '. $difference;?> 
 		</div>
 		
 		<div class="modal-footer" style= "text-align: center;">
-	<!--<div class='btn btn-sm btn-danger' id='cancel_sale_button'><span class="glyphicon glyphicon-remove">&nbsp</span><?php echo $this->lang->line('cashups_cancel_cashups'); ?></div>-->
 
 	  <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->lang->line('cashups_cancel_cashups')?></button>
        </div>	   
@@ -482,15 +489,7 @@ $(document).ready(function()
 				number: '<?php echo $this->lang->line('cashups_amount_number'); ?>'
 			}
 		}
-	}, form_support.error));
+	}, form_support.error));	
 	
-	$("#submit_form").click(function()
-	{
-		if(confirm("<?php echo $this->lang->line("sales_confirm_cancel_sale"); ?>"))
-		{
-			$('#buttons_form').attr('action', "<?php echo site_url($controller_name."/save"); ?>");
-			$('#buttons_form').submit();
-		}
-	});
 });
 </script>
