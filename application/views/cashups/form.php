@@ -1,6 +1,6 @@
 <h5><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
 <br>
-<?php echo 'Cancel if just checking';?>
+<?php echo "Do not submit unless it's the Open or Close of the day";?>
 </div></h5>
 
 <ul id="error_message_box" class="error_message_box"></ul>
@@ -335,7 +335,7 @@
 		
 		<div class="modal-footer" style= "text-align: center;">
 
-	  <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->lang->line('cashups_cancel_cashups')?></button>
+	  <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo "Just looking"?></button>
        </div>	   
 	  
 		<div class="form-group form-group-sm">
