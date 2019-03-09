@@ -436,8 +436,8 @@ class Reports extends Secure_Controller
 					'trans_group' => $row['trans_group'],
 					'trans_type' => $row['trans_type'],
 					'trans_count' => $row['trans_count'],
-					'trans_amount' => to_currency($row['trans_amount']),
-					'trans_payments' => to_currency($row['trans_payments']),
+					'trans_amount' => to_currency($row['trans_payments']),
+					'trans_payments' => to_currency($row['trans_amount']),
 					'trans_refunded' => to_currency($row['trans_refunded']),
 					'trans_due' => to_currency($row['trans_due'])
 				));
