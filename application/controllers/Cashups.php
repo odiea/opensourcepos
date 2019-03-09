@@ -33,7 +33,7 @@ class Cashups extends Secure_Controller
 					 'is_deleted' => FALSE);
 
 		// check if any filter is set in the multiselect dropdown
-		$filledup = array_fill_keys($this->input->get('filters'), FALSE);
+		$filledup = array_fill_keys($this->input->get('filters'), TRUE);
 		$filters = array_merge($filters, $filledup);
 		$cash_ups = $this->Cashup->search($search, $filters, $limit, $offset, $sort, $order);
 		$total_rows = $this->Cashup->get_found_rows($search, $filters);
@@ -47,7 +47,7 @@ class Cashups extends Secure_Controller
 	}
 
 	public function view($cashup_id = -1)
-	{		
+	{
 		$data = array();
 
 		$data['employees'] = array();
@@ -68,6 +68,7 @@ class Cashups extends Secure_Controller
 			$cash_ups_info->$property = $this->xss_clean($value);
 		}
 
+		// open cashup
 		if(empty($cash_ups_info->cashup_id))
 		{
 			$cash_ups_info->open_date = date('Y-m-d H:i:s');
@@ -80,13 +81,13 @@ class Cashups extends Secure_Controller
 			floatval($cash_ups_info->closed_amount_due) == 0 &&
 			floatval($cash_ups_info->closed_amount_card) == 0 &&
 			floatval($cash_ups_info->closed_amount_check) == 0)
-		{	
+		{
 			// set the close date and time to the actual as this is a close session
 			$cash_ups_info->close_date = date('Y-m-d H:i:s');
-			
+
 			// the closed amount starts with the open amount -/+ any trasferred amount
-			$cash_ups_info->expected_closed_amount_cash = $cash_ups_info->open_amount_cash ;
-			
+			//$cash_ups_info->closed_amount_cash = $cash_ups_info->open_amount_cash + $cash_ups_info->transfer_amount_cash;
+
 			// if it's date mode only and not date & time truncate the open and end date to date only
 			if(empty($this->config->item('date_or_time_format')))
 			{
@@ -98,25 +99,9 @@ class Cashups extends Secure_Controller
 				// search for all the payments given the time range
 				$inputs = array('start_date' => $cash_ups_info->open_date, 'end_date' => $cash_ups_info->close_date, 'sale_type' => 'complete', 'location_id' => 'all');
 			}
-			
-			// lookup expenses paid in cash
-			$filters = array(
-						 'only_cash' => FALSE,
-						 'only_due' => FALSE,
-						 'only_check' => FALSE,
-						 'only_credit' => FALSE,
-						 'only_debit' => FALSE,
-						 'only_invoices' => FALSE,
-						 'is_deleted' => FALSE);
-						 
-			$payments = $this->Expense->get_payments_summary('', array_merge($inputs, $filters));
-			foreach($payments as $row)
-			{				
-				$cash_ups_info->transfer_amount_cash -= $this->xss_clean($row['amount']);
-			}            
-			//$cash_ups_info->closed_amount_cash = $cash_ups_info->closed_amount_cash + $cash_ups_info->transfer_amount_cash;
 			$cash_ups_info->expected_closed_amount_cash = $cash_ups_info->open_amount_cash + $cash_ups_info->transfer_amount_cash;
-			
+
+			// get all the transactions payment summaries
 			$this->load->model('reports/Summary_payments');
 			$reports_data = $this->Summary_payments->getData($inputs);		
 					
@@ -143,13 +128,28 @@ class Cashups extends Secure_Controller
 					$cash_ups_info->expected_closed_amount_check -= $this->xss_clean($row['trans_amount']);
 				}
 			}
-			
-		$cash_ups_info->closed_amount_total = $this->_calculate_total($cash_ups_info->open_amount_cash, $cash_ups_info->transfer_amount_cash, $cash_ups_info->closed_amount_cash, $cash_ups_info->closed_amount_card, $cash_ups_info->closed_amount_check);
-	
-		$cash_ups_info->expected_closed_amount_total =  $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->expected_closed_amount_card + $cash_ups_info->expected_closed_amount_check;
+
+			// lookup expenses paid in cash
+			$filters = array(
+						 'only_cash' => TRUE,
+						 'only_due' => FALSE,
+						 'only_check' => FALSE,
+						 'only_credit' => FALSE,
+						 'only_debit' => FALSE,
+						 'is_deleted' => FALSE);
+			$payments = $this->Expense->get_payments_summary('', array_merge($inputs, $filters));
+
+			foreach($payments as $row)
+			{
+				$cash_ups_info->transfer_amount_cash -= $this->xss_clean($row['amount']);
+			}
+			$cash_ups_info->expected_closed_amount_cash = $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->transfer_amount_cash;
+			$cash_ups_info->closed_amount_total = $this->_calculate_total($cash_ups_info->open_amount_cash, $cash_ups_info->transfer_amount_cash, $cash_ups_info->closed_amount_cash, $cash_ups_info->closed_amount_due, $cash_ups_info->closed_amount_card, $cash_ups_info->closed_amount_check);
+			$cash_ups_info->expected_closed_amount_total =  $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->expected_closed_amount_card + $cash_ups_info->expected_closed_amount_check;
 		}
-		$data['cash_ups_info'] = $cash_ups_info;		
-	
+
+		$data['cash_ups_info'] = $cash_ups_info;
+
 		$this->load->view("cashups/form", $data);
 	}
 
@@ -229,14 +229,15 @@ class Cashups extends Secure_Controller
 	AJAX call from cashup input form to calculate the total
 	*/
 	public function ajax_cashup_total()
-	{		
+	{
 		$open_amount_cash = parse_decimals($this->input->post('open_amount_cash'));
-		$transfer_amount_cash = parse_decimals($this->input->post('transfer_amount_cash'));		
+		$transfer_amount_cash = parse_decimals($this->input->post('transfer_amount_cash'));
 		$closed_amount_cash = parse_decimals($this->input->post('closed_amount_cash'));
+		$closed_amount_due = parse_decimals($this->input->post('closed_amount_due'));
 		$closed_amount_card = parse_decimals($this->input->post('closed_amount_card'));
 		$closed_amount_check = parse_decimals($this->input->post('closed_amount_check'));
 
-		$total = $this->_calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_cash, $closed_amount_card, $closed_amount_check);
+		$total = $this->_calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_due, $closed_amount_cash, $closed_amount_card, $closed_amount_check);
 
 		echo json_encode(array('total' => to_currency_no_money($total)));
 	}
@@ -244,9 +245,8 @@ class Cashups extends Secure_Controller
 	/*
 	Calculate total
 	*/
-	private function _calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_cash, $closed_amount_card, $closed_amount_check)
+	private function _calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_due, $closed_amount_cash, $closed_amount_card, $closed_amount_check)
 	{
-
 		return ($closed_amount_cash + $closed_amount_card + $closed_amount_check);
 	}
 }
