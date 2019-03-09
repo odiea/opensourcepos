@@ -324,7 +324,7 @@ class Sale extends CI_Model
 	public function get_payments_summary($search, $filters)
 	{
 		// get payment summary
-		$this->db->select('payment_type, COUNT(payment_amount) AS count, SUM(payment_amount) AS payment_amount, SUM(total_amount) AS total_amount');
+		$this->db->select('payment_type, COUNT(payment_amount) AS count, SUM(payment_amount) AS payment_amount');
 		$this->db->from('sales AS sales');
 		$this->db->join('sales_payments', 'sales_payments.sale_id = sales.sale_id');
 		$this->db->join('people AS customer_p', 'sales.customer_id = customer_p.person_id', 'LEFT');
@@ -605,7 +605,7 @@ class Sale extends CI_Model
 	 * The sales_taxes variable needs to be initialized to an empty array before calling
 	 */
 	public function save($sale_id, &$sale_status, &$items, $customer_id, $employee_id, $comment, $invoice_number,
-							$work_order_number, $quote_number, $sale_type, $payments, $totals,  $dinner_table, &$sales_taxes)
+							$work_order_number, $quote_number, $sale_type, $payments, $dinner_table, &$sales_taxes)
 	{
 		if($sale_id != -1)
 		{
@@ -671,8 +671,7 @@ class Sale extends CI_Model
 			$sales_payments_data = array(
 				'sale_id'		 => $sale_id,
 				'payment_type'	 => $payment['payment_type'],
-				'payment_amount' => $payment['payment_amount'],
-				'total_amount' => $totals
+				'payment_amount' => $payment['payment_amount']			
 			);
 			$this->db->insert('sales_payments', $sales_payments_data);
 			$total_amount = floatval($total_amount) + floatval($payment['payment_amount']);
