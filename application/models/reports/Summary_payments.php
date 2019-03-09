@@ -10,8 +10,8 @@ class Summary_payments extends Summary_report
 			array('trans_group' => $this->lang->line('reports_trans_group')),
 			array('trans_type' => $this->lang->line('reports_trans_type')),
 			array('trans_count' => $this->lang->line('reports_count')),
-			array('trans_amount' => $this->lang->line('reports_trans_amount')),
-			array('trans_payments' => $this->lang->line('reports_trans_payments')),
+			array('trans_amount' => $this->lang->line('reports_trans_payments')),
+			array('trans_payments' => $this->lang->line('reports_trans_amount')),
 			array('trans_refunded' => $this->lang->line('reports_trans_refunded')),
 			array('trans_due' => $this->lang->line('reports_trans_due')));
 	}
