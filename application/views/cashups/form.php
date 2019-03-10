@@ -330,7 +330,9 @@
 	
 		<div style= "text-align: center; color:red;">
 		<?php $difference = (float)$cash_ups_info->closed_amount_cash - (float)$cash_ups_info->expected_closed_amount_cash;?>
+		<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>							
 		<?php echo "Cash Difference: " .'$ '. $difference;?> 
+				<?php endif; ?>
 		</div>
 		
 		<div class="modal-footer" style= "text-align: center;">
