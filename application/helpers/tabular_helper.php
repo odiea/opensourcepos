@@ -727,7 +727,9 @@ function get_cashups_manage_table_headers()
 		array('closed_amount_cash' => $CI->lang->line('cashups_closed_amount_cash')),
 		array('note' => $CI->lang->line('cashups_note')),
 		array('closed_amount_card' => $CI->lang->line('cashups_closed_amount_card')),
+		array('closed_amount_due' => $CI->lang->line('cashups_closed_amount_due')),
 		array('closed_amount_check' => $CI->lang->line('cashups_closed_amount_check')),
+		array('closed_amount_giftcard' => $CI->lang->line('cashups_closed_amount_giftcard')),
 		array('closed_amount_total' => $CI->lang->line('cashups_closed_amount_total'))
 	);
 
@@ -752,8 +754,10 @@ function get_cash_up_data_row($cash_up)
 		'closed_amount_cash' => to_currency($cash_up->closed_amount_cash),
 		'note' => $cash_up->note ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>',
 		'closed_amount_card' => to_currency($cash_up->closed_amount_card),
+		'closed_amount_due' => to_currency($cash_up->closed_amount_due),
 		'closed_amount_check' => to_currency($cash_up->closed_amount_check),	
-    	'closed_amount_total' => to_currency($cash_up->closed_amount_total),
+    	'closed_amount_giftcard' => to_currency($cash_up->closed_amount_giftcard),
+		'closed_amount_total' => to_currency($cash_up->closed_amount_total),
 		'edit' => anchor($controller_name."/view/$cash_up->cashup_id", '<span class="glyphicon glyphicon-edit"></span>',
 			array('class'=>'modal-dlg', 'data-btn-submit' => $CI->lang->line('common_submit'), 'title'=>$CI->lang->line($controller_name.'_update'))
 		));

@@ -282,8 +282,50 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
 	
+	<div class="form-group form-group-sm">
+			<?php echo form_label($this->lang->line('cashups_giftcard'), 'closed_amount_giftcard', array('class'=>'control-label col-xs-3')); ?>
+			<div class='col-xs-4'>
+				<div class="input-group input-group-sm">
+					<?php if (!currency_side()): ?>
+						<span class="input-group-addon input-sm"><?php echo $this->config->item('currency_symbol'); ?></span>
+					<?php endif; ?>
+					<?php echo form_input(array(
+							'name'=>'closed_amount_giftcard',
+							'id'=>'closed_amount_giftcard',
+							'readonly'=>'true',
+							'class'=>'form-control input-sm',
+							'value'=>to_currency_no_money($cash_ups_info->closed_amount_giftcard))
+							);?>
+					<?php if (currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></span>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class='col-xs-4'>
+				<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>
+				<div class="input-group input-group-sm">
+				<?php else:?>				
+					<div class="input-group input-group-sm hidden">	
+				<?php endif?>
+				<?php if (!currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></b></span>
+					<?php endif; ?>
+				<?php echo form_input(array(
+							'name'=>'expected_closed_amount_giftcard',
+							'id'=>'expected_closed_amount_giftcard',
+							'readonly'=>'true',
+							'class'=>'form-control input-sm',
+							'value'=>to_currency_no_money($cash_ups_info->expected_closed_amount_giftcard))
+							);?>
+					<?php if (currency_side()): ?>
+						<span class="input-group-addon input-sm"><b><?php echo $this->config->item('currency_symbol'); ?></span>
+					<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_closed_amount_total'), 'closed_amount_total', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-4'>
@@ -445,6 +487,7 @@ $(document).ready(function()
 					'transfer_amount_cash': $('#transfer_amount_cash').val(),					
 					'closed_amount_cash': $('#closed_amount_cash').val(),
 					'closed_amount_card': $('#closed_amount_card').val(),
+					'closed_amount_giftcard': $('#closed_amount_giftcard').val(),
 					'closed_amount_check': $('#closed_amount_check').val()
 			}),
 			function(response) {

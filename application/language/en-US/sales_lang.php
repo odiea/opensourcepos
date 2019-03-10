@@ -69,6 +69,7 @@ $lang["sales_error_editing_item"] = "Error editing item";
 $lang["sales_find_or_scan_item"] = "Find or Scan Item";
 $lang["sales_find_or_scan_item_or_receipt"] = "Find or Scan Item or Receipt";
 $lang["sales_giftcard"] = "Gift Card";
+$lang["sales_giftcard_filter"] = "Gift Card";
 $lang["sales_giftcard_balance"] = "Gift Card Balance";
 $lang["sales_giftcard_number"] = "Gift Card Number";
 $lang["sales_group_by_category"] = "Group by Category";

@@ -100,7 +100,7 @@ class Cashups extends Secure_Controller
 				$inputs = array('start_date' => $cash_ups_info->open_date, 'end_date' => $cash_ups_info->close_date, 'sale_type' => 'complete', 'location_id' => 'all');
 			}
 			$cash_ups_info->expected_closed_amount_cash = $cash_ups_info->open_amount_cash + $cash_ups_info->transfer_amount_cash;
-
+			
 			// get all the transactions payment summaries
 			$this->load->model('reports/Summary_payments');
 			$reports_data = $this->Summary_payments->getData($inputs);		
@@ -116,17 +116,24 @@ class Cashups extends Secure_Controller
 					$cash_ups_info->closed_amount_due += $this->xss_clean($row['trans_amount']);
 					$cash_ups_info->expected_closed_amount_due += $this->xss_clean($row['trans_amount']);
 				}
+				
 				elseif($row['trans_type'] == $this->lang->line('sales_debit') || 
 						$row['trans_type'] == $this->lang->line('sales_credit'))
 				{					
-					$cash_ups_info->closed_amount_card -= $this->xss_clean($row['trans_amount']);
-					$cash_ups_info->expected_closed_amount_card -= $this->xss_clean($row['trans_amount']);
+					$cash_ups_info->closed_amount_card += $this->xss_clean($row['trans_amount']);
+					$cash_ups_info->expected_closed_amount_card += $this->xss_clean($row['trans_amount']);
 				}
 				elseif($row['trans_type'] == $this->lang->line('sales_check'))
 				{
 					//$cash_ups_info->closed_amount_check += $this->xss_clean($row['payment_amount']);
-					$cash_ups_info->expected_closed_amount_check -= $this->xss_clean($row['trans_amount']);
+					$cash_ups_info->expected_closed_amount_check += $this->xss_clean($row['trans_amount']);
+				}				
+				elseif($row['trans_type'] == $this->lang->line('sales_giftcard'));
+				{
+					$cash_ups_info->closed_amount_giftcard = $this->xss_clean($row['trans_amount']);
+					$cash_ups_info->expected_closed_amount_giftcard = $this->xss_clean($row['trans_amount']);
 				}
+				
 			}
 
 			// lookup expenses paid in cash
@@ -136,6 +143,7 @@ class Cashups extends Secure_Controller
 						 'only_check' => FALSE,
 						 'only_credit' => FALSE,
 						 'only_debit' => FALSE,
+						 'only_giftcard' => FALSE,						 
 						 'is_deleted' => FALSE);
 			$payments = $this->Expense->get_payments_summary('', array_merge($inputs, $filters));
 
@@ -144,8 +152,8 @@ class Cashups extends Secure_Controller
 				$cash_ups_info->transfer_amount_cash -= $this->xss_clean($row['amount']);
 			}
 			$cash_ups_info->expected_closed_amount_cash = $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->transfer_amount_cash;
-			$cash_ups_info->closed_amount_total = $this->_calculate_total($cash_ups_info->open_amount_cash, $cash_ups_info->transfer_amount_cash, $cash_ups_info->closed_amount_cash, $cash_ups_info->closed_amount_due, $cash_ups_info->closed_amount_card, $cash_ups_info->closed_amount_check);
-			$cash_ups_info->expected_closed_amount_total =  $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->expected_closed_amount_card + $cash_ups_info->expected_closed_amount_check;
+			$cash_ups_info->closed_amount_total = $this->_calculate_total($cash_ups_info->open_amount_cash, $cash_ups_info->transfer_amount_cash, $cash_ups_info->closed_amount_cash, $cash_ups_info->closed_amount_due, $cash_ups_info->closed_amount_card, $cash_ups_info->closed_amount_check, $cash_ups_info->closed_amount_giftcard);
+			$cash_ups_info->expected_closed_amount_total =  $cash_ups_info->expected_closed_amount_cash + $cash_ups_info->expected_closed_amount_card + $cash_ups_info->expected_closed_amount_check +$cash_ups_info->expected_closed_amount_giftcard ;
 		}
 
 		$data['cash_ups_info'] = $cash_ups_info;
@@ -177,11 +185,13 @@ class Cashups extends Secure_Controller
 			'closed_amount_cash' => parse_decimals($this->input->post('closed_amount_cash')),
 			'closed_amount_due' => parse_decimals($this->input->post('closed_amount_due')),
 			'closed_amount_card' => parse_decimals($this->input->post('closed_amount_card')),
+			'closed_amount_giftcard' => parse_decimals($this->input->post('closed_amount_giftcard')),
 			'closed_amount_check' => parse_decimals($this->input->post('closed_amount_check')),
 			'closed_amount_total' => parse_decimals($this->input->post('closed_amount_total')),
 			'expected_closed_amount_due' => parse_decimals($this->input->post('expected_closed_amount_due')),
 			'expected_closed_amount_cash' => parse_decimals($this->input->post('expected_closed_amount_cash')),
 			'expected_closed_amount_card' => parse_decimals($this->input->post('expected_closed_amount_card')),
+			'expected_closed_amount_giftcard' => parse_decimals($this->input->post('expected_closed_amount_giftcard')),
 			'expected_closed_amount_check' => parse_decimals($this->input->post('expected_closed_amount_check')),
 			'expected_closed_amount_total' => parse_decimals($this->input->post('expected_closed_amount_total')),
 			'note' => $this->input->post('note') != NULL,
@@ -236,8 +246,8 @@ class Cashups extends Secure_Controller
 		$closed_amount_due = parse_decimals($this->input->post('closed_amount_due'));
 		$closed_amount_card = parse_decimals($this->input->post('closed_amount_card'));
 		$closed_amount_check = parse_decimals($this->input->post('closed_amount_check'));
-
-		$total = $this->_calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_due, $closed_amount_cash, $closed_amount_card, $closed_amount_check);
+		$closed_amount_giftcard = parse_decimals($this->input->post('closed_amount_giftcard'));
+		$total = $this->_calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_due, $closed_amount_cash, $closed_amount_card, $closed_amount_check, $closed_amount_giftcard );
 
 		echo json_encode(array('total' => to_currency_no_money($total)));
 	}
@@ -245,9 +255,9 @@ class Cashups extends Secure_Controller
 	/*
 	Calculate total
 	*/
-	private function _calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_due, $closed_amount_cash, $closed_amount_card, $closed_amount_check)
+	private function _calculate_total($open_amount_cash, $transfer_amount_cash, $closed_amount_due, $closed_amount_cash, $closed_amount_card, $closed_amount_check, $closed_amount_giftcard)
 	{
-		return ($closed_amount_cash + $closed_amount_card + $closed_amount_check);
+		return ($closed_amount_cash + $closed_amount_card + $closed_amount_check + $closed_amount_giftcard);
 	}
 }
 ?>
