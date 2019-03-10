@@ -374,7 +374,12 @@
 <script type='text/javascript'>
 //validation and submit handling
 $(document).ready(function()
-{
+{	
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+		alert('<?php echo $this->lang->line('cashups_cancel_cashups_enter'); ?>');
+        }  
+});
 	<?php $this->load->view('partial/datepicker_locale'); ?>
 
 	$('#open_date').datetimepicker({
