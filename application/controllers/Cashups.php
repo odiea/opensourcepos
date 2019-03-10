@@ -109,7 +109,7 @@ class Cashups extends Secure_Controller
 			{
 				if($row['trans_type'] == $this->lang->line('sales_cash'))
 				{					
-					$cash_ups_info->expected_closed_amount_cash += $this->xss_clean($row['trans_payments']);
+					$cash_ups_info->expected_closed_amount_cash += $this->xss_clean($row['trans_amount']);
 				}
 				elseif($row['trans_type'] == $this->lang->line('sales_due'))
 				{

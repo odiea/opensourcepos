@@ -99,7 +99,7 @@ class Summary_payments extends Summary_report
 			if($payment_summary['trans_type'] == $cash_payment)
 			{
 				$payments[$key]['trans_refunded'] = $total_cash_refund;
-				$payments[$key]['trans_payments'] -= $total_cash_refund;
+				$payments[$key]['trans_amount'] -= $total_cash_refund;
 			}
 		}
 
