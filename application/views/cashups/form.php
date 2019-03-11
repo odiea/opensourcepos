@@ -1,10 +1,16 @@
 	<h5><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
 	<br>
 	<?php echo "Do not submit unless it's the Open or Close of the day";?>	
+	<br>	
+	<?php $difference = (float)$cash_ups_info->closed_amount_cash - (float)$cash_ups_info->expected_closed_amount_cash;?>
+		<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>							
+		<?php echo "Cash Difference: " .'$ '. $difference;?> 
+	<?php endif; ?>
 	<br>
 	<br>
-	<button type="button" class="btn btn-danger" data-dismiss="modal" style= "text-align: center;"><?php echo "Just looking"?></button>
+	<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" style= "text-align: center;"><?php echo "Just looking"?></button>
 	</div></h5>	
+	
 <ul id="error_message_box" class="error_message_box"></ul>
 <?php echo form_open('cashups/save/'.$cash_ups_info->cashup_id, array('id'=>'cashups_edit_form', 'class'=>'form-horizontal')); ?>
 	<fieldset id="item_basic_info">
@@ -75,8 +81,18 @@
 					<?php endif; ?>
 				</div>
 			</div>
+		<div class="form-group form-group-sm">
+			<?php echo form_label($this->lang->line('cashups_note'), 'note', array('class'=>'control-label col-xs-2')); ?>
+			<div class='col-xs-2'>
+				<?php echo form_checkbox(array(
+					'name'=>'note',
+					'id'=>'note',
+					'value'=>0,
+					'checked'=>($cash_ups_info->note) ? 1 : 0)
+				);?>
+			</div>
 		</div>
-
+	</div>
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_close_date'), 'close_date', array('class'=>'required control-label col-xs-3')); ?>
 			<div class='col-xs-6'>
@@ -140,19 +156,7 @@
 				</div>				
 			</div>	
 		</div>
-	</div>
-	
-		<div class="form-group form-group-sm">
-			<?php echo form_label($this->lang->line('cashups_note'), 'note', array('class'=>'control-label col-xs-3')); ?>
-			<div class='col-xs-6'>
-				<?php echo form_checkbox(array(
-					'name'=>'note',
-					'id'=>'note',
-					'value'=>0,
-					'checked'=>($cash_ups_info->note) ? 1 : 0)
-				);?>
-			</div>
-		</div>
+	</div>		
 
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_closed_amount_due'), 'closed_amount_due', array('class'=>'control-label col-xs-3')); ?>
@@ -377,9 +381,7 @@
 		<?php echo "Cash Difference: " .'$ '. $difference;?> 
 				<?php endif; ?>
 		</div>		
-		<!--<div class="modal-footer" style= "text-align: center;">
-	  <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo "Just looking"?></button>
-       </div>-->  
+		
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_description'), 'description', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-6'>
