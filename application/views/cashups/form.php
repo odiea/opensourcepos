@@ -1,10 +1,11 @@
-<h5><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
-<br>
-<?php echo "Do not submit unless it's the Open or Close of the day";?>
-</div></h5>
-
+	<h5><div id="required_fields_message" style="color:red";><?php echo $this->lang->line('common_fields_required_message'); ?>
+	<br>
+	<?php echo "Do not submit unless it's the Open or Close of the day";?>	
+	<br>
+	<br>
+	<button type="button" class="btn btn-danger" data-dismiss="modal" style= "text-align: center;"><?php echo "Just looking"?></button>
+	</div></h5>	
 <ul id="error_message_box" class="error_message_box"></ul>
-
 <?php echo form_open('cashups/save/'.$cash_ups_info->cashup_id, array('id'=>'cashups_edit_form', 'class'=>'form-horizontal')); ?>
 	<fieldset id="item_basic_info">
 		<div class="form-group form-group-sm">
@@ -375,13 +376,10 @@
 		<?php if($this->Employee->has_grant('config', $this->session->userdata('person_id'))):?>							
 		<?php echo "Cash Difference: " .'$ '. $difference;?> 
 				<?php endif; ?>
-		</div>
-		
-		<div class="modal-footer" style= "text-align: center;">
-
+		</div>		
+		<!--<div class="modal-footer" style= "text-align: center;">
 	  <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo "Just looking"?></button>
-       </div>	   
-	  
+       </div>-->  
 		<div class="form-group form-group-sm">
 			<?php echo form_label($this->lang->line('cashups_description'), 'description', array('class'=>'control-label col-xs-3')); ?>
 			<div class='col-xs-6'>
