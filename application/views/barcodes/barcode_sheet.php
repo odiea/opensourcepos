@@ -6,16 +6,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title><?php echo $this->lang->line('items_generate_barcodes'); ?></title>
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/barcode_font.css" />
-<style type="text/css">
-@media print
-{    
-    .no-print, .no-print *
-    {
-        display: none !important;
-    }
-}
 
-</style>
 	</head>
 <!--<body  class=<?php echo "font_".$this->barcode_lib->get_font_name($barcode_config['barcode_font']); ?> 
     style="font-size:<?php echo $barcode_config['barcode_font_size']; ?>px">-->
@@ -92,6 +83,7 @@
    jsPrintSetup.clearSilentPrint();
    jsPrintSetup.setOption('printSilent', 1);
   	jsPrintSetup.print();
+	 //window.print(); 
 	self.close();
 }	
 </script>
