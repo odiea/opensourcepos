@@ -734,6 +734,9 @@ class Items extends Secure_Controller
 		);
 		if($this->Item_quantity->save($item_quantity_data, $item_id, $location_id))
 		{
+			
+			$this->db->where('item_id', $item_id);
+			$this->db->update('items', array('barcodes'=>$this->input->post('newquantity'), 'printed'=>0));
 			$message = $this->xss_clean($this->lang->line('items_successful_updating') . ' ' . $cur_item_info->name);
 			
 			echo json_encode(array('success' => TRUE, 'message' => $message, 'id' => $item_id));
