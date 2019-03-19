@@ -1090,7 +1090,7 @@ function check_payment_type()
                 items.push("<ul class='dropdown-menu scrollable-menu'>");
                 $.each(val,function(ikey,ival) 
 				{
-                    items.push("<li><button style='margin:2px;' type='button' class='btn btn-default' onclick='additem("+ival+")'>"+ival+"</a></li>"); 
+                    items.push("<li><button style='margin:2px;' type='button' class='btn btn-secondary' onclick='additem("+ival+")'>"+ival+"</a></li>"); 
                 });
                 items.push( "</ul>");
                 items.push( "</div>");       
