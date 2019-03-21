@@ -131,8 +131,8 @@ class Cashups extends Secure_Controller
 				}				
 				elseif($row['trans_type'] == $this->lang->line('sales_giftcard'));
 				{
-					$cash_ups_info->closed_amount_giftcard = $this->xss_clean($row['trans_amount']);
-					$cash_ups_info->expected_closed_amount_giftcard = $this->xss_clean($row['trans_amount']);
+					$cash_ups_info->closed_amount_giftcard = (float)$this->xss_clean($row['trans_amount']);
+					$cash_ups_info->expected_closed_amount_giftcard = (float)$this->xss_clean($row['trans_amount']);
 				}
 				
 			}
