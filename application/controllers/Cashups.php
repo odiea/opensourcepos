@@ -80,6 +80,7 @@ class Cashups extends Secure_Controller
 		elseif(floatval($cash_ups_info->closed_amount_cash) == 0 &&
 			floatval($cash_ups_info->closed_amount_due) == 0 &&
 			floatval($cash_ups_info->closed_amount_card) == 0 &&
+			floatval($cash_ups_info->closed_amount_giftcard) == 0 &&
 			floatval($cash_ups_info->closed_amount_check) == 0)
 		{
 			// set the close date and time to the actual as this is a close session
@@ -125,13 +126,13 @@ class Cashups extends Secure_Controller
 				}
 				elseif($row['trans_type'] == $this->lang->line('sales_check'))
 				{
-					//$cash_ups_info->closed_amount_check += $this->xss_clean($row['payment_amount']);
+					//$cash_ups_info->closed_amount_check += $this->xss_clean($row['trans_amount']);
 					$cash_ups_info->expected_closed_amount_check += $this->xss_clean($row['trans_amount']);
 				}				
 				elseif($row['trans_type'] == $this->lang->line('sales_giftcard'));
 				{
-					$cash_ups_info->closed_amount_giftcard = (float)$this->xss_clean($row['trans_amount']);
-					$cash_ups_info->expected_closed_amount_giftcard = (float)$this->xss_clean($row['trans_amount']);
+					$cash_ups_info->closed_amount_giftcard = $this->xss_clean($row['trans_amount']);
+					$cash_ups_info->expected_closed_amount_giftcard = $this->xss_clean($row['trans_amount']);
 				}
 				
 			}
