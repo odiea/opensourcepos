@@ -31,9 +31,8 @@ body:
       label: OpensourcePOS Version
       description: What version of our software are you running?
       options:
-        - opensourcepos 3.3.9
-        - opensourcepos 3.3.8
-        - opensourcepos 3.3.7
+        - development (unreleased)
+        - opensourcepos unstable
       default: 0
     validations:
       required: true  
